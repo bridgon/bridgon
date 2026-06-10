@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rdb ip_name="GPIO" regs_id="GPIO_CORE">
+<rdb
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://bridgon.com/schemas/register-db" ip_name="GPIO" regs_id="GPIO_CORE">
   <register offset="0x00" name="PDOR" display_name="Port Data Output Register"
             size="32" access="RW" reset_value="0x00000000">
     <description>Stores the logic levels driven on each GPIO output pin. Writing 1 drives the pin high; writing 0 drives it low.</description>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rdb ip_name="UART" regs_id="UART_CORE">
+<rdb
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://bridgon.com/schemas/register-db" ip_name="UART" regs_id="UART_CORE">
   <register offset="0x00" name="UART_BAUD1" display_name="Baud Rate Register High"
             size="32" access="RW" reset_value="0x00000004">
     <description>Upper byte of the baud rate modulo divisor. Together with BAUD2 determines the baud rate.</description>
