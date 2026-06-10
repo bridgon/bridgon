@@ -20,7 +20,7 @@
        Bridgon Custom Format Schemas
        ================================================================== -->
 
-  <!-- Parameter Definition (.prm) -->
+  <!-- Parameter Mapping (.prm) -->
   <uri name="http://bridgon.com/schemas/param-mapping"
        uri="bridgon-prm.xsd"/>
 

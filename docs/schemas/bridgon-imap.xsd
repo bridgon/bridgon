@@ -6,7 +6,7 @@
   Defines the structure for Instance Map files used in the
   Bridgon SoC DocFlow pipeline.
 
-  Root element: <instance>
+  Root element: <imap>
   Namespace:    http://bridgon.com/schemas/instance-map
 
   An .imap file instantiates parameter values for a specific
@@ -35,12 +35,12 @@
   </xs:annotation>
 
   <!-- ==================================================================
-       Root Element: instance
+       Root Element: imap
        ================================================================== -->
-  <xs:element name="instance">
+  <xs:element name="imap">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="reg" type="regInstanceType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="rdb_instance" type="regInstanceType" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="spec_id" type="xs:string" use="required">
         <xs:annotation>
@@ -52,12 +52,12 @@
           <xs:documentation>Chip family prefix used as lookup key in the Non-RTL Parameter DB.</xs:documentation>
         </xs:annotation>
       </xs:attribute>
-      <xs:attribute name="paramdef_ref" type="xs:string">
+      <xs:attribute name="prm_ref" type="xs:string">
         <xs:annotation>
           <xs:documentation>Relative path to the parameter definition (.prm) file for this scope.</xs:documentation>
         </xs:annotation>
       </xs:attribute>
-      <xs:attribute name="global_paramdef_ref" type="xs:string">
+      <xs:attribute name="global_prm_ref" type="xs:string">
         <xs:annotation>
           <xs:documentation>Relative path to the global parameter definition file.</xs:documentation>
         </xs:annotation>
@@ -70,7 +70,7 @@
        ================================================================== -->
   <xs:complexType name="regInstanceType">
     <xs:sequence>
-      <xs:element name="regs_link" type="regsLinkType" minOccurs="0">
+      <xs:element name="rdb_link" type="regsLinkType" minOccurs="0">
         <xs:annotation>
           <xs:documentation>Link to the register database (.rdb) file for this instance.</xs:documentation>
         </xs:annotation>
@@ -95,13 +95,13 @@
           <xs:documentation>Bus/address space type (e.g., "PERIPHERAL", "AHB0", "SYSTEM").</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="param_override" type="paramOverrideType" minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="prm_override" type="paramOverrideType" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation>
           <xs:documentation>A parameter override for this specific instance.</xs:documentation>
         </xs:annotation>
       </xs:element>
     </xs:sequence>
-    <xs:attribute name="instance_name" type="xs:string" use="required">
+    <xs:attribute name="imap_name" type="xs:string" use="required">
       <xs:annotation>
         <xs:documentation>Unique name for this register instance (e.g., "FlexCAN_core_0").</xs:documentation>
       </xs:annotation>
