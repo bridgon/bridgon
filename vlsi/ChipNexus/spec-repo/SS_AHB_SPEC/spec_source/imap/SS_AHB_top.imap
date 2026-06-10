@@ -4,29 +4,29 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://bridgon.com/schemas/instance-map http://bridgon.com/schemas/bridgon-imap.xsd"
     spec_id="SS_AHB" chip_prefix="DEMO"
-          paramdef_ref="../prm/SS_AHB.prm"
-          global_paramdef_ref="../../../global-params/global_params.prm">
+          prm_ref="../prm/SS_AHB.prm"
+          global_prm_ref="../../../global-params/global_params.prm">
 
-  <reg instance_name="DMA_engine_0" ip_spec="IP_DMA_SPEC">
-    <regs_link href="../../../IP_DMA_SPEC/spec_source/rdb/DMA_core_regs.rdb"/>
+  <rdb_instance imap_name="DMA_engine_0" ip_spec="IP_DMA_SPEC">
+    <rdb_link href="../../../IP_DMA_SPEC/spec_source/rdb/DMA_core_regs.rdb"/>
     <base_address>0x40010000</base_address>
     <slot_size>0x1000</slot_size>
     <address_space>PERIPHERAL</address_space>
-    <param_override param_id="DMA_NUM_CHANNELS">32</param_override>
-    <param_override param_id="DMA_DATA_WIDTH">64</param_override>
-    <param_override param_id="DMA_SCATTER_GATHER">true</param_override>
-    <param_override param_id="DMA_PUBLISH_MODE">FULL</param_override>
-    <param_override param_id="DMA_DOC_REVISION">Rev. 1.7</param_override>
-  </reg>
+    <prm_override param_id="DMA_NUM_CHANNELS">32</prm_override>
+    <prm_override param_id="DMA_DATA_WIDTH">64</prm_override>
+    <prm_override param_id="DMA_SCATTER_GATHER">true</prm_override>
+    <prm_override param_id="DMA_PUBLISH_MODE">FULL</prm_override>
+    <prm_override param_id="DMA_DOC_REVISION">Rev. 1.7</prm_override>
+  </rdb_instance>
 
-  <reg instance_name="GPIO_block_0" ip_spec="IP_GPIO_SPEC">
-    <regs_link href="../../../IP_GPIO_SPEC/spec_source/rdb/GPIO_core_regs.rdb"/>
+  <rdb_instance imap_name="GPIO_block_0" ip_spec="IP_GPIO_SPEC">
+    <rdb_link href="../../../IP_GPIO_SPEC/spec_source/rdb/GPIO_core_regs.rdb"/>
     <base_address>0x40040000</base_address>
     <slot_size>0x1000</slot_size>
     <address_space>PERIPHERAL</address_space>
-    <param_override param_id="GPIO_NUM_PINS">32</param_override>
-    <param_override param_id="GPIO_INTERRUPT_EN">true</param_override>
-    <param_override param_id="GPIO_PUBLISH_MODE">FULL</param_override>
-  </reg>
+    <prm_override param_id="GPIO_NUM_PINS">32</prm_override>
+    <prm_override param_id="GPIO_INTERRUPT_EN">true</prm_override>
+    <prm_override param_id="GPIO_PUBLISH_MODE">FULL</prm_override>
+  </rdb_instance>
 
-</instance>
+</imap>

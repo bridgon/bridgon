@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<registers ip_name="GPIO" regs_id="GPIO_CORE">
+<rdb ip_name="GPIO" regs_id="GPIO_CORE">
   <register offset="0x00" name="PDOR" display_name="Port Data Output Register"
             size="32" access="RW" reset_value="0x00000000">
     <description>Stores the logic levels driven on each GPIO output pin. Writing 1 drives the pin high; writing 0 drives it low.</description>
@@ -49,4 +49,4 @@
       <description>Port Input Disable — Bit N: 1 = disable digital input buffer for pin N</description>
     </bitfield>
   </register>
-</registers>
+</rdb>

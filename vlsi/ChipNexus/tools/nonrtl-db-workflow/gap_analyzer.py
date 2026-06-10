@@ -187,10 +187,10 @@ def analyze_gaps(
                 ss_inst = ss_data.get('subsystems', {}).get(ss_name, {})
                 # Subsystem instances are tracked separately
 
-    for instance_name in soc_instances:
-        if instance_name not in db_instances:
+    for imap_name in soc_instances:
+        if imap_name not in db_instances:
             report['missing_instances'].append({
-                'instance_name': instance_name,
+                'imap_name': imap_name,
                 'chip_prefix': chip_prefix,
             })
 
@@ -205,7 +205,7 @@ def analyze_gaps(
                     break
             if not found:
                 report['stale_instances'].append({
-                    'instance_name': inst_name,
+                    'imap_name': inst_name,
                     'chip_prefix': chip_prefix,
                 })
 
@@ -263,12 +263,12 @@ def print_gap_report(report: Dict):
     if report['missing_instances']:
         print(f"\n📥  Missing Instances (need DB entries):")
         for item in report['missing_instances']:
-            print(f"    - {item['instance_name']}")
+            print(f"    - {item['imap_name']}")
 
     if report['stale_instances']:
         print(f"\n⚠️   Stale Instances (no longer in any SoC):")
         for item in report['stale_instances']:
-            print(f"    - {item['instance_name']}")
+            print(f"    - {item['imap_name']}")
 
 
 def generate_contribution_yaml(report: Dict, db: Dict, output_path: str):
@@ -325,7 +325,7 @@ def generate_contribution_yaml(report: Dict, db: Dict, output_path: str):
     for item in report['missing_instances']:
         contributions['slots'].append({
             'action': 'add_instance',
-            'instance_name': item['instance_name'],
+            'imap_name': item['imap_name'],
             'chip_prefix': report['chip_prefix'],
             'assigned_to': default_author,
             'status': 'pending',

@@ -6,7 +6,7 @@
   Defines the structure for Register Database files used in the
   Bridgon SoC DocFlow pipeline.
 
-  Root element: <registers>
+  Root element: <rdb>
   Namespace:    http://bridgon.com/schemas/register-db
 
   An .rdb file defines hardware registers with their bitfield
@@ -34,9 +34,9 @@
   </xs:annotation>
 
   <!-- ==================================================================
-       Root Element: registers
+       Root Element: rdb
        ================================================================== -->
-  <xs:element name="registers">
+  <xs:element name="rdb">
     <xs:complexType>
       <xs:sequence>
         <xs:element name="register" type="registerType" minOccurs="0" maxOccurs="unbounded"/>

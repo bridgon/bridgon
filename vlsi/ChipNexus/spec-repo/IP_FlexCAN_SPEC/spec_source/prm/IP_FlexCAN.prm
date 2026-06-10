@@ -5,7 +5,7 @@
   This file defines all configurable parameters—both RTL and non-RTL—
   describing their default values, limits, descriptions, and types.
 -->
-<paramdef
+<prm
     xmlns="http://bridgon.com/schemas/param-mapping"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://bridgon.com/schemas/param-mapping http://bridgon.com/schemas/bridgon-prm.xsd" spec_id="IP_FlexCAN">
@@ -101,4 +101,4 @@
     <description>The chip family prefix used to namespace the instance files and to select chip-specific parameter overrides from the Non-RTL Parameter Database.</description>
   </parameter>
 
-</paramdef>
+</prm>

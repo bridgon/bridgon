@@ -5,7 +5,7 @@
      xmlns:pm="http://ditaspec.org/param-mapping">
   <title>AHB Bus SubSystem Reference</title>
   <topicref href="../topics/SS_AHB_Overview.dita" navtitle="AHB SubSystem Overview" type="concept"/>
-  <topicref href="ipref:IP_DMA_SPEC" navtitle="DMA Controller" type="concept"/>
-  <topicref href="ipref:IP_GPIO_SPEC" navtitle="GPIO Controller" type="concept"/>
-  <topicref href="regref:AHB_FABRIC_REGS" navtitle="AHB Fabric Register Descriptions" type="reference"/>
+  <topicref href="prmref:IP_DMA_SPEC" navtitle="DMA Controller" type="concept"/>
+  <topicref href="prmref:IP_GPIO_SPEC" navtitle="GPIO Controller" type="concept"/>
+  <topicref href="rdbref:AHB_FABRIC_REGS" navtitle="AHB Fabric Register Descriptions" type="reference"/>
 </map>

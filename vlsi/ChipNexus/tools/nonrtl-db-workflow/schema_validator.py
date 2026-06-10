@@ -9,7 +9,7 @@ Validates contribution YAML and the JSON database against the parameter schema:
   - Range validation (low_limit / high_limit for integers)
   - Enum validation (accepted_values)
   - Required field presence
-  - Cross-reference integrity (spec_ref, instance_name existence)
+  - Cross-reference integrity (spec_ref, imap_name existence)
 
 Usage:
   python3 schema_validator.py \
@@ -157,14 +157,14 @@ class SchemaValidator:
                 )
 
         elif action == 'add_instance':
-            instance_name = slot.get('instance_name', '')
-            if not instance_name:
-                self.errors.append(f"{prefix}: Missing 'instance_name'")
+            imap_name = slot.get('imap_name', '')
+            if not imap_name:
+                self.errors.append(f"{prefix}: Missing 'imap_name'")
                 is_valid = False
             # Check instance naming convention
-            if instance_name and not re.match(r'^[A-Za-z][A-Za-z0-9_]*$', instance_name):
+            if imap_name and not re.match(r'^[A-Za-z][A-Za-z0-9_]*$', imap_name):
                 self.errors.append(
-                    f"{prefix}: Invalid instance name '{instance_name}' — "
+                    f"{prefix}: Invalid instance name '{imap_name}' — "
                     f"must match [A-Za-z][A-Za-z0-9_]*"
                 )
                 is_valid = False

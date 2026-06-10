@@ -39,8 +39,8 @@
   <!-- ========== Programming Model / Registers ========== -->
   <topicref href="../topics/FlexCAN_Programming_Model.dita" navtitle="Programming Model" type="concept">
     <topicref href="../topics/FlexCAN_Register_Summary.dita" navtitle="Register Summary" type="reference"/>
-    <!-- Register detail is injected by ditaproc resolution via the regs_link -->
-    <topicref href="regref:FLEXCAN_CORE_REGS" navtitle="Register Descriptions" type="reference"/>
+    <!-- Register detail is injected by ditaproc resolution via the rdb_link -->
+    <topicref href="rdbref:FLEXCAN_CORE_REGS" navtitle="Register Descriptions" type="reference"/>
   </topicref>
 
   <!-- ========== Application Notes ========== -->

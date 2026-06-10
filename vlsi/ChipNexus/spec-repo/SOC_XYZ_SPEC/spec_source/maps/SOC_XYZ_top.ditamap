@@ -3,7 +3,7 @@
 <!--
   SOC_XYZ_top.ditamap — Top-level DITA map for SoC XYZ Reference Manual.
   Aggregates multiple IP-level ditamaps and SubSystem-level ditamaps
-  into a single hierarchical document structure. Each ipref link
+  into a single hierarchical document structure. Each prmref link
   pulls in the corresponding IP spec ditamap at build time.
 -->
 <map xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
@@ -23,23 +23,23 @@
   <topicref href="../topics/SOC_Memory_Map.dita" navtitle="System Memory Map" type="reference"/>
 
   <!-- ========== IP Chapter References ========== 
-       Each ipref links to the corresponding IP spec ditamap.
+       Each prmref links to the corresponding IP spec ditamap.
        The ditaproc at SoC level resolves these references. -->
-  <topicref href="ipref:IP_FlexCAN_SPEC" navtitle="FlexCAN Controller"
+  <topicref href="prmref:IP_FlexCAN_SPEC" navtitle="FlexCAN Controller"
             type="concept"
             pm:cond_SOC_CHIP_NAME="MCU_X9Z"/>
   
-  <topicref href="ipref:IP_DMA_SPEC" navtitle="DMA Controller"
+  <topicref href="prmref:IP_DMA_SPEC" navtitle="DMA Controller"
             type="concept"/>
 
-  <topicref href="ipref:IP_UART_SPEC" navtitle="UART Interface"
+  <topicref href="prmref:IP_UART_SPEC" navtitle="UART Interface"
             type="concept"/>
 
-  <topicref href="ipref:IP_GPIO_SPEC" navtitle="GPIO Controller"
+  <topicref href="prmref:IP_GPIO_SPEC" navtitle="GPIO Controller"
             type="concept"/>
 
   <!-- ========== SubSystem Chapter ========== -->
-  <topicref href="ssref:SS_AHB_BUS" navtitle="AHB Bus SubSystem"
+  <topicref href="ssmap:SS_AHB_BUS" navtitle="AHB Bus SubSystem"
             type="concept"/>
 
   <!-- ========== SoC-Specific Chapters (AI-Generated) ========== -->
@@ -49,7 +49,7 @@
   <topicref href="../topics/SOC_Power_Domains.dita" navtitle="Power Management" type="concept"/>
 
   <!-- ========== Register Summary (auto-generated from pub) ========== -->
-  <topicref href="regref:SOC_TOP_REGS" navtitle="SoC-Level Register Descriptions" type="reference"/>
+  <topicref href="rdbref:SOC_TOP_REGS" navtitle="SoC-Level Register Descriptions" type="reference"/>
 
   <!-- ========== Paramdef (auto-generated) ========== -->
   <topicref href="../params/SOC_XYZ_top.prm" navtitle="SoC Parameter Definitions" type="reference"/>

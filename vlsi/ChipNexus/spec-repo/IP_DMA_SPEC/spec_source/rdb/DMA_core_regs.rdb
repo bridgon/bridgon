@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<registers ip_name="DMA" regs_id="DMA_CORE">
+<rdb ip_name="DMA" regs_id="DMA_CORE">
 
   <register offset="0x00" name="DMA_CR" display_name="DMA Control Register"
             size="32" access="RW" reset_value="0x00000000">
@@ -87,4 +87,4 @@
     </bitfield>
   </register>
 
-</registers>
+</rdb>

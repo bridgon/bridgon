@@ -4,14 +4,14 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:pm="http://bridgon.com/schemas/param-mapping"
     xsi:schemaLocation="http://bridgon.com/schemas/publishing http://bridgon.com/schemas/bridgon-pub.xsd" spec_id="SOC_XYZ">
-  <paramdef_href href="../prm/SOC_XYZ_top.prm"/>
+  <prm_href href="../prm/SOC_XYZ_top.prm"/>
 
   <resolve_group id="FLEXCAN_CORE_0">
     <description>FlexCAN instance 0 register resolution</description>
-    <instance_selector type="imap_file">
-      <imap_href href="../imap/SOC_XYZ_top.imap"/>
-      <regs_ref select_instance="FlexCAN_core_0"/>
-    </instance_selector>
+    <imap_selector type="imap">
+      <imap_ref href="../imap/SOC_XYZ_top.imap"/>
+      <rdb_ref select_imap="FlexCAN_core_0"/>
+    </imap_selector>
     <merging_rules>
       <common_region_strategy>keep_first</common_region_strategy>
       <address_grouping>concatenate</address_grouping>
@@ -21,10 +21,10 @@
 
   <resolve_group id="FLEXCAN_CORE_1">
     <description>FlexCAN instance 1 register resolution</description>
-    <instance_selector type="imap_file">
-      <imap_href href="../imap/SOC_XYZ_top.imap"/>
-      <regs_ref select_instance="FlexCAN_core_1"/>
-    </instance_selector>
+    <imap_selector type="imap">
+      <imap_ref href="../imap/SOC_XYZ_top.imap"/>
+      <rdb_ref select_imap="FlexCAN_core_1"/>
+    </imap_selector>
     <merging_rules>
       <common_region_strategy>merge_with_first</common_region_strategy>
       <address_grouping>concatenate</address_grouping>
@@ -33,26 +33,26 @@
   </resolve_group>
 
   <resolve_group id="DMA_ENGINE_0">
-    <instance_selector type="imap_file">
-      <imap_href href="../imap/SOC_XYZ_top.imap"/>
-      <regs_ref select_instance="DMA_engine_0"/>
-    </instance_selector>
+    <imap_selector type="imap">
+      <imap_ref href="../imap/SOC_XYZ_top.imap"/>
+      <rdb_ref select_imap="DMA_engine_0"/>
+    </imap_selector>
     <output_regmap format="dita_table_with_diagram"/>
   </resolve_group>
 
   <resolve_group id="UART_INST_0">
-    <instance_selector type="imap_file">
-      <imap_href href="../imap/SOC_XYZ_top.imap"/>
-      <regs_ref select_instance="UART_inst_0"/>
-    </instance_selector>
+    <imap_selector type="imap">
+      <imap_ref href="../imap/SOC_XYZ_top.imap"/>
+      <rdb_ref select_imap="UART_inst_0"/>
+    </imap_selector>
     <output_regmap format="dita_table_with_diagram"/>
   </resolve_group>
 
   <resolve_group id="GPIO_BLOCK_0">
-    <instance_selector type="imap_file">
-      <imap_href href="../imap/SOC_XYZ_top.imap"/>
-      <regs_ref select_instance="GPIO_block_0"/>
-    </instance_selector>
+    <imap_selector type="imap">
+      <imap_ref href="../imap/SOC_XYZ_top.imap"/>
+      <rdb_ref select_imap="GPIO_block_0"/>
+    </imap_selector>
     <output_regmap format="dita_table_with_diagram"/>
   </resolve_group>
 

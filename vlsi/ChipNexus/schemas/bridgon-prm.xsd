@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  bridgon-prm.xsd — Parameter Definition (.prm) Schema
+  bridgon-prm.xsd — Parameter Mapping (.prm) Schema
   ======================================================
   Custom extension to DITA OT for semiconductor documentation.
   Defines the structure for parameter definition files used in
   the Bridgon SoC DocFlow pipeline.
 
-  Root element: <paramdef>
+  Root element: <prm>
   Namespace:    http://bridgon.com/schemas/param-mapping
   Prefix:       pm
 
@@ -36,9 +36,9 @@
   </xs:annotation>
 
   <!-- ==================================================================
-       Root Element: paramdef
+       Root Element: prm
        ================================================================== -->
-  <xs:element name="paramdef">
+  <xs:element name="prm">
     <xs:annotation>
       <xs:documentation>Root element for a parameter definition file.</xs:documentation>
     </xs:annotation>

@@ -34,8 +34,8 @@ def enrich_imap(rtl_imap_path, nonrtl_db_path, chip_prefix, output_path):
     enriched_count = 0
     
     for reg_elem in root.findall('reg'):
-        instance_name = reg_elem.get('instance_name', '')
-        inst_nrtl = instances_db.get(instance_name, {})
+        imap_name = reg_elem.get('imap_name', '')
+        inst_nrtl = instances_db.get(imap_name, {})
         nrtl_params = inst_nrtl.get('nonrtl_params', {})
         
         if not nrtl_params:
@@ -43,17 +43,17 @@ def enrich_imap(rtl_imap_path, nonrtl_db_path, chip_prefix, output_path):
         
         # Add non-RTL comment separator
         comment = ET.Comment(' Non-RTL params enriched from Non-RTL Parameter DB ')
-        # Insert after regs_link
-        regs_link = reg_elem.find('regs_link')
-        if regs_link is not None:
-            idx = list(reg_elem).index(regs_link) + 1
+        # Insert after rdb_link
+        rdb_link = reg_elem.find('rdb_link')
+        if rdb_link is not None:
+            idx = list(reg_elem).index(rdb_link) + 1
             reg_elem.insert(idx, comment)
         
         for param_id, param_value in nrtl_params.items():
             # Skip if already exists from RTL
-            existing = reg_elem.find(f'param_override[@param_id="{param_id}"]')
+            existing = reg_elem.find(f'prm_override[@param_id="{param_id}"]')
             if existing is None:
-                override = ET.SubElement(reg_elem, 'param_override', {'param_id': param_id})
+                override = ET.SubElement(reg_elem, 'prm_override', {'param_id': param_id})
                 override.text = str(param_value)
                 enriched_count += 1
     

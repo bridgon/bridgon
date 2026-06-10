@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<paramdef
+<prm
     xmlns="http://bridgon.com/schemas/param-mapping"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://bridgon.com/schemas/param-mapping http://bridgon.com/schemas/bridgon-prm.xsd" spec_id="IP_UART">
@@ -52,4 +52,4 @@
     <default>Rev. 3.0</default>
     <description>Document revision string for the published reference manual.</description>
   </parameter>
-</paramdef>
+</prm>

@@ -60,11 +60,11 @@ def load_rtl_params(json_path: str) -> Dict:
 
 
 def find_rtl_params_for_instance(
-    rtl_params: Dict, instance_name: str
+    rtl_params: Dict, imap_name: str
 ) -> Dict[str, Any]:
     """Extract RTL parameters for a specific instance from the design analysis output."""
     found_params = {}
-    search_name = instance_name.lower().replace('_', '')
+    search_name = imap_name.lower().replace('_', '')
     
     for module_path, module_data in rtl_params.get('modules', {}).items():
         if search_name in module_path.lower().replace('_', ''):
@@ -87,8 +87,8 @@ def generate_imap(
         'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
         'spec_id': 'SOC_XYZ',
         'chip_prefix': chip_prefix,
-        'paramdef_ref': '../params/SOC_XYZ_top.prm',
-        'global_paramdef_ref': '../../../global-params/global_params.prm'
+        'prm_ref': '../params/SOC_XYZ_top.prm',
+        'global_prm_ref': '../../../global-params/global_params.prm'
     })
     
     # Add header comment
@@ -101,11 +101,11 @@ def generate_imap(
     for entry in memmap:
         inst_name = entry.get('inst_name', '')
         reg_elem = ET.SubElement(root, 'reg', {
-            'instance_name': inst_name,
+            'imap_name': inst_name,
             'ip_spec': entry.get('spec_ref', '')
         })
         
-        ET.SubElement(reg_elem, 'regs_link', {
+        ET.SubElement(reg_elem, 'rdb_link', {
             'href': f"../../../{entry.get('rdb_path', '')}"
         })
         ET.SubElement(reg_elem, 'base_address').text = entry.get('start_addr', '0x0')
@@ -118,7 +118,7 @@ def generate_imap(
             comment = ET.Comment(' RTL Parameters from design analysis ')
             reg_elem.append(comment)
             for pname, pvalue in rtl_inst_params.items():
-                override = ET.SubElement(reg_elem, 'param_override', {
+                override = ET.SubElement(reg_elem, 'prm_override', {
                     'param_id': pname
                 })
                 override.text = str(pvalue)

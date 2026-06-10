@@ -37,7 +37,7 @@ def build_param_dict(imap_root: ET.Element) -> Dict[str, str]:
     """Build a flat parameter name→value dictionary from .imap."""
     params = {}
     for reg_elem in imap_root.findall('reg'):
-        for override in reg_elem.findall('param_override'):
+        for override in reg_elem.findall('prm_override'):
             param_id = override.get('param_id')
             params[param_id] = override.text or ''
     return params

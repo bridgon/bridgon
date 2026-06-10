@@ -40,7 +40,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element name="description" type="xs:string" minOccurs="0"/>
-        <xs:element name="paramdef_href" minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="prm_href" minOccurs="0" maxOccurs="unbounded">
           <xs:annotation>
             <xs:documentation>Reference to a parameter definition file.</xs:documentation>
           </xs:annotation>
@@ -66,7 +66,7 @@
   <xs:complexType name="resolveGroupType">
     <xs:sequence>
       <xs:element name="description" type="xs:string" minOccurs="0"/>
-      <xs:element name="instance_selector" type="instanceSelectorType"/>
+      <xs:element name="imap_selector" type="instanceSelectorType"/>
       <xs:element name="merging_rules" type="mergingRulesType" minOccurs="0"/>
       <xs:element name="output_regmap" minOccurs="0">
         <xs:complexType>
@@ -95,7 +95,7 @@
        ================================================================== -->
   <xs:complexType name="instanceSelectorType">
     <xs:sequence>
-      <xs:element name="imap_href">
+      <xs:element name="imap_ref">
         <xs:annotation>
           <xs:documentation>Reference to the instance map file.</xs:documentation>
         </xs:annotation>
@@ -103,12 +103,12 @@
           <xs:attribute name="href" type="xs:string" use="required"/>
         </xs:complexType>
       </xs:element>
-      <xs:element name="regs_ref">
+      <xs:element name="rdb_ref">
         <xs:annotation>
           <xs:documentation>Selects a specific register instance from the IMAP.</xs:documentation>
         </xs:annotation>
         <xs:complexType>
-          <xs:attribute name="select_instance" type="xs:string" use="required">
+          <xs:attribute name="select_imap" type="xs:string" use="required">
             <xs:annotation>
               <xs:documentation>Name of the register instance to select.</xs:documentation>
             </xs:annotation>
@@ -118,7 +118,7 @@
     </xs:sequence>
     <xs:attribute name="type" type="xs:string" use="required">
       <xs:annotation>
-        <xs:documentation>Selector type (typically "imap_file").</xs:documentation>
+        <xs:documentation>Selector type (typically "imap").</xs:documentation>
       </xs:annotation>
     </xs:attribute>
   </xs:complexType>

@@ -3,18 +3,18 @@
     xmlns="http://bridgon.com/schemas/instance-map"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://bridgon.com/schemas/instance-map http://bridgon.com/schemas/bridgon-imap.xsd"
-    spec_id="IP_GPIO" paramdef_ref="../prm/IP_GPIO.prm">
-  <reg instance_name="GPIO_block_0">
-    <regs_link href="../rdb/GPIO_core_regs.rdb"/>
+    spec_id="IP_GPIO" prm_ref="../prm/IP_GPIO.prm">
+  <rdb_instance imap_name="GPIO_block_0">
+    <rdb_link href="../rdb/GPIO_core_regs.rdb"/>
     <base_address>0x40040000</base_address>
     <slot_size>0x1000</slot_size>
     <address_space>PERIPHERAL</address_space>
-    <param_override param_id="GPIO_NUM_PINS">32</param_override>
-    <param_override param_id="GPIO_INTERRUPT_EN">true</param_override>
-    <param_override param_id="GPIO_PULL_EN">true</param_override>
-    <param_override param_id="GPIO_DRIVE_STRENGTH">HIGH</param_override>
-    <param_override param_id="GPIO_PUBLISH_MODE">FULL</param_override>
-    <param_override param_id="GPIO_CHIP_PREFIX">DEMO</param_override>
-    <param_override param_id="GPIO_DOC_REVISION">Rev. 2.4</param_override>
-  </reg>
-</instance>
+    <prm_override param_id="GPIO_NUM_PINS">32</prm_override>
+    <prm_override param_id="GPIO_INTERRUPT_EN">true</prm_override>
+    <prm_override param_id="GPIO_PULL_EN">true</prm_override>
+    <prm_override param_id="GPIO_DRIVE_STRENGTH">HIGH</prm_override>
+    <prm_override param_id="GPIO_PUBLISH_MODE">FULL</prm_override>
+    <prm_override param_id="GPIO_CHIP_PREFIX">DEMO</prm_override>
+    <prm_override param_id="GPIO_DOC_REVISION">Rev. 2.4</prm_override>
+  </rdb_instance>
+</imap>

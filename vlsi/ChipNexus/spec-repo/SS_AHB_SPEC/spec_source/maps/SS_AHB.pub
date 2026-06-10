@@ -4,21 +4,21 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:pm="http://bridgon.com/schemas/param-mapping"
     xsi:schemaLocation="http://bridgon.com/schemas/publishing http://bridgon.com/schemas/bridgon-pub.xsd" spec_id="SS_AHB">
-  <paramdef_href href="../prm/SS_AHB.prm"/>
+  <prm_href href="../prm/SS_AHB.prm"/>
 
   <resolve_group id="DMA_ENGINE_0">
-    <instance_selector type="imap_file">
-      <imap_href href="../imap/SS_AHB_top.imap"/>
-      <regs_ref select_instance="DMA_engine_0"/>
-    </instance_selector>
+    <imap_selector type="imap">
+      <imap_ref href="../imap/SS_AHB_top.imap"/>
+      <rdb_ref select_imap="DMA_engine_0"/>
+    </imap_selector>
     <output_regmap format="dita_table_with_diagram"/>
   </resolve_group>
 
   <resolve_group id="GPIO_BLOCK_0">
-    <instance_selector type="imap_file">
-      <imap_href href="../imap/SS_AHB_top.imap"/>
-      <regs_ref select_instance="GPIO_block_0"/>
-    </instance_selector>
+    <imap_selector type="imap">
+      <imap_ref href="../imap/SS_AHB_top.imap"/>
+      <rdb_ref select_imap="GPIO_block_0"/>
+    </imap_selector>
     <output_regmap format="dita_table_with_diagram"/>
   </resolve_group>
 

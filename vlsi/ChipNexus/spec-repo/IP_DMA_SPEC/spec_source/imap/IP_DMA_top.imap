@@ -3,19 +3,19 @@
     xmlns="http://bridgon.com/schemas/instance-map"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://bridgon.com/schemas/instance-map http://bridgon.com/schemas/bridgon-imap.xsd"
-    spec_id="IP_DMA" paramdef_ref="../prm/IP_DMA.prm">
-  <reg instance_name="DMA_engine_0">
-    <regs_link href="../rdb/DMA_core_regs.rdb"/>
+    spec_id="IP_DMA" prm_ref="../prm/IP_DMA.prm">
+  <rdb_instance imap_name="DMA_engine_0">
+    <rdb_link href="../rdb/DMA_core_regs.rdb"/>
     <base_address>0x40010000</base_address>
     <slot_size>0x1000</slot_size>
     <address_space>PERIPHERAL</address_space>
-    <param_override param_id="DMA_NUM_CHANNELS">32</param_override>
-    <param_override param_id="DMA_DATA_WIDTH">64</param_override>
-    <param_override param_id="DMA_ADDR_WIDTH">32</param_override>
-    <param_override param_id="DMA_SCATTER_GATHER">true</param_override>
-    <param_override param_id="DMA_FIFO_DEPTH">16</param_override>
-    <param_override param_id="DMA_PUBLISH_MODE">FULL</param_override>
-    <param_override param_id="DMA_CHIP_PREFIX">DEMO</param_override>
-    <param_override param_id="DMA_DOC_REVISION">Rev. 1.7</param_override>
-  </reg>
-</instance>
+    <prm_override param_id="DMA_NUM_CHANNELS">32</prm_override>
+    <prm_override param_id="DMA_DATA_WIDTH">64</prm_override>
+    <prm_override param_id="DMA_ADDR_WIDTH">32</prm_override>
+    <prm_override param_id="DMA_SCATTER_GATHER">true</prm_override>
+    <prm_override param_id="DMA_FIFO_DEPTH">16</prm_override>
+    <prm_override param_id="DMA_PUBLISH_MODE">FULL</prm_override>
+    <prm_override param_id="DMA_CHIP_PREFIX">DEMO</prm_override>
+    <prm_override param_id="DMA_DOC_REVISION">Rev. 1.7</prm_override>
+  </rdb_instance>
+</imap>
