@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChipNexus — SoC DocFlow Platform | Bridgon</title>
+<style>:root{--bg:#080c14;--bg2:#0f1626;--bg3:#182032;--border:#1e2d4d;--text:#e2e8f0;--muted:#8899b4;--blue:#38bdf8;--purple:#a78bfa;--emerald:#34d399;--amber:#fbbf24;--rose:#fb7185;--grad:linear-gradient(135deg,#38bdf8 0%,#a78bfa 50%,#34d399 100%)}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}nav{position:sticky;top:0;z-index:100;background:rgba(8,12,20,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 40px;display:flex;align-items:center;height:64px;gap:40px}.nav-logo{font-size:20px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.nav-links{display:flex;gap:28px;margin-left:auto}.nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s}.nav-links a:hover,.nav-links a.active{color:var(--text)}.nav-cta{background:var(--grad);color:#080c14;padding:10px 24px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;transition:opacity .2s}.nav-cta:hover{opacity:.9}section{padding:80px 40px;max-width:1280px;margin:0 auto}.page-hero{padding:80px 40px 60px;text-align:center}.page-hero h1{font-size:clamp(32px,5vw,52px);font-weight:900;margin-bottom:18px}.page-hero h1 span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.page-hero p{font-size:17px;color:var(--muted);max-width:640px;margin:0 auto}.section-tag{font-size:12px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:2.5px;margin-bottom:14px}.section-title{font-size:clamp(28px,4vw,42px);font-weight:800;margin-bottom:18px;line-height:1.2}.section-desc{font-size:16px;color:var(--muted);max-width:600px;margin-bottom:48px}
+.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-bottom:60px}.metric-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px;text-align:center}.metric-num{font-size:40px;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.metric-label{font-size:13px;color:var(--muted);margin-top:6px}
+.pipeline{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:48px;overflow-x:auto}.pipeline h3{font-size:20px;margin-bottom:28px;text-align:center}.pipe-steps{display:flex;gap:0;justify-content:center;flex-wrap:wrap}.pipe-step{background:var(--bg3);border:1px solid var(--border);padding:20px 16px;text-align:center;min-width:140px;position:relative}.pipe-step:not(:last-child)::after{content:'→';position:absolute;right:-16px;top:50%;transform:translateY(-50%);color:var(--border);font-size:20px;z-index:1}.pipe-num{width:28px;height:28px;border-radius:50%;background:var(--purple);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}.pipe-title{font-size:13px;font-weight:600;margin-bottom:4px}.pipe-desc{font-size:11px;color:var(--muted)}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:20px}.feat-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:28px;transition:border-color .2s}.feat-card:hover{border-color:var(--blue)}.feat-icon{font-size:32px;margin-bottom:14px}.feat-title{font-size:18px;font-weight:700;margin-bottom:10px}.feat-desc{font-size:14px;color:var(--muted);line-height:1.75}
+.format-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}.format-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:22px}.format-ext{font-family:monospace;font-size:22px;font-weight:800;color:var(--blue);margin-bottom:8px}.format-name{font-size:13px;font-weight:600;margin-bottom:6px}.format-desc{font-size:12px;color:var(--muted)}
+.code-block{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:24px;overflow-x:auto;margin:16px 0}.code-block pre{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);line-height:1.6}
+.arch-diagram{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:40px;overflow-x:auto;margin-top:24px}.arch-row{display:flex;align-items:center;justify-content:center;gap:12px;margin:12px 0;flex-wrap:wrap}.arch-box{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px 18px;text-align:center;min-width:130px;font-size:13px}.arch-box.hl{border-color:var(--blue);background:rgba(56,189,248,.05)}.arch-box.out{border-color:var(--emerald);background:rgba(52,211,153,.05)}
+.btn-primary{background:var(--grad);color:#080c14;padding:15px 36px;border-radius:10px;font-weight:700;font-size:16px;text-decoration:none;display:inline-block;transition:all .2s}.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(56,189,248,.25)}
+.cta-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}.cta-section>div{max-width:1280px;margin:0 auto;padding:80px 40px;text-align:center}
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:64px 40px}.footer-grid{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}.footer-brand{font-size:22px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:12px}.footer-desc{font-size:13px;color:var(--muted);margin-bottom:20px}.footer-col h4{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text);margin-bottom:16px}.footer-col a{display:block;color:var(--muted);font-size:13px;text-decoration:none;margin-bottom:10px;transition:color .2s}.footer-col a:hover{color:var(--blue)}.footer-bottom{max-width:1280px;margin:48px auto 0;padding-top:28px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}@media(max-width:768px){nav{padding:0 20px;gap:16px}.nav-links{display:none}section{padding:60px 20px}.footer-grid{grid-template-columns:1fr 1fr}}</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Bridgon</div>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="solutions.html">Solutions</a>
+    <a href="chipnexus.html" class="active">ChipNexus</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <a href="contact.html" class="nav-cta">Get Started</a>
+</nav>
+
+<section class="page-hero">
+  <div class="section-tag">Flagship Product</div>
+  <h1>ChipNexus — <span>SoC DocFlow</span></h1>
+  <p>AI-powered automated SoC Reference Manual generation. From 6–8 weeks to under 4 hours. Zero parameter errors. Single-source publishing.</p>
+</section>
+
+<section>
+  <div class="section-title">Proven Results at Scale</div>
+  <div class="metric-grid">
+    <div class="metric-card"><div class="metric-num">270×</div><div class="metric-label">Faster RM Generation</div></div>
+    <div class="metric-card"><div class="metric-num">100%</div><div class="metric-label">Parameter Accuracy</div></div>
+    <div class="metric-card"><div class="metric-num">0</div><div class="metric-label">Manual Entry Errors</div></div>
+    <div class="metric-card"><div class="metric-num">−40%</div><div class="metric-label">Support Queries via AI Chatbot</div></div>
+    <div class="metric-card"><div class="metric-num">80%</div><div class="metric-label">Fewer Build Failures</div></div>
+    <div class="metric-card"><div class="metric-num">40+</div><div class="metric-label">Active Users Worldwide</div></div>
+    <div class="metric-card"><div class="metric-num">50+</div><div class="metric-label">Reference Manuals Generated</div></div>
+    <div class="metric-card"><div class="metric-num">95%</div><div class="metric-label">IP Spec Reuse Across SoCs</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="section-tag">How It Works</div>
+  <div class="section-title">7-Step Automated Pipeline</div>
+  <div class="section-desc">From RTL design elaboration to published documentation — fully automated, single source of truth, with AI-assisted content generation and human oversight.</div>
+  <div class="pipeline">
+    <div class="pipe-steps">
+      <div class="pipe-step"><div class="pipe-num">1</div><div class="pipe-title">RTL Elaboration</div><div class="pipe-desc">RTL Design Elaboration parses SV/VHDL, extracts parameters</div></div>
+      <div class="pipe-step"><div class="pipe-num">2</div><div class="pipe-title">Memory Map</div><div class="pipe-desc">XLSX→IMAP with addresses & overrides</div></div>
+      <div class="pipe-step"><div class="pipe-num">3</div><div class="pipe-title">Non-RTL DB</div><div class="pipe-desc">JSON-based parameter enrichment</div></div>
+      <div class="pipe-step"><div class="pipe-num">4</div><div class="pipe-title">DITA Auto-Gen</div><div class="pipe-desc">Claude API generates chapters</div></div>
+      <div class="pipe-step"><div class="pipe-num">5</div><div class="pipe-title">DITA-OT Resolve</div><div class="pipe-desc">Parameter resolution + SVG diagrams</div></div>
+      <div class="pipe-step"><div class="pipe-num">6</div><div class="pipe-title">RAG Ingest</div><div class="pipe-desc">Vector KB for AI chatbot</div></div>
+      <div class="pipe-step"><div class="pipe-num">7</div><div class="pipe-title">Publish</div><div class="pipe-desc">PDF + WebHelp + Chatbot KB</div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-tag">Architecture</div>
+  <div class="section-title">7 Subsystems, 1 Unified Platform</div>
+  <div class="arch-diagram">
+    <div class="arch-row"><div class="arch-box hl" style="min-width:300px">VS Code Extension (Unified UI)</div></div>
+    <div class="arch-row">
+      <div class="arch-box">Design Analysis<br>RTL Design Elaboration</div>
+      <div class="arch-box">IMAP Generator<br>Memory Map→XML</div>
+      <div class="arch-box">Non-RTL DB<br>JSON Ditabase</div>
+      <div class="arch-box">DITA Generator<br>Claude API</div>
+      <div class="arch-box">RM Explorer<br>Flask + RAG</div>
+    </div>
+    <div class="arch-row"><div class="arch-box out" style="min-width:400px">Output: SVG Diagrams + Resolved DITA + PDF + WebHelp + RAG KB</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="section-tag">Core Subsystems</div>
+  <div class="feat-grid">
+    <div class="feat-card"><div class="feat-icon">🖥️</div><div class="feat-title">VS Code Extension</div><div class="feat-desc">One-click design analysis, parameter explorer, build pipeline WebView, DITA preview, and RM Explorer launcher — all within VS Code.</div></div>
+    <div class="feat-card"><div class="feat-icon">🔬</div><div class="feat-title">RTL Design Elaboration Elaboration</div><div class="feat-desc">Full SystemVerilog/VHDL design elaboration extracting all parameters with hierarchical resolution, type tracking, and source line references.</div></div>
+    <div class="feat-card"><div class="feat-icon">🗺️</div><div class="feat-title">IMAP Generator</div><div class="feat-desc">Converts architecture team Excel memory maps into structured XML Instance Map files with automatic parameter merging and address validation.</div></div>
+    <div class="feat-card"><div class="feat-icon">🗄️</div><div class="feat-title">Non-RTL Parameter DB</div><div class="feat-desc">Git-versioned JSON database for documentation-specific parameters. CI-integrated gap analysis, contribution YAML workflow, schema validation.</div></div>
+    <div class="feat-card"><div class="feat-icon">🤖</div><div class="feat-title">AI Chapter Generation</div><div class="feat-desc">Claude API extracts SoC-specific chapters (clocking, reset, interrupts, power) from architecture PDFs. AI extracts, humans verify, pipeline includes.</div></div>
+    <div class="feat-card"><div class="feat-icon">📐</div><div class="feat-title">Register Diagram Renderer</div><div class="feat-desc">Custom DITA-OT plugin generating SVG bit-field diagrams with colour-coded access types and multi-instance memory map tables.</div></div>
+    <div class="feat-card"><div class="feat-icon">💬</div><div class="feat-title">RAG Chatbot</div><div class="feat-desc">Flask-based RM Explorer with RAG-powered AI assistant. Natural language queries with source citations — 40% reduction in support tickets.</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="section-tag">File Formats</div>
+  <div class="section-title">Custom XML Formats for Semiconductor Documentation</div>
+  <div class="section-desc">Extended DITA-OT with four custom formats, each with formal XSD schemas hosted at bridgon.com/platform/.</div>
+  <div class="format-grid">
+    <div class="format-card"><div class="format-ext">parameter definitions</div><div class="format-name">Parameter Definition</div><div class="format-desc">Configurable parameters with defaults, constraints, types. RTL + non-RTL sources.</div></div>
+    <div class="format-card"><div class="format-ext">instance mappings</div><div class="format-name">Instance Map</div><div class="format-desc">Per-instance parameter overrides with base addresses and register file references.</div></div>
+    <div class="format-card"><div class="format-ext">register databases</div><div class="format-name">Register Database</div><div class="format-desc">IP-XACT-compatible register definitions with bitfields, access types, and encodings.</div></div>
+    <div class="format-card"><div class="format-ext">publishing configs</div><div class="format-name">Publishing Instructions</div><div class="format-desc">Resolution groups, merging rules, output targets, parameter ordering.</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="section-tag">Platform Documentation</div>
+  <div class="section-title">XSD Schemas at bridgon.com/platform/</div>
+  <div class="section-desc">All custom file formats have formal XSD schemas served from our domain for XML validation.</div>
+  <div class="code-block"><pre>http://bridgon.com/platform/param-mapping    ← bridgon-docs
+http://bridgon.com/platform/instance-map     ← bridgon-docs
+http://bridgon.com/platform/register-db      ← bridgon-docs
+http://bridgon.com/platform/publishing       ← bridgon-docs</pre></div>
+  <p style="color:var(--muted);font-size:14px;margin-top:16px">An OASIS XML Catalog (<code>catalog.xml</code>) maps all namespace URIs to local XSD files. Standard DITA-OT DTDs are delegated to the bundled DITA-OT 4.4 distribution.</p>
+</section>
+
+<section class="cta-section"><div>
+  <div class="section-tag">Open Source</div>
+  <div class="section-title">Deploy ChipNexus in Your Organization</div>
+  <div class="section-desc" style="margin:20px auto 32px">Modular architecture with swappable components. Swap RTL Design Elaboration for Open-Source Elaboration, DITA-OT for Sphinx, Claude for GPT-4 — all without architectural changes.</div>
+  <a href="contact.html" class="btn-primary">Talk to Our Team →</a>
+</div></section>
+
+<footer>
+  <div class="footer-grid">
+    <div><div class="footer-brand">Bridgon</div><div class="footer-desc">AI-powered automation for semiconductor documentation and enterprise content pipelines.</div></div>
+    <div class="footer-col"><h4>Solutions</h4><a href="solutions.html#documentation">Doc Automation</a><a href="solutions.html#pipeline">Design Pipeline</a><a href="solutions.html#rag">RAG Knowledge Bases</a><a href="chipnexus.html">ChipNexus</a></div>
+    <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="about.html#team">Team</a><a href="about.html#careers">Careers</a></div>
+    <div class="footer-col"><h4>Connect</h4><a href="contact.html">Contact</a><a href="https://bridgon.com">Website</a><a href="#">Resources</a></div>
+  </div>
+  <div class="footer-bottom"><span>&copy; 2026 Bridgon. All rights reserved.</span><span>Built with ❤️ for automation teams everywhere.</span></div>
+</footer>
+</body>
+</html>

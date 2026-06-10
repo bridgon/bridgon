@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map PUBLIC "-//OASIS//DTD DITA 2.0 Map//EN" "../../../dita-ot-4.4/plugins/org.oasis-open.dita.techcomm.v2_0/dtd/technicalContent/map.dtd">
+<!--
+  SOC_XYZ_top.ditamap — Top-level DITA map for SoC XYZ Reference Manual.
+  Aggregates multiple IP-level ditamaps and SubSystem-level ditamaps
+  into a single hierarchical document structure. Each ipref link
+  pulls in the corresponding IP spec ditamap at build time.
+-->
+<map xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+     ditaarch:DITAArchVersion="2.0"
+     xml:lang="en"
+      xmlns:pm="http://bridgon.com/schemas/param-mapping">
+
+  <title>MCU_X9Z SoC Reference Manual</title>
+
+  <!-- ========== SoC Overview ========== -->
+  <topicref href="../topics/SOC_Overview.dita" navtitle="SoC Overview" type="concept">
+    <topicref href="../topics/SOC_Block_Diagram.dita" navtitle="Top-Level Block Diagram" type="concept"/>
+    <topicref href="../topics/SOC_Feature_Summary.dita" navtitle="Feature Summary" type="reference"/>
+  </topicref>
+
+  <!-- ========== Memory Map ========== -->
+  <topicref href="../topics/SOC_Memory_Map.dita" navtitle="System Memory Map" type="reference"/>
+
+  <!-- ========== IP Chapter References ========== 
+       Each ipref links to the corresponding IP spec ditamap.
+       The ditaproc at SoC level resolves these references. -->
+  <topicref href="ipref:IP_FlexCAN_SPEC" navtitle="FlexCAN Controller"
+            type="concept"
+            pm:cond_SOC_CHIP_NAME="MCU_X9Z"/>
+  
+  <topicref href="ipref:IP_DMA_SPEC" navtitle="DMA Controller"
+            type="concept"/>
+
+  <topicref href="ipref:IP_UART_SPEC" navtitle="UART Interface"
+            type="concept"/>
+
+  <topicref href="ipref:IP_GPIO_SPEC" navtitle="GPIO Controller"
+            type="concept"/>
+
+  <!-- ========== SubSystem Chapter ========== -->
+  <topicref href="ssref:SS_AHB_BUS" navtitle="AHB Bus SubSystem"
+            type="concept"/>
+
+  <!-- ========== SoC-Specific Chapters (AI-Generated) ========== -->
+  <topicref href="../topics/SOC_Clocking_Strategy.dita" navtitle="SoC Clocking Architecture" type="concept"/>
+  <topicref href="../topics/SOC_Reset_Architecture.dita" navtitle="Reset Architecture" type="concept"/>
+  <topicref href="../topics/SOC_Interrupt_Map.dita" navtitle="Interrupt Mapping" type="reference"/>
+  <topicref href="../topics/SOC_Power_Domains.dita" navtitle="Power Management" type="concept"/>
+
+  <!-- ========== Register Summary (auto-generated from pub) ========== -->
+  <topicref href="regref:SOC_TOP_REGS" navtitle="SoC-Level Register Descriptions" type="reference"/>
+
+  <!-- ========== Paramdef (auto-generated) ========== -->
+  <topicref href="../params/SOC_XYZ_top.prm" navtitle="SoC Parameter Definitions" type="reference"/>
+
+</map>

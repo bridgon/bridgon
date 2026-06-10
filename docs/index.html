@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bridgon — AI-Powered Automation for Semiconductor & Enterprise Teams</title>
+<style>
+:root {
+  --bg: #080c14; --bg2: #0f1626; --bg3: #182032; --border: #1e2d4d;
+  --text: #e2e8f0; --muted: #8899b4; --blue: #38bdf8; --purple: #a78bfa;
+  --emerald: #34d399; --amber: #fbbf24; --rose: #fb7185;
+  --grad: linear-gradient(135deg, #38bdf8 0%, #a78bfa 50%, #34d399 100%);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; overflow-x: hidden; }
+
+nav { position: sticky; top: 0; z-index: 100; background: rgba(8,12,20,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 0 40px; display: flex; align-items: center; height: 64px; gap: 40px; }
+.nav-logo { font-size: 20px; font-weight: 800; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.nav-links { display: flex; gap: 28px; margin-left: auto; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--text); }
+.nav-cta { background: var(--grad); color: #080c14; padding: 10px 24px; border-radius: 8px; font-weight: 700; font-size: 14px; text-decoration: none; transition: opacity 0.2s; }
+.nav-cta:hover { opacity: 0.9; }
+
+.hero { padding: 120px 40px 100px; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(56,189,248,0.12) 0%, transparent 70%), radial-gradient(ellipse 40% 60% at 80% 100%, rgba(167,139,250,0.08) 0%, transparent 60%); pointer-events: none; }
+.hero-badge { display: inline-block; background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.25); color: var(--blue); padding: 6px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 28px; letter-spacing: 0.5px; }
+.hero h1 { font-size: clamp(40px, 7vw, 72px); font-weight: 900; line-height: 1.08; margin-bottom: 24px; letter-spacing: -1px; }
+.hero h1 span { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero p { font-size: 18px; color: var(--muted); max-width: 640px; margin: 0 auto 40px; line-height: 1.7; }
+.hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.btn-primary { background: var(--grad); color: #080c14; padding: 15px 36px; border-radius: 10px; font-weight: 700; font-size: 16px; text-decoration: none; transition: all 0.2s; }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(56,189,248,0.25); }
+.btn-secondary { background: var(--bg2); border: 1px solid var(--border); color: var(--text); padding: 15px 36px; border-radius: 10px; font-weight: 600; font-size: 16px; text-decoration: none; transition: all 0.2s; }
+.btn-secondary:hover { border-color: var(--blue); color: var(--blue); }
+
+.hero-stats { display: flex; gap: 48px; justify-content: center; margin-top: 72px; flex-wrap: wrap; }
+.stat { text-align: center; }
+.stat-num { font-size: 44px; font-weight: 900; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.stat-label { font-size: 14px; color: var(--muted); margin-top: 4px; }
+
+section { padding: 80px 40px; max-width: 1280px; margin: 0 auto; }
+.section-tag { font-size: 12px; font-weight: 700; color: var(--purple); text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 14px; }
+.section-title { font-size: clamp(30px, 5vw, 46px); font-weight: 800; margin-bottom: 18px; line-height: 1.2; }
+.section-desc { font-size: 16px; color: var(--muted); max-width: 600px; margin-bottom: 56px; }
+
+.solutions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 24px; }
+.sol-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 32px; transition: all 0.3s; position: relative; overflow: hidden; }
+.sol-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--grad); opacity: 0; transition: opacity 0.3s; }
+.sol-card:hover { border-color: var(--blue); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+.sol-card:hover::before { opacity: 1; }
+.sol-icon { font-size: 36px; margin-bottom: 18px; }
+.sol-title { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+.sol-desc { font-size: 14px; color: var(--muted); line-height: 1.75; }
+
+.tech-stack { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 48px; margin-top: 60px; }
+.tech-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 16px; margin-top: 32px; }
+.tech-item { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 18px 14px; text-align: center; font-size: 13px; font-weight: 600; color: var(--muted); transition: all 0.2s; }
+.tech-item:hover { border-color: var(--blue); color: var(--blue); }
+
+.cta-section { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.cta-section > div { max-width: 1280px; margin: 0 auto; padding: 80px 40px; text-align: center; }
+
+footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 64px 40px; }
+.footer-grid { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; }
+.footer-brand { font-size: 22px; font-weight: 800; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 12px; }
+.footer-desc { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+.footer-col h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text); margin-bottom: 16px; }
+.footer-col a { display: block; color: var(--muted); font-size: 13px; text-decoration: none; margin-bottom: 10px; transition: color 0.2s; }
+.footer-col a:hover { color: var(--blue); }
+.footer-bottom { max-width: 1280px; margin: 48px auto 0; padding-top: 28px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+
+.logo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 24px; margin-top: 40px; }
+.logo-item { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 24px; display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--muted); font-weight: 600; }
+
+@media (max-width: 768px) {
+  nav { padding: 0 20px; gap: 16px; }
+  .nav-links { display: none; }
+  section { padding: 60px 20px; }
+  .hero { padding: 80px 20px 60px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Bridgon</div>
+  <div class="nav-links">
+    <a href="index.html" class="active">Home</a>
+    <a href="solutions.html">Solutions</a>
+    <a href="chipnexus.html">ChipNexus</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <a href="contact.html" class="nav-cta">Get Started</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">🤖 AI-Powered Enterprise Automation</div>
+  <h1>We Build <span>Intelligent Automation</span><br/>That Transforms Workflows</h1>
+  <p>Bridgon helps organizations eliminate manual bottlenecks with AI-driven automation platforms — from semiconductor documentation to enterprise content pipelines, we deliver 270× faster cycle times with zero error rates.</p>
+  <div class="hero-btns">
+    <a href="solutions.html" class="btn-primary">Explore Solutions →</a>
+    <a href="chipnexus.html" class="btn-secondary">See ChipNexus →</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">270×</div><div class="stat-label">Faster Workflows</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Eliminated Errors</div></div>
+    <div class="stat"><div class="stat-num">40+</div><div class="stat-label">Enterprise Users</div></div>
+    <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Projects Delivered</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="section-tag">What We Do</div>
+  <div class="section-title">Automation platforms that eliminate<br/>the manual, the repetitive, and the error-prone.</div>
+  <div class="section-desc">From SoC Reference Manual generation to enterprise documentation pipelines, our platforms integrate design analysis, parameter extraction, AI-assisted content generation, and intelligent quality assurance into unified workflows.</div>
+
+  <div class="solutions-grid">
+    <div class="sol-card">
+      <div class="sol-icon">🧠</div>
+      <div class="sol-title">AI Document Generation</div>
+      <div class="sol-desc">Automatically extract structured information from architecture specs, PDFs, and RTL designs. Generate complete documentation chapters using LLMs with human-in-the-loop oversight.</div>
+    </div>
+    <div class="sol-card">
+      <div class="sol-icon">⚡</div>
+      <div class="sol-title">Design-to-Document Pipeline</div>
+      <div class="sol-desc">Directly elaborate RTL designs (SystemVerilog/VHDL) to extract parameters, registers, and memory maps — eliminating manual transcription and guaranteeing documentation matches hardware.</div>
+    </div>
+    <div class="sol-card">
+      <div class="sol-icon">🔍</div>
+      <div class="sol-title">RAG Knowledge Bases</div>
+      <div class="sol-desc">Turn your documentation into an interactive AI assistant. RAG-powered chatbots answer technical questions with source citations — reducing support queries by 40%.</div>
+    </div>
+    <div class="sol-card">
+      <div class="sol-icon">📊</div>
+      <div class="sol-title">Parameter Management Platforms</div>
+      <div class="sol-desc">Centralize configuration management with Git-versioned JSON databases, automated gap analysis, CI-integrated validation, and contribution workflows.</div>
+    </div>
+    <div class="sol-card">
+      <div class="sol-icon">🔧</div>
+      <div class="sol-title">Custom VS Code Extensions</div>
+      <div class="sol-desc">Purpose-built IDE extensions that bring your automation pipeline into the editor — one-click design analysis, parameter explorers, build dashboards, and preview panes.</div>
+    </div>
+    <div class="sol-card">
+      <div class="sol-icon">🌐</div>
+      <div class="sol-title">Multi-Format Publishing</div>
+      <div class="sol-desc">Generate PDF, WebHelp, and RAG-ready embeddings from a single source. Custom DITA-OT pipelines with parameterized conditional content and register diagram rendering.</div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div>
+    <div class="section-tag">Flagship Product</div>
+    <div class="section-title">ChipNexus — SoC DocFlow Platform</div>
+    <div class="section-desc" style="margin: 20px auto 32px;">Our flagship platform reduces SoC Reference Manual generation from 6–8 weeks to under 4 hours. Deployed across multiple product lines, serving 40+ technical authors globally.</div>
+    <a href="chipnexus.html" class="btn-primary">Learn About ChipNexus →</a>
+  </div>
+</section>
+
+<section>
+  <div class="section-tag">Technology Stack</div>
+  <div class="section-title">Built on industry-standard tools<br/>with modular, swappable components.</div>
+  <div class="tech-stack">
+    <p style="color: var(--muted); font-size: 14px;">Every layer of our platform is designed for customization — swap components without architectural changes.</p>
+    <div class="tech-grid">
+      <div class="tech-item">RTL Design Elaboration</div>
+      <div class="tech-item">Open-Source Elaboration</div>
+      <div class="tech-item">DITA-OT 4.4</div>
+      <div class="tech-item">Claude API</div>
+      <div class="tech-item">GPT-4</div>
+      <div class="tech-item">Flask</div>
+      <div class="tech-item">Python 3.9+</div>
+      <div class="tech-item">TypeScript</div>
+      <div class="tech-item">VS Code API</div>
+      <div class="tech-item">GitLab CI</div>
+      <div class="tech-item">GitHub Actions</div>
+      <div class="tech-item">Sphinx</div>
+      <div class="tech-item">AsciiDoc</div>
+      <div class="tech-item">IP-XACT</div>
+      <div class="tech-item">SystemRDL</div>
+      <div class="tech-item">SVG</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">Bridgon</div>
+      <div class="footer-desc">AI-powered automation for semiconductor documentation and enterprise content pipelines. Transform months of manual work into hours of automated generation.</div>
+    </div>
+    <div class="footer-col">
+      <h4>Solutions</h4>
+      <a href="solutions.html#documentation">Doc Automation</a>
+      <a href="solutions.html#pipeline">Design Pipeline</a>
+      <a href="solutions.html#rag">RAG Knowledge Bases</a>
+      <a href="chipnexus.html">ChipNexus</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="about.html">About Us</a>
+      <a href="about.html#team">Team</a>
+      <a href="about.html#careers">Careers</a>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <a href="contact.html">Contact</a>
+      <a href="https://bridgon.com">Website</a>
+      <a href="#">Resources</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Bridgon. All rights reserved.</span>
+    <span>Built with ❤️ for automation teams everywhere.</span>
+  </div>
+</footer>
+
+</body>
+</html>

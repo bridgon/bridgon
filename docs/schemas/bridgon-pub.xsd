@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  bridgon-pub.xsd — Publishing Instructions (.pub) Schema
+  =========================================================
+  Custom extension to DITA OT for semiconductor documentation.
+  Defines the structure for Publishing Instruction files used in
+  the Bridgon SoC DocFlow pipeline.
+
+  Root element: <pub>
+  Namespace:    http://bridgon.com/schemas/publishing
+
+  A .pub file defines register resolution groups, instance
+  selectors, merging rules, parameter resolution ordering,
+  and output configuration for a specification scope.
+
+  Schema version: 2.0
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:pm="http://bridgon.com/schemas/param-mapping"
+           targetNamespace="http://bridgon.com/schemas/publishing"
+           xmlns="http://bridgon.com/schemas/publishing"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="2.0">
+
+  <xs:annotation>
+    <xs:documentation>
+      Bridgon Publishing Instructions (.pub) Schema.
+
+      Defines how register instances are resolved and merged,
+      the parameter resolution pipeline order, and output
+      configuration (DITA-resolved, PDF, WebHelp targets).
+    </xs:documentation>
+  </xs:annotation>
+
+  <!-- ==================================================================
+       Root Element: pub
+       ================================================================== -->
+  <xs:element name="pub">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="description" type="xs:string" minOccurs="0"/>
+        <xs:element name="paramdef_href" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>Reference to a parameter definition file.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:attribute name="href" type="xs:string" use="required"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="resolve_group" type="resolveGroupType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="parameter_resolution_order" type="resolutionOrderType" minOccurs="0"/>
+        <xs:element name="output_config" type="outputConfigType" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="spec_id" type="xs:string" use="required">
+        <xs:annotation>
+          <xs:documentation>Identifier for the specification scope.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- ==================================================================
+       Resolve Group Type
+       ================================================================== -->
+  <xs:complexType name="resolveGroupType">
+    <xs:sequence>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+      <xs:element name="instance_selector" type="instanceSelectorType"/>
+      <xs:element name="merging_rules" type="mergingRulesType" minOccurs="0"/>
+      <xs:element name="output_regmap" minOccurs="0">
+        <xs:complexType>
+          <xs:attribute name="format" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation>Output format for register maps (e.g., "dita_table_with_diagram").</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="style" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Style template name (e.g., "standard_bitfield").</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:ID" use="required">
+      <xs:annotation>
+        <xs:documentation>Unique identifier for this resolve group (e.g., "FLEXCAN_CORE_REGS").</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <!-- ==================================================================
+       Instance Selector Type
+       ================================================================== -->
+  <xs:complexType name="instanceSelectorType">
+    <xs:sequence>
+      <xs:element name="imap_href">
+        <xs:annotation>
+          <xs:documentation>Reference to the instance map file.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:attribute name="href" type="xs:string" use="required"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="regs_ref">
+        <xs:annotation>
+          <xs:documentation>Selects a specific register instance from the IMAP.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:attribute name="select_instance" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation>Name of the register instance to select.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="type" type="xs:string" use="required">
+      <xs:annotation>
+        <xs:documentation>Selector type (typically "imap_file").</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <!-- ==================================================================
+       Merging Rules Type
+       ================================================================== -->
+  <xs:complexType name="mergingRulesType">
+    <xs:sequence>
+      <xs:element name="common_region_strategy" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Strategy for common register regions: "keep_first", "merge", "duplicate".</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="address_grouping" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Address grouping strategy: "concatenate", "interleave", "separate".</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="merge_on_field" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Field used to merge registers across instances (e.g., "register_offset").</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ==================================================================
+       Parameter Resolution Order Type
+       ================================================================== -->
+  <xs:complexType name="resolutionOrderType">
+    <xs:sequence>
+      <xs:element name="step" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>A step in the parameter resolution pipeline.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="priority" type="xs:positiveInteger" use="required"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ==================================================================
+       Output Configuration Type
+       ================================================================== -->
+  <xs:complexType name="outputConfigType">
+    <xs:sequence>
+      <xs:element name="target" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:attribute name="name" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation>Target output name: "dita_resolved", "pdf", "webhelp".</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="dir" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation>Output directory for this target.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="template" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>XSL template file for PDF output.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="skin" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Skin name for WebHelp output.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="memory_map" minOccurs="0">
+        <xs:complexType>
+          <xs:attribute name="include_at_ip_level" type="xs:boolean"/>
+          <xs:attribute name="include_offset_bars" type="xs:boolean"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>

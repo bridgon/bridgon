@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SoC DocFlow — Generated Reference Manual</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'IBM Plex Mono', monospace; background: #0d1117; color: #c9d1d9; display: flex; min-height: 100vh; }
+.sidebar { width: 280px; background: #161b22; border-right: 1px solid #30363d; padding: 20px; position: fixed; top: 0; left: 0; height: 100vh; overflow-y: auto; }
+.sidebar h1 { font-size: 16px; color: #58a6ff; margin-bottom: 4px; }
+.sidebar .subtitle { font-size: 11px; color: #8b949e; margin-bottom: 20px; }
+.toc-chapter { margin-bottom: 12px; }
+.toc-ip { display: block; font-size: 12px; font-weight: 700; color: #7c3aed; padding: 6px 0; border-bottom: 1px solid #30363d; margin-bottom: 4px; }
+.toc-reg { display: block; font-size: 11px; color: #8b949e; padding: 3px 8px; text-decoration: none; border-radius: 4px; }
+.toc-reg:hover { background: #21262d; color: #58a6ff; }
+.main { margin-left: 280px; padding: 30px; flex: 1; max-width: 1100px; }
+.page-header { margin-bottom: 30px; padding-bottom: 16px; border-bottom: 1px solid #30363d; }
+.page-header h1 { font-size: 24px; color: #c9d1d9; }
+.page-header .meta { font-size: 12px; color: #8b949e; margin-top: 6px; }
+.ip-heading { font-size: 20px; color: #58a6ff; margin: 30px 0 16px; padding-bottom: 8px; border-bottom: 2px solid #7c3aed; }
+.register-section { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 20px; margin-bottom: 24px; }
+.register-section h3 { font-size: 16px; color: #c9d1d9; margin-bottom: 10px; }
+.reg-name-badge { background: #21262d; color: #7c3aed; padding: 2px 10px; border-radius: 4px; font-size: 13px; margin-left: 8px; }
+.reg-meta { display: flex; gap: 16px; margin-bottom: 10px; font-size: 12px; color: #8b949e; flex-wrap: wrap; }
+.reg-meta span { background: #21262d; padding: 3px 10px; border-radius: 4px; }
+.reg-desc { font-size: 13px; color: #8b949e; margin-bottom: 14px; line-height: 1.6; }
+.svg-container { margin-bottom: 14px; overflow-x: auto; }
+.reg-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.reg-table th { background: #21262d; padding: 8px 12px; text-align: left; color: #8b949e; font-weight: 600; }
+.reg-table td { padding: 8px 12px; border-bottom: 1px solid #21262d; }
+.reg-table tr:hover td { background: #1a1f27; }
+.access-rw { background: #1f1a3a; color: #a371f7; padding: 2px 8px; border-radius: 3px; font-size: 10px; font-weight: 600; }
+.access-ro { background: #1a2f1a; color: #3fb950; padding: 2px 8px; border-radius: 3px; font-size: 10px; font-weight: 600; }
+.access-w1c { background: #3a2a1a; color: #d29922; padding: 2px 8px; border-radius: 3px; font-size: 10px; font-weight: 600; }
+.access-wo { background: #3a1a1a; color: #f85149; padding: 2px 8px; border-radius: 3px; font-size: 10px; font-weight: 600; }
+.memmap-section { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 20px; margin-bottom: 24px; }
+.memmap-section h2 { font-size: 18px; color: #58a6ff; margin-bottom: 14px; }
+.memmap-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.memmap-table th { background: #21262d; padding: 10px 14px; text-align: left; color: #8b949e; }
+.memmap-table td { padding: 10px 14px; border-bottom: 1px solid #21262d; }
+code { background: #21262d; padding: 1px 6px; border-radius: 3px; font-size: 12px; color: #79c0ff; }
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <h1>SoC DocFlow</h1>
+  <div class="subtitle">Generated Reference Manual<br>2026-06-06 21:36</div>
+  <div class="toc-chapter">
+    <span class="toc-ip">📋 Memory Map</span>
+    <a class="toc-reg" href="#memmap">System Memory Map</a>
+  </div>
+  <div class="toc-chapter"><span class="toc-ip">GPIO</span>
+  <a class="toc-reg" href="#PDOR">PDOR</a>
+  <a class="toc-reg" href="#PSOR">PSOR</a>
+  <a class="toc-reg" href="#PCOR">PCOR</a>
+  <a class="toc-reg" href="#PTOR">PTOR</a>
+  <a class="toc-reg" href="#PDIR">PDIR</a>
+  <a class="toc-reg" href="#PDDR">PDDR</a>
+  <a class="toc-reg" href="#PIDR">PIDR</a>
+</div>
+<div class="toc-chapter"><span class="toc-ip">UART</span>
+  <a class="toc-reg" href="#UART_BAUD1">UART_BAUD1</a>
+  <a class="toc-reg" href="#UART_BAUD2">UART_BAUD2</a>
+  <a class="toc-reg" href="#UART_CTRL">UART_CTRL</a>
+  <a class="toc-reg" href="#UART_STAT">UART_STAT</a>
+</div>
+<div class="toc-chapter"><span class="toc-ip">DMA</span>
+  <a class="toc-reg" href="#DMA_CR">DMA_CR</a>
+  <a class="toc-reg" href="#DMA_ES">DMA_ES</a>
+  <a class="toc-reg" href="#DMA_ERQ">DMA_ERQ</a>
+  <a class="toc-reg" href="#DMA_EEI">DMA_EEI</a>
+</div>
+<div class="toc-chapter"><span class="toc-ip">FlexCAN</span>
+  <a class="toc-reg" href="#MCR">MCR</a>
+  <a class="toc-reg" href="#CTRL1">CTRL1</a>
+  <a class="toc-reg" href="#TIMER">TIMER</a>
+  <a class="toc-reg" href="#RXMGMASK">RXMGMASK</a>
+  <a class="toc-reg" href="#RX14MASK">RX14MASK</a>
+  <a class="toc-reg" href="#RX15MASK">RX15MASK</a>
+  <a class="toc-reg" href="#ECR">ECR</a>
+  <a class="toc-reg" href="#ESR1">ESR1</a>
+  <a class="toc-reg" href="#MB_CS_0">MB_CS_0</a>
+</div>
+
+</nav>
+<main class="main">
+  <div class="page-header">
+    <h1>SoC Reference Manual</h1>
+    <div class="meta">Generated by SoC DocFlow Pipeline Demo | 2026-06-06 21:36 | 
+    24 registers from 4 IP blocks</div>
+  </div>
+
+  <div class="memmap-section" id="memmap">
+    <h2>System Memory Map</h2>
+    <table class="memmap-table">
+      <thead><tr><th>IP Spec</th><th>Instance</th><th>Base Address</th><th>Key Parameter</th></tr></thead>
+      <tbody><tr><td><strong></strong></td><td>GPIO_block_0</td><td><code>0x40040000</code></td><td>—</td></tr>
+<tr><td><strong></strong></td><td>UART_inst_0</td><td><code>0x40030000</code></td><td>—</td></tr>
+<tr><td><strong></strong></td><td>DMA_engine_0</td><td><code>0x40010000</code></td><td>32</td></tr>
+<tr><td><strong></strong></td><td>FlexCAN_core_0</td><td><code>0x40024000</code></td><td>64</td></tr>
+<tr><td><strong>IP_FlexCAN_SPEC</strong></td><td>FlexCAN_core_0</td><td><code>0x40024000</code></td><td>64</td></tr>
+<tr><td><strong>IP_FlexCAN_SPEC</strong></td><td>FlexCAN_core_1</td><td><code>0x40028000</code></td><td>32</td></tr>
+<tr><td><strong>IP_DMA_SPEC</strong></td><td>DMA_engine_0</td><td><code>0x40010000</code></td><td>32</td></tr>
+<tr><td><strong>IP_UART_SPEC</strong></td><td>UART_inst_0</td><td><code>0x40030000</code></td><td>—</td></tr>
+<tr><td><strong>IP_GPIO_SPEC</strong></td><td>GPIO_block_0</td><td><code>0x40040000</code></td><td>—</td></tr>
+<tr><td><strong>IP_DMA_SPEC</strong></td><td>DMA_engine_0</td><td><code>0x40010000</code></td><td>32</td></tr>
+<tr><td><strong>IP_GPIO_SPEC</strong></td><td>GPIO_block_0</td><td><code>0x40040000</code></td><td>—</td></tr>
+</tbody>
+    </table>
+  </div>
+
+  <h2 class="ip-heading">GPIO</h2>
+
+<div class="register-section" id="PDOR">
+  <h3>Port Data Output Register <span class="reg-name-badge">PDOR</span></h3>
+  <div class="reg-meta">
+    <span>Offset: <code>0x00</code></span>
+    <span>Size: 32 bits</span>
+    <span>Access: RW</span>
+    <span>Reset: <code>0x00000000</code></span>
+  </div>
+  <p class="reg-desc">Stores the logic levels driven on each GPIO output pin. Writing 1 drives the pin high; writing 0 drives it low.</p>
+  <div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="110" viewBox="0 0 760 110">
+<rect width="760" height="110" fill="#1e1e2e" rx="6"/>
+<text x="10" y="16" font-family="monospace" font-size="11" font-weight="bold" fill="#c9d1d9">PDOR — Port Data Output Register</text>
+<text x="31.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">31</text>
+<text x="53.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">30</text>
+<text x="76.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">29</text>
+<text x="98.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">28</text>
+<text x="121.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">27</text>
+<text x="143.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">26</text>
+<text x="166.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">25</text>
+<text x="188.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">24</text>
+<text x="211.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">23</text>
+<text x="233.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">22</text>
+<text x="256.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">21</text>
+<text x="278.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">20</text>
+<text x="301.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">19</text>
+<text x="323.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">18</text>
+<text x="346.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">17</text>
+<text x="368.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">16</text>
+<text x="391.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">15</text>
+<text x="413.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">14</text>
+<text x="436.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">13</text>
+<text x="458.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">12</text>
+<text x="481.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">11</text>
+<text x="503.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">10</text>
+<text x="526.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">9</text>
+<text x="548.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">8</text>
+<text x="571.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">7</text>
+<text x="593.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">6</text>
+<text x="616.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">5</text>
+<text x="638.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">4</text>
+<text x="661.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">3</text>
+<text x="683.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">2</text>
+<text x="706.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">1</text>
+<text x="728.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">0</text>
+<rect x="20" y="36" width="720" height="40" fill="#30363d" rx="2"/>
+<rect x="20.0" y="36" width="720.0" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="380.0" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">PDO</text>
+<text x="380.0" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<text x="20" y="98" font-size="8" fill="#6e7681">Offset: 0x00  |  Reset: 0x00000000  |  ■ RW (Purple)  ■ RO (Green)  ■ W1C (Amber)  ■ WO (Red)  □ Reserved (Grey)</text>
+</svg></div>
+  <table class="reg-table">
+    <thead><tr><th>Field</th><th>Bits</th><th>Access</th><th>Reset</th><th>Description</th></tr></thead>
+    <tbody><tr><td><strong>PDO</strong></td><td>31:0</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Port Data Output — Bit N controls pin N output level</td></tr>
+</tbody>
+  </table>
+</div>
+
+<div class="register-section" id="PSOR">
+  <h3>Port Set Output Register <span class="reg-name-badge">PSOR</span></h3>
+  <div class="reg-meta">
+    <span>Offset: <code>0x04</code></span>
+    <span>Size: 32 bits</span>
+    <span>Access: WO</span>
+    <span>Reset: <code>0x00000000</code></span>
+  </div>
+  <p class="reg-desc">Writing 1 to a bit sets the corresponding output pin high. Writing 0 has no effect.</p>
+  <div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="110" viewBox="0 0 760 110">
+<rect width="760" height="110" fill="#1e1e2e" rx="6"/>
+<text x="10" y="16" font-family="monospace" font-size="11" font-weight="bold" fill="#c9d1d9">PSOR — Port Set Output Register</text>
+<text x="31.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">31</text>
+<text x="53.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">30</text>
+<text x="76.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">29</text>
+<text x="98.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">28</text>
+<text x="121.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">27</text>
+<text x="143.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">26</text>
+<text x="166.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">25</text>
+<text x="188.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">24</text>
+<text x="211.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">23</text>
+<text x="233.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">22</text>
+<text x="256.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">21</text>
+<text x="278.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">20</text>
+<text x="301.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">19</text>
+<text x="323.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">18</text>
+<text x="346.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">17</text>
+<text x="368.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">16</text>
+<text x="391.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">15</text>
+<text x="413.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">14</text>
+<text x="436.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">13</text>
+<text x="458.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">12</text>
+<text x="481.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">11</text>
+<text x="503.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">10</text>
+<text x="526.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">9</text>
+<text x="548.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">8</text>
+<text x="571.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">7</text>
+<text x="593.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">6</text>
+<text x="616.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">5</text>
+<text x="638.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">4</text>
+<text x="661.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">3</text>
+<text x="683.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">2</text>
+<text x="706.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">1</text>
+<text x="728.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">0</text>
+<rect x="20" y="36" width="720" height="40" fill="#30363d" rx="2"/>
+<rect x="20.0" y="36" width="720.0" height="40" fill="#dc2626" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="380.0" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">PTSO</text>
+<text x="380.0" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">WO</text>
+<text x="20" y="98" font-size="8" fill="#6e7681">Offset: 0x04  |  Reset: 0x00000000  |  ■ RW (Purple)  ■ RO (Green)  ■ W1C (Amber)  ■ WO (Red)  □ Reserved (Grey)</text>
+</svg></div>
+  <table class="reg-table">
+    <thead><tr><th>Field</th><th>Bits</th><th>Access</th><th>Reset</th><th>Description</th></tr></thead>
+    <tbody><tr><td><strong>PTSO</strong></td><td>31:0</td><td><span class="access-wo">WO</span></td><td>0x00000000</td><td>Port Set Output — Write 1 to set pin N high</td></tr>
+</tbody>
+  </table>
+</div>
+
+<div class="register-section" id="PCOR">
+  <h3>Port Clear Output Register <span class="reg-name-badge">PCOR</span></h3>
+  <div class="reg-meta">
+    <span>Offset: <code>0x08</code></span>
+    <span>Size: 32 bits</span>
+    <span>Access: WO</span>
+    <span>Reset: <code>0x00000000</code></span>
+  </div>
+  <p class="reg-desc">Writing 1 to a bit clears the corresponding output pin to low. Writing 0 has no effect.</p>
+  <div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="110" viewBox="0 0 760 110">
+<rect width="760" height="110" fill="#1e1e2e" rx="6"/>
+<text x="10" y="16" font-family="monospace" font-size="11" font-weight="bold" fill="#c9d1d9">PCOR — Port Clear Output Register</text>
+<text x="31.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">31</text>
+<text x="53.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">30</text>
+<text x="76.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">29</text>
+<text x="98.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">28</text>
+<text x="121.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">27</text>
+<text x="143.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">26</text>
+<text x="166.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">25</text>
+<text x="188.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">24</text>
+<text x="211.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">23</text>
+<text x="233.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">22</text>
+<text x="256.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">21</text>
+<text x="278.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">20</text>
+<text x="301.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">19</text>
+<text x="323.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">18</text>
+<text x="346.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">17</text>
+<text x="368.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">16</text>
+<text x="391.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">15</text>
+<text x="413.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">14</text>
+<text x="436.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">13</text>
+<text x="458.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">12</text>
+<text x="481.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">11</text>
+<text x="503.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">10</text>
+<text x="526.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">9</text>
+<text x="548.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">8</text>
+<text x="571.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">7</text>
+<text x="593.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">6</text>
+<text x="616.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">5</text>
+<text x="638.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">4</text>
+<text x="661.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">3</text>
+<text x="683.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">2</text>
+<text x="706.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">1</text>
+<text x="728.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">0</text>
+<rect x="20" y="36" width="720" height="40" fill="#30363d" rx="2"/>
+<rect x="20.0" y="36" width="720.0" height="40" fill="#dc2626" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="380.0" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">PTCO</text>
+<text x="380.0" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">WO</text>
+<text x="20" y="98" font-size="8" fill="#6e7681">Offset: 0x08  |  Reset: 0x00000000  |  ■ RW (Purple)  ■ RO (Green)  ■ W1C (Amber)  ■ WO (Red)  □ Reserved (Grey)</text>
+</svg></div>
+  <table class="reg-table">
+    <thead><tr><th>Field</th><th>Bits</th><th>Access</th><th>Reset</th><th>Description</th></tr></thead>
+    <tbody><tr><td><strong>PTCO</strong></td><td>31:0</td><td><span class="access-wo">WO</span></td><td>0x00000000</td><td>Port Clear Output — Write 1 to clear pin N to low</td></tr>
+</tbody>
+  </table>
+</div>
+
+<div class="register-section" id="PTOR">
+  <h3>Port Toggle Output Register <span class="reg-name-badge">PTOR</span></h3>
+  <div class="reg-meta">
+    <span>Offset: <code>0x0C</code></span>
+    <span>Size: 32 bits</span>
+    <span>Access: WO</span>
+    <span>Reset: <code>0x00000000</code></span>
+  </div>
+  <p class="reg-desc">Writing 1 to a bit toggles the corresponding output pin. Writing 0 has no effect.</p>
+  <div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="110" viewBox="0 0 760 110">
+<rect width="760" height="110" fill="#1e1e2e" rx="6"/>
+<text x="10" y="16" font-family="monospace" font-size="11" font-weight="bold" fill="#c9d1d9">PTOR — Port Toggle Output Register</text>
+<text x="31.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">31</text>
+<text x="53.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">30</text>
+<text x="76.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">29</text>
+<text x="98.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">28</text>
+<text x="121.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">27</text>
+<text x="143.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">26</text>
+<text x="166.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">25</text>
+<text x="188.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">24</text>
+<text x="211.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">23</text>
+<text x="233.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">22</text>
+<text x="256.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">21</text>
+<text x="278.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">20</text>
+<text x="301.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">19</text>
+<text x="323.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">18</text>
+<text x="346.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">17</text>
+<text x="368.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">16</text>
+<text x="391.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">15</text>
+<text x="413.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">14</text>
+<text x="436.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">13</text>
+<text x="458.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">12</text>
+<text x="481.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">11</text>
+<text x="503.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">10</text>
+<text x="526.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">9</text>
+<text x="548.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">8</text>
+<text x="571.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">7</text>
+<text x="593.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">6</text>
+<text x="616.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">5</text>
+<text x="638.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">4</text>
+<text x="661.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">3</text>
+<text x="683.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">2</text>
+<text x="706.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">1</text>
+<text x="728.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">0</text>
+<rect x="20" y="36" width="720" height="40" fill="#30363d" rx="2"/>
+<rect x="20.0" y="36" width="720.0" height="40" fill="#dc2626" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="380.0" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">PTTO</text>
+<text x="380.0" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">WO</text>
+<text x="20" y="98" font-size="8" fill="#6e7681">Offset: 0x0C  |  Reset: 0x00000000  |  ■ RW (Purple)  ■ RO (Green)  ■ W1C (Amber)  ■ WO (Red)  □ Reserved (Grey)</text>
+</svg></div>
+  <table class="reg-table">
+    <thead><tr><th>Field</th><th>Bits</th><th>Access</th><th>Reset</th><th>Description</th></tr></thead>
+    <tbody><tr><td><strong>PTTO</strong></td><td>31:0</td><td><span class="access-wo">WO</span></td><td>0x00000000</td><td>Port Toggle Output — Write 1 to toggle pin N</td></tr>
+</tbody>
+  </table>
+</div>
+
+<div class="register-section" id="PDIR">
+  <h3>Port Data Input Register <span class="reg-name-badge">PDIR</span></h3>
+  <div class="reg-meta">
+    <span>Offset: <code>0x10</code></span>
+    <span>Size: 32 bits</span>
+    <span>Access: RO</span>
+    <span>Reset: <code>0x00000000</code></span>
+  </div>
+  <p class="reg-desc">Reflects the current logic level on each GPIO pin regardless of direction setting.</p>
+  <div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="110" viewBox="0 0 760 110">
+<rect width="760" height="110" fill="#1e1e2e" rx="6"/>
+<text x="10" y="16" font-family="monospace" font-size="11" font-weight="bold" fill="#c9d1d9">PDIR — Port Data Input Register</text>
+<text x="31.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">31</text>
+<text x="53.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">30</text>
+<text x="76.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">29</text>
+<text x="98.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">28</text>
+<text x="121.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">27</text>
+<text x="143.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">26</text>
+<text x="166.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">25</text>
+<text x="188.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">24</text>
+<text x="211.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">23</text>
+<text x="233.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">22</text>
+<text x="256.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">21</text>
+<text x="278.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">20</text>
+<text x="301.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">19</text>
+<text x="323.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">18</text>
+<text x="346.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">17</text>
+<text x="368.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">16</text>
+<text x="391.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">15</text>
+<text x="413.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">14</text>
+<text x="436.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">13</text>
+<text x="458.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">12</text>
+<text x="481.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">11</text>
+<text x="503.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">10</text>
+<text x="526.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">9</text>
+<text x="548.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">8</text>
+<text x="571.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">7</text>
+<text x="593.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">6</text>
+<text x="616.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">5</text>
+<text x="638.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">4</text>
+<text x="661.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">3</text>
+<text x="683.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">2</text>
+<text x="706.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">1</text>
+<text x="728.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">0</text>
+<rect x="20" y="36" width="720" height="40" fill="#30363d" rx="2"/>
+<rect x="20.0" y="36" width="720.0" height="40" fill="#059669" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="380.0" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">PDI</text>
+<text x="380.0" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RO</text>
+<text x="20" y="98" font-size="8" fill="#6e7681">Offset: 0x10  |  Reset: 0x00000000  |  ■ RW (Purple)  ■ RO (Green)  ■ W1C (Amber)  ■ WO (Red)  □ Reserved (Grey)</text>
+</svg></div>
+  <table class="reg-table">
+    <thead><tr><th>Field</th><th>Bits</th><th>Access</th><th>Reset</th><th>Description</th></tr></thead>
+    <tbody><tr><td><strong>PDI</strong></td><td>31:0</td><td><span class="access-ro">RO</span></td><td>0x00000000</td><td>Port Data Input — Bit N reflects current level on pin N</td></tr>
+</tbody>
+  </table>
+</div>
+
+<div class="register-section" id="PDDR">
+  <h3>Port Data Direction Register <span class="reg-name-badge">PDDR</span></h3>
+  <div class="reg-meta">
+    <span>Offset: <code>0x14</code></span>
+    <span>Size: 32 bits</span>
+    <span>Access: RW</span>
+    <span>Reset: <code>0x00000000</code></span>
+  </div>
+  <p class="reg-desc">Controls the direction of each GPIO pin. 0 = input, 1 = output.</p>
+  <div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="110" viewBox="0 0 760 110">
+<rect width="760" height="110" fill="#1e1e2e" rx="6"/>
+<text x="10" y="16" font-family="monospace" font-size="11" font-weight="bold" fill="#c9d1d9">PDDR — Port Data Direction Register</text>
+<text x="31.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">31</text>
+<text x="53.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">30</text>
+<text x="76.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">29</text>
+<text x="98.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">28</text>
+<text x="121.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">27</text>
+<text x="143.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">26</text>
+<text x="166.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">25</text>
+<text x="188.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">24</text>
+<text x="211.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">23</text>
+<text x="233.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">22</text>
+<text x="256.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">21</text>
+<text x="278.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">20</text>
+<text x="301.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">19</text>
+<text x="323.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">18</text>
+<text x="346.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">17</text>
+<text x="368.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">16</text>
+<text x="391.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">15</text>
+<text x="413.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">14</text>
+<text x="436.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">13</text>
+<text x="458.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">12</text>
+<text x="481.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">11</text>
+<text x="503.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">10</text>
+<text x="526.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">9</text>
+<text x="548.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">8</text>
+<text x="571.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">7</text>
+<text x="593.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">6</text>
+<text x="616.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">5</text>
+<text x="638.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">4</text>
+<text x="661.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">3</text>
+<text x="683.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">2</text>
+<text x="706.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">1</text>
+<text x="728.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">0</text>
+<rect x="20" y="36" width="720" height="40" fill="#30363d" rx="2"/>
+<rect x="20.0" y="36" width="720.0" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="380.0" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">PDD</text>
+<text x="380.0" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<text x="20" y="98" font-size="8" fill="#6e7681">Offset: 0x14  |  Reset: 0x00000000  |  ■ RW (Purple)  ■ RO (Green)  ■ W1C (Amber)  ■ WO (Red)  □ Reserved (Grey)</text>
+</svg></div>
+  <table class="reg-table">
+    <thead><tr><th>Field</th><th>Bits</th><th>Access</th><th>Reset</th><th>Description</th></tr></thead>
+    <tbody><tr><td><strong>PDD</strong></td><td>31:0</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Port Data Direction — Bit N: 0 = input, 1 = output for pin N</td></tr>
+</tbody>
+  </table>
+</div>
+
+<div class="register-section" id="PIDR">
+  <h3>Port Input Disable Register <span class="reg-name-badge">PIDR</span></h3>
+  <div class="reg-meta">
+    <span>Offset: <code>0x18</code></span>
+    <span>Size: 32 bits</span>
+    <span>Access: RW</span>
+    <span>Reset: <code>0x00000000</code></span>
+  </div>
+  <p class="reg-desc">Disables the digital input path for each pin to reduce power consumption when used as analog input.</p>
+  <div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="110" viewBox="0 0 760 110">
+<rect width="760" height="110" fill="#1e1e2e" rx="6"/>
+<text x="10" y="16" font-family="monospace" font-size="11" font-weight="bold" fill="#c9d1d9">PIDR — Port Input Disable Register</text>
+<text x="31.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">31</text>
+<text x="53.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">30</text>
+<text x="76.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">29</text>
+<text x="98.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">28</text>
+<text x="121.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">27</text>
+<text x="143.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">26</text>
+<text x="166.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">25</text>
+<text x="188.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">24</text>
+<text x="211.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">23</text>
+<text x="233.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">22</text>
+<text x="256.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">21</text>
+<text x="278.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">20</text>
+<text x="301.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">19</text>
+<text x="323.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">18</text>
+<text x="346.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">17</text>
+<text x="368.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">16</text>
+<text x="391.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">15</text>
+<text x="413.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">14</text>
+<text x="436.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">13</text>
+<text x="458.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">12</text>
+<text x="481.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">11</text>
+<text x="503.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">10</text>
+<text x="526.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">9</text>
+<text x="548.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">8</text>
+<text x="571.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">7</text>
+<text x="593.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">6</text>
+<text x="616.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">5</text>
+<text x="638.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">4</text>
+<text x="661.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">3</text>
+<text x="683.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">2</text>
+<text x="706.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">1</text>
+<text x="728.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">0</text>
+<rect x="20" y="36" width="720" height="40" fill="#30363d" rx="2"/>
+<rect x="20.0" y="36" width="720.0" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="380.0" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">PID</text>
+<text x="380.0" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<text x="20" y="98" font-size="8" fill="#6e7681">Offset: 0x18  |  Reset: 0x00000000  |  ■ RW (Purple)  ■ RO (Green)  ■ W1C (Amber)  ■ WO (Red)  □ Reserved (Grey)</text>
+</svg></div>
+  <table class="reg-table">
+    <thead><tr><th>Field</th><th>Bits</th><th>Access</th><th>Reset</th><th>Description</th></tr></thead>
+    <tbody><tr><td><strong>PID</strong></td><td>31:0</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Port Input Disable — Bit N: 1 = disable digital input buffer for pin N</td></tr>
+</tbody>
+  </table>
+</div>
+<h2 class="ip-heading">UART</h2>
+
+<div class="register-section" id="UART_BAUD1">
+  <h3>Baud Rate Register High <span class="reg-name-badge">UART_BAUD1</span></h3>
+  <div class="reg-meta">
+    <span>Offset: <code>0x00</code></span>
+    <span>Size: 32 bits</span>
+    <span>Access: RW</span>
+    <span>Reset: <code>0x00000004</code></span>
+  </div>
+  <p class="reg-desc">Upper byte of the baud rate modulo divisor. Together with BAUD2 determines the baud rate.</p>
+  <div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="110" viewBox="0 0 760 110">
+<rect width="760" height="110" fill="#1e1e2e" rx="6"/>
+<text x="10" y="16" font-family="monospace" font-size="11" font-weight="bold" fill="#c9d1d9">UART_BAUD1 — Baud Rate Register High</text>
+<text x="31.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">31</text>
+<text x="53.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">30</text>
+<text x="76.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">29</text>
+<text x="98.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">28</text>
+<text x="121.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">27</text>
+<text x="143.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">26</text>
+<text x="166.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">25</text>
+<text x="188.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">24</text>
+<text x="211.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">23</text>
+<text x="233.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">22</text>
+<text x="256.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">21</text>
+<text x="278.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">20</text>
+<text x="301.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">19</text>
+<text x="323.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">18</text>
+<text x="346.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">17</text>
+<text x="368.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">16</text>
+<text x="391.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">15</text>
+<text x="413.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">14</text>
+<text x="436.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">13</text>
+<text x="458.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">12</text>
+<text x="481.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">11</text>
+<text x="503.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">10</text>
+<text x="526.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">9</text>
+<text x="548.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">8</text>
+<text x="571.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">7</text>
+<text x="593.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">6</text>
+<text x="616.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">5</text>
+<text x="638.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">4</text>
+<text x="661.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">3</text>
+<text x="683.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">2</text>
+<text x="706.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">1</text>
+<text x="728.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">0</text>
+<rect x="20" y="36" width="720" height="40" fill="#30363d" rx="2"/>
+<rect x="447.5" y="36" width="45.0" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="470.0" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">BOTHEDGE</text>
+<text x="470.0" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="492.5" y="36" width="67.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="526.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">SBNS</text>
+<text x="526.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="560.0" y="36" width="180.0" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="650.0" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">SBR</text>
+<text x="650.0" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<text x="20" y="98" font-size="8" fill="#6e7681">Offset: 0x00  |  Reset: 0x00000004  |  ■ RW (Purple)  ■ RO (Green)  ■ W1C (Amber)  ■ WO (Red)  □ Reserved (Grey)</text>
+</svg></div>
+  <table class="reg-table">
+    <thead><tr><th>Field</th><th>Bits</th><th>Access</th><th>Reset</th><th>Description</th></tr></thead>
+    <tbody><tr><td><strong>BOTHEDGE</strong></td><td>12:11</td><td><span class="access-rw">RW</span></td><td>0x00000004</td><td>Both Edge Sampling — 1: Sample on both rising and falling edges</td></tr>
+<tr><td><strong>SBNS</strong></td><td>10:8</td><td><span class="access-rw">RW</span></td><td>0x00000004</td><td>Stop Bit Number Select — 0: One stop bit, 1: Two stop bits</td></tr>
+<tr><td><strong>SBR</strong></td><td>7:0</td><td><span class="access-rw">RW</span></td><td>0x00000004</td><td>Baud Rate Modulo Divisor — High 8 bits of 13-bit divisor</td></tr>
+</tbody>
+  </table>
+</div>
+
+<div class="register-section" id="UART_BAUD2">
+  <h3>Baud Rate Register Low <span class="reg-name-badge">UART_BAUD2</span></h3>
+  <div class="reg-meta">
+    <span>Offset: <code>0x04</code></span>
+    <span>Size: 32 bits</span>
+    <span>Access: RW</span>
+    <span>Reset: <code>0x00000000</code></span>
+  </div>
+  <p class="reg-desc">Lower 5 bits of the baud rate modulo divisor.</p>
+  <div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="110" viewBox="0 0 760 110">
+<rect width="760" height="110" fill="#1e1e2e" rx="6"/>
+<text x="10" y="16" font-family="monospace" font-size="11" font-weight="bold" fill="#c9d1d9">UART_BAUD2 — Baud Rate Register Low</text>
+<text x="31.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">31</text>
+<text x="53.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">30</text>
+<text x="76.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">29</text>
+<text x="98.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">28</text>
+<text x="121.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">27</text>
+<text x="143.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">26</text>
+<text x="166.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">25</text>
+<text x="188.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">24</text>
+<text x="211.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">23</text>
+<text x="233.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">22</text>
+<text x="256.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">21</text>
+<text x="278.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">20</text>
+<text x="301.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">19</text>
+<text x="323.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">18</text>
+<text x="346.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">17</text>
+<text x="368.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">16</text>
+<text x="391.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">15</text>
+<text x="413.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">14</text>
+<text x="436.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">13</text>
+<text x="458.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">12</text>
+<text x="481.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">11</text>
+<text x="503.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">10</text>
+<text x="526.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">9</text>
+<text x="548.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">8</text>
+<text x="571.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">7</text>
+<text x="593.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">6</text>
+<text x="616.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">5</text>
+<text x="638.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">4</text>
+<text x="661.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">3</text>
+<text x="683.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">2</text>
+<text x="706.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">1</text>
+<text x="728.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">0</text>
+<rect x="20" y="36" width="720" height="40" fill="#30363d" rx="2"/>
+<rect x="627.5" y="36" width="112.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="683.8" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">SBR</text>
+<text x="683.8" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<text x="20" y="98" font-size="8" fill="#6e7681">Offset: 0x04  |  Reset: 0x00000000  |  ■ RW (Purple)  ■ RO (Green)  ■ W1C (Amber)  ■ WO (Red)  □ Reserved (Grey)</text>
+</svg></div>
+  <table class="reg-table">
+    <thead><tr><th>Field</th><th>Bits</th><th>Access</th><th>Reset</th><th>Description</th></tr></thead>
+    <tbody><tr><td><strong>SBR</strong></td><td>4:0</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Baud Rate Modulo Divisor — Low 5 bits of 13-bit divisor</td></tr>
+</tbody>
+  </table>
+</div>
+
+<div class="register-section" id="UART_CTRL">
+  <h3>UART Control Register <span class="reg-name-badge">UART_CTRL</span></h3>
+  <div class="reg-meta">
+    <span>Offset: <code>0x08</code></span>
+    <span>Size: 32 bits</span>
+    <span>Access: RW</span>
+    <span>Reset: <code>0x00000000</code></span>
+  </div>
+  <p class="reg-desc">Controls UART transmitter and receiver enable, parity, and interrupt enables.</p>
+  <div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="110" viewBox="0 0 760 110">
+<rect width="760" height="110" fill="#1e1e2e" rx="6"/>
+<text x="10" y="16" font-family="monospace" font-size="11" font-weight="bold" fill="#c9d1d9">UART_CTRL — UART Control Register</text>
+<text x="31.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">31</text>
+<text x="53.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">30</text>
+<text x="76.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">29</text>
+<text x="98.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">28</text>
+<text x="121.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">27</text>
+<text x="143.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">26</text>
+<text x="166.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">25</text>
+<text x="188.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">24</text>
+<text x="211.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">23</text>
+<text x="233.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">22</text>
+<text x="256.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">21</text>
+<text x="278.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">20</text>
+<text x="301.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">19</text>
+<text x="323.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">18</text>
+<text x="346.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">17</text>
+<text x="368.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">16</text>
+<text x="391.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">15</text>
+<text x="413.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">14</text>
+<text x="436.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">13</text>
+<text x="458.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">12</text>
+<text x="481.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">11</text>
+<text x="503.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">10</text>
+<text x="526.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">9</text>
+<text x="548.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">8</text>
+<text x="571.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">7</text>
+<text x="593.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">6</text>
+<text x="616.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">5</text>
+<text x="638.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">4</text>
+<text x="661.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">3</text>
+<text x="683.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">2</text>
+<text x="706.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">1</text>
+<text x="728.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">0</text>
+<rect x="20" y="36" width="720" height="40" fill="#30363d" rx="2"/>
+<rect x="20.0" y="36" width="22.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="31.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">R8T9</text>
+<text x="31.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="200.0" y="36" width="22.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="211.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">TIE</text>
+<text x="211.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="222.5" y="36" width="22.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="233.8" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">TCIE</text>
+<text x="233.8" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="245.0" y="36" width="22.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="256.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">RIE</text>
+<text x="256.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="290.0" y="36" width="22.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="301.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">TE</text>
+<text x="301.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="312.5" y="36" width="22.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="323.8" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">RE</text>
+<text x="323.8" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="492.5" y="36" width="22.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="503.8" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">PE</text>
+<text x="503.8" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="515.0" y="36" width="22.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="526.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">PT</text>
+<text x="526.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<text x="20" y="98" font-size="8" fill="#6e7681">Offset: 0x08  |  Reset: 0x00000000  |  ■ RW (Purple)  ■ RO (Green)  ■ W1C (Amber)  ■ WO (Red)  □ Reserved (Grey)</text>
+</svg></div>
+  <table class="reg-table">
+    <thead><tr><th>Field</th><th>Bits</th><th>Access</th><th>Reset</th><th>Description</th></tr></thead>
+    <tbody><tr><td><strong>R8T9</strong></td><td>31:31</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Receive Bit 8 / Transmit Bit 9 — 9-bit mode data bit</td></tr>
+<tr><td><strong>TIE</strong></td><td>23:23</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Transmit Interrupt Enable</td></tr>
+<tr><td><strong>TCIE</strong></td><td>22:22</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Transmission Complete Interrupt Enable</td></tr>
+<tr><td><strong>RIE</strong></td><td>21:21</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Receiver Interrupt Enable</td></tr>
+<tr><td><strong>TE</strong></td><td>19:19</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Transmitter Enable</td></tr>
+<tr><td><strong>RE</strong></td><td>18:18</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Receiver Enable</td></tr>
+<tr><td><strong>PE</strong></td><td>10:10</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Parity Enable</td></tr>
+<tr><td><strong>PT</strong></td><td>9:9</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Parity Type — 0: Even, 1: Odd</td></tr>
+</tbody>
+  </table>
+</div>
+
+<div class="register-section" id="UART_STAT">
+  <h3>UART Status Register <span class="reg-name-badge">UART_STAT</span></h3>
+  <div class="reg-meta">
+    <span>Offset: <code>0x0C</code></span>
+    <span>Size: 32 bits</span>
+    <span>Access: RO</span>
+    <span>Reset: <code>0x00C00000</code></span>
+  </div>
+  <p class="reg-desc">Reflects the current status of the UART transmitter and receiver.</p>
+  <div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="110" viewBox="0 0 760 110">
+<rect width="760" height="110" fill="#1e1e2e" rx="6"/>
+<text x="10" y="16" font-family="monospace" font-size="11" font-weight="bold" fill="#c9d1d9">UART_STAT — UART Status Register</text>
+<text x="31.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">31</text>
+<text x="53.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">30</text>
+<text x="76.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">29</text>
+<text x="98.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">28</text>
+<text x="121.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">27</text>
+<text x="143.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">26</text>
+<text x="166.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">25</text>
+<text x="188.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">24</text>
+<text x="211.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">23</text>
+<text x="233.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">22</text>
+<text x="256.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">21</text>
+<text x="278.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">20</text>
+<text x="301.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">19</text>
+<text x="323.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">18</text>
+<text x="346.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">17</text>
+<text x="368.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">16</text>
+<text x="391.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">15</text>
+<text x="413.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">14</text>
+<text x="436.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">13</text>
+<text x="458.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">12</text>
+<text x="481.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">11</text>
+<text x="503.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">10</text>
+<text x="526.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">9</text>
+<text x="548.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">8</text>
+<text x="571.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">7</text>
+<text x="593.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">6</text>
+<text x="616.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">5</text>
+<text x="638.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">4</text>
+<text x="661.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">3</text>
+<text x="683.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">2</text>
+<text x="706.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">1</text>
+<text x="728.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">0</text>
+<rect x="20" y="36" width="720" height="40" fill="#30363d" rx="2"/>
+<rect x="20.0" y="36" width="22.5" height="40" fill="#059669" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="31.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">TDRE</text>
+<text x="31.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RO</text>
+<rect x="42.5" y="36" width="22.5" height="40" fill="#059669" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="53.8" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">TC</text>
+<text x="53.8" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RO</text>
+<rect x="65.0" y="36" width="22.5" height="40" fill="#059669" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="76.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">RDRF</text>
+<text x="76.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RO</text>
+<rect x="87.5" y="36" width="22.5" height="40" fill="#d97706" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="98.8" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">IDLE</text>
+<text x="98.8" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">W1C</text>
+<rect x="110.0" y="36" width="22.5" height="40" fill="#d97706" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="121.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">OR</text>
+<text x="121.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">W1C</text>
+<rect x="132.5" y="36" width="22.5" height="40" fill="#d97706" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="143.8" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">NF</text>
+<text x="143.8" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">W1C</text>
+<rect x="155.0" y="36" width="22.5" height="40" fill="#d97706" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="166.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">FE</text>
+<text x="166.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">W1C</text>
+<rect x="177.5" y="36" width="22.5" height="40" fill="#d97706" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="188.8" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">PF</text>
+<text x="188.8" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">W1C</text>
+<text x="20" y="98" font-size="8" fill="#6e7681">Offset: 0x0C  |  Reset: 0x00C00000  |  ■ RW (Purple)  ■ RO (Green)  ■ W1C (Amber)  ■ WO (Red)  □ Reserved (Grey)</text>
+</svg></div>
+  <table class="reg-table">
+    <thead><tr><th>Field</th><th>Bits</th><th>Access</th><th>Reset</th><th>Description</th></tr></thead>
+    <tbody><tr><td><strong>TDRE</strong></td><td>31:31</td><td><span class="access-ro">RO</span></td><td>0x00C00000</td><td>Transmit Data Register Empty — 1: Transmit buffer ready for new data</td></tr>
+<tr><td><strong>TC</strong></td><td>30:30</td><td><span class="access-ro">RO</span></td><td>0x00C00000</td><td>Transmission Complete — 1: No transmission in progress</td></tr>
+<tr><td><strong>RDRF</strong></td><td>29:29</td><td><span class="access-ro">RO</span></td><td>0x00C00000</td><td>Receive Data Register Full — 1: Received data available</td></tr>
+<tr><td><strong>IDLE</strong></td><td>28:28</td><td><span class="access-w1c">W1C</span></td><td>0x00C00000</td><td>Idle Line Flag — 1: Idle line detected</td></tr>
+<tr><td><strong>OR</strong></td><td>27:27</td><td><span class="access-w1c">W1C</span></td><td>0x00C00000</td><td>Receiver Overrun Flag</td></tr>
+<tr><td><strong>NF</strong></td><td>26:26</td><td><span class="access-w1c">W1C</span></td><td>0x00C00000</td><td>Noise Flag</td></tr>
+<tr><td><strong>FE</strong></td><td>25:25</td><td><span class="access-w1c">W1C</span></td><td>0x00C00000</td><td>Framing Error Flag</td></tr>
+<tr><td><strong>PF</strong></td><td>24:24</td><td><span class="access-w1c">W1C</span></td><td>0x00C00000</td><td>Parity Error Flag</td></tr>
+</tbody>
+  </table>
+</div>
+<h2 class="ip-heading">DMA</h2>
+
+<div class="register-section" id="DMA_CR">
+  <h3>DMA Control Register <span class="reg-name-badge">DMA_CR</span></h3>
+  <div class="reg-meta">
+    <span>Offset: <code>0x00</code></span>
+    <span>Size: 32 bits</span>
+    <span>Access: RW</span>
+    <span>Reset: <code>0x00000000</code></span>
+  </div>
+  <p class="reg-desc">Global DMA engine control register. Controls enable, halt, debug, and arbitration mode.</p>
+  <div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="110" viewBox="0 0 760 110">
+<rect width="760" height="110" fill="#1e1e2e" rx="6"/>
+<text x="10" y="16" font-family="monospace" font-size="11" font-weight="bold" fill="#c9d1d9">DMA_CR — DMA Control Register</text>
+<text x="31.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">31</text>
+<text x="53.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">30</text>
+<text x="76.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">29</text>
+<text x="98.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">28</text>
+<text x="121.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">27</text>
+<text x="143.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">26</text>
+<text x="166.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">25</text>
+<text x="188.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">24</text>
+<text x="211.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">23</text>
+<text x="233.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">22</text>
+<text x="256.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">21</text>
+<text x="278.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">20</text>
+<text x="301.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">19</text>
+<text x="323.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">18</text>
+<text x="346.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">17</text>
+<text x="368.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">16</text>
+<text x="391.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">15</text>
+<text x="413.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">14</text>
+<text x="436.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">13</text>
+<text x="458.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">12</text>
+<text x="481.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">11</text>
+<text x="503.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">10</text>
+<text x="526.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">9</text>
+<text x="548.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">8</text>
+<text x="571.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">7</text>
+<text x="593.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">6</text>
+<text x="616.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">5</text>
+<text x="638.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">4</text>
+<text x="661.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">3</text>
+<text x="683.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">2</text>
+<text x="706.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">1</text>
+<text x="728.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">0</text>
+<rect x="20" y="36" width="720" height="40" fill="#30363d" rx="2"/>
+<rect x="20.0" y="36" width="22.5" height="40" fill="#059669" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="31.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">ACTIVE</text>
+<text x="31.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RO</text>
+<rect x="42.5" y="36" width="22.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="53.8" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">HALT</text>
+<text x="53.8" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="560.0" y="36" width="22.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="571.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">EMLM</text>
+<text x="571.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="582.5" y="36" width="22.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="593.8" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">CLM</text>
+<text x="593.8" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="605.0" y="36" width="22.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="616.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">HALT_ERR</text>
+<text x="616.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="627.5" y="36" width="22.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="638.8" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">HOE</text>
+<text x="638.8" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="672.5" y="36" width="22.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="683.8" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">ERCA</text>
+<text x="683.8" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="695.0" y="36" width="22.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="706.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">EDBG</text>
+<text x="706.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<text x="20" y="98" font-size="8" fill="#6e7681">Offset: 0x00  |  Reset: 0x00000000  |  ■ RW (Purple)  ■ RO (Green)  ■ W1C (Amber)  ■ WO (Red)  □ Reserved (Grey)</text>
+</svg></div>
+  <table class="reg-table">
+    <thead><tr><th>Field</th><th>Bits</th><th>Access</th><th>Reset</th><th>Description</th></tr></thead>
+    <tbody><tr><td><strong>ACTIVE</strong></td><td>31:31</td><td><span class="access-ro">RO</span></td><td>0x00000000</td><td>DMA Active — 1: DMA is executing a transfer</td></tr>
+<tr><td><strong>HALT</strong></td><td>30:30</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Halt DMA Operations — 1: Stall new channel activations</td></tr>
+<tr><td><strong>EMLM</strong></td><td>7:7</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Enable Minor Loop Mapping — 1: Enable minor loop offset feature</td></tr>
+<tr><td><strong>CLM</strong></td><td>6:6</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Continuous Link Mode — 1: Automatically activate next channel after minor loop</td></tr>
+<tr><td><strong>HALT_ERR</strong></td><td>5:5</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Halt on Error — 1: Halt DMA operations when an error is detected</td></tr>
+<tr><td><strong>HOE</strong></td><td>4:4</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Halt on Error — 1: Halt DMA operations when an error is detected</td></tr>
+<tr><td><strong>ERCA</strong></td><td>2:2</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Enable Round Robin Channel Arbitration</td></tr>
+<tr><td><strong>EDBG</strong></td><td>1:1</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Enable Debug — 1: Stall DMA when in debug mode</td></tr>
+</tbody>
+  </table>
+</div>
+
+<div class="register-section" id="DMA_ES">
+  <h3>DMA Error Status Register <span class="reg-name-badge">DMA_ES</span></h3>
+  <div class="reg-meta">
+    <span>Offset: <code>0x04</code></span>
+    <span>Size: 32 bits</span>
+    <span>Access: RO</span>
+    <span>Reset: <code>0x00000000</code></span>
+  </div>
+  <p class="reg-desc">Reports the source and type of the most recent DMA error.</p>
+  <div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="110" viewBox="0 0 760 110">
+<rect width="760" height="110" fill="#1e1e2e" rx="6"/>
+<text x="10" y="16" font-family="monospace" font-size="11" font-weight="bold" fill="#c9d1d9">DMA_ES — DMA Error Status Register</text>
+<text x="31.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">31</text>
+<text x="53.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">30</text>
+<text x="76.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">29</text>
+<text x="98.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">28</text>
+<text x="121.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">27</text>
+<text x="143.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">26</text>
+<text x="166.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">25</text>
+<text x="188.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">24</text>
+<text x="211.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">23</text>
+<text x="233.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">22</text>
+<text x="256.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">21</text>
+<text x="278.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">20</text>
+<text x="301.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">19</text>
+<text x="323.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">18</text>
+<text x="346.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">17</text>
+<text x="368.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">16</text>
+<text x="391.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">15</text>
+<text x="413.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">14</text>
+<text x="436.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">13</text>
+<text x="458.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">12</text>
+<text x="481.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">11</text>
+<text x="503.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">10</text>
+<text x="526.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">9</text>
+<text x="548.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">8</text>
+<text x="571.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">7</text>
+<text x="593.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">6</text>
+<text x="616.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">5</text>
+<text x="638.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">4</text>
+<text x="661.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">3</text>
+<text x="683.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">2</text>
+<text x="706.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">1</text>
+<text x="728.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">0</text>
+<rect x="20" y="36" width="720" height="40" fill="#30363d" rx="2"/>
+<rect x="20.0" y="36" width="22.5" height="40" fill="#059669" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="31.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">VLD</text>
+<text x="31.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RO</text>
+<rect x="357.5" y="36" width="22.5" height="40" fill="#059669" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="368.8" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">ECX</text>
+<text x="368.8" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RO</text>
+<rect x="402.5" y="36" width="22.5" height="40" fill="#059669" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="413.8" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">CPE</text>
+<text x="413.8" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RO</text>
+<rect x="425.0" y="36" width="22.5" height="40" fill="#059669" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="436.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">SAE</text>
+<text x="436.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RO</text>
+<rect x="447.5" y="36" width="22.5" height="40" fill="#059669" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="458.8" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">SOE</text>
+<text x="458.8" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RO</text>
+<rect x="470.0" y="36" width="22.5" height="40" fill="#059669" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="481.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">DAE</text>
+<text x="481.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RO</text>
+<rect x="492.5" y="36" width="22.5" height="40" fill="#059669" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="503.8" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">DOE</text>
+<text x="503.8" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RO</text>
+<rect x="515.0" y="36" width="22.5" height="40" fill="#059669" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="526.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">NCE</text>
+<text x="526.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RO</text>
+<rect x="537.5" y="36" width="22.5" height="40" fill="#059669" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="548.8" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">SGE</text>
+<text x="548.8" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RO</text>
+<rect x="560.0" y="36" width="22.5" height="40" fill="#059669" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="571.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">SBE</text>
+<text x="571.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RO</text>
+<rect x="582.5" y="36" width="22.5" height="40" fill="#059669" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="593.8" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">DBE</text>
+<text x="593.8" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RO</text>
+<rect x="627.5" y="36" width="112.5" height="40" fill="#059669" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="683.8" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">ERRCHN</text>
+<text x="683.8" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RO</text>
+<text x="20" y="98" font-size="8" fill="#6e7681">Offset: 0x04  |  Reset: 0x00000000  |  ■ RW (Purple)  ■ RO (Green)  ■ W1C (Amber)  ■ WO (Red)  □ Reserved (Grey)</text>
+</svg></div>
+  <table class="reg-table">
+    <thead><tr><th>Field</th><th>Bits</th><th>Access</th><th>Reset</th><th>Description</th></tr></thead>
+    <tbody><tr><td><strong>VLD</strong></td><td>31:31</td><td><span class="access-ro">RO</span></td><td>0x00000000</td><td>Logical OR of all ERR status bits — 1: Error has occurred</td></tr>
+<tr><td><strong>ECX</strong></td><td>16:16</td><td><span class="access-ro">RO</span></td><td>0x00000000</td><td>Transfer Cancelled — 1: Last transfer was cancelled</td></tr>
+<tr><td><strong>CPE</strong></td><td>14:14</td><td><span class="access-ro">RO</span></td><td>0x00000000</td><td>Channel Priority Error</td></tr>
+<tr><td><strong>SAE</strong></td><td>13:13</td><td><span class="access-ro">RO</span></td><td>0x00000000</td><td>Source Address Error</td></tr>
+<tr><td><strong>SOE</strong></td><td>12:12</td><td><span class="access-ro">RO</span></td><td>0x00000000</td><td>Source Offset Error</td></tr>
+<tr><td><strong>DAE</strong></td><td>11:11</td><td><span class="access-ro">RO</span></td><td>0x00000000</td><td>Destination Address Error</td></tr>
+<tr><td><strong>DOE</strong></td><td>10:10</td><td><span class="access-ro">RO</span></td><td>0x00000000</td><td>Destination Offset Error</td></tr>
+<tr><td><strong>NCE</strong></td><td>9:9</td><td><span class="access-ro">RO</span></td><td>0x00000000</td><td>NBYTES/CITER Configuration Error</td></tr>
+<tr><td><strong>SGE</strong></td><td>8:8</td><td><span class="access-ro">RO</span></td><td>0x00000000</td><td>Scatter/Gather Configuration Error</td></tr>
+<tr><td><strong>SBE</strong></td><td>7:7</td><td><span class="access-ro">RO</span></td><td>0x00000000</td><td>Source Bus Error</td></tr>
+<tr><td><strong>DBE</strong></td><td>6:6</td><td><span class="access-ro">RO</span></td><td>0x00000000</td><td>Destination Bus Error</td></tr>
+<tr><td><strong>ERRCHN</strong></td><td>4:0</td><td><span class="access-ro">RO</span></td><td>0x00000000</td><td>Error Channel Number — Channel that generated the error</td></tr>
+</tbody>
+  </table>
+</div>
+
+<div class="register-section" id="DMA_ERQ">
+  <h3>DMA Enable Request Register <span class="reg-name-badge">DMA_ERQ</span></h3>
+  <div class="reg-meta">
+    <span>Offset: <code>0x08</code></span>
+    <span>Size: 32 bits</span>
+    <span>Access: RW</span>
+    <span>Reset: <code>0x00000000</code></span>
+  </div>
+  <p class="reg-desc">Enables hardware service requests for each DMA channel. Bit N enables channel N.</p>
+  <div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="110" viewBox="0 0 760 110">
+<rect width="760" height="110" fill="#1e1e2e" rx="6"/>
+<text x="10" y="16" font-family="monospace" font-size="11" font-weight="bold" fill="#c9d1d9">DMA_ERQ — DMA Enable Request Register</text>
+<text x="31.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">31</text>
+<text x="53.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">30</text>
+<text x="76.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">29</text>
+<text x="98.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">28</text>
+<text x="121.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">27</text>
+<text x="143.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">26</text>
+<text x="166.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">25</text>
+<text x="188.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">24</text>
+<text x="211.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">23</text>
+<text x="233.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">22</text>
+<text x="256.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">21</text>
+<text x="278.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">20</text>
+<text x="301.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">19</text>
+<text x="323.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">18</text>
+<text x="346.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">17</text>
+<text x="368.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">16</text>
+<text x="391.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">15</text>
+<text x="413.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">14</text>
+<text x="436.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">13</text>
+<text x="458.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">12</text>
+<text x="481.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">11</text>
+<text x="503.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">10</text>
+<text x="526.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">9</text>
+<text x="548.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">8</text>
+<text x="571.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">7</text>
+<text x="593.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">6</text>
+<text x="616.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">5</text>
+<text x="638.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">4</text>
+<text x="661.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">3</text>
+<text x="683.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">2</text>
+<text x="706.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">1</text>
+<text x="728.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">0</text>
+<rect x="20" y="36" width="720" height="40" fill="#30363d" rx="2"/>
+<rect x="20.0" y="36" width="720.0" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="380.0" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">ERQ</text>
+<text x="380.0" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<text x="20" y="98" font-size="8" fill="#6e7681">Offset: 0x08  |  Reset: 0x00000000  |  ■ RW (Purple)  ■ RO (Green)  ■ W1C (Amber)  ■ WO (Red)  □ Reserved (Grey)</text>
+</svg></div>
+  <table class="reg-table">
+    <thead><tr><th>Field</th><th>Bits</th><th>Access</th><th>Reset</th><th>Description</th></tr></thead>
+    <tbody><tr><td><strong>ERQ</strong></td><td>31:0</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Enable DMA Request — Bit N: 1 = enable hardware service request for channel N</td></tr>
+</tbody>
+  </table>
+</div>
+
+<div class="register-section" id="DMA_EEI">
+  <h3>DMA Enable Error Interrupt Register <span class="reg-name-badge">DMA_EEI</span></h3>
+  <div class="reg-meta">
+    <span>Offset: <code>0x0C</code></span>
+    <span>Size: 32 bits</span>
+    <span>Access: RW</span>
+    <span>Reset: <code>0x00000000</code></span>
+  </div>
+  <p class="reg-desc">Enables error interrupt generation for each DMA channel.</p>
+  <div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="110" viewBox="0 0 760 110">
+<rect width="760" height="110" fill="#1e1e2e" rx="6"/>
+<text x="10" y="16" font-family="monospace" font-size="11" font-weight="bold" fill="#c9d1d9">DMA_EEI — DMA Enable Error Interrupt Register</text>
+<text x="31.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">31</text>
+<text x="53.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">30</text>
+<text x="76.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">29</text>
+<text x="98.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">28</text>
+<text x="121.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">27</text>
+<text x="143.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">26</text>
+<text x="166.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">25</text>
+<text x="188.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">24</text>
+<text x="211.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">23</text>
+<text x="233.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">22</text>
+<text x="256.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">21</text>
+<text x="278.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">20</text>
+<text x="301.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">19</text>
+<text x="323.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">18</text>
+<text x="346.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">17</text>
+<text x="368.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">16</text>
+<text x="391.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">15</text>
+<text x="413.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">14</text>
+<text x="436.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">13</text>
+<text x="458.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">12</text>
+<text x="481.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">11</text>
+<text x="503.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">10</text>
+<text x="526.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">9</text>
+<text x="548.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">8</text>
+<text x="571.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">7</text>
+<text x="593.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">6</text>
+<text x="616.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">5</text>
+<text x="638.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">4</text>
+<text x="661.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">3</text>
+<text x="683.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">2</text>
+<text x="706.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">1</text>
+<text x="728.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">0</text>
+<rect x="20" y="36" width="720" height="40" fill="#30363d" rx="2"/>
+<rect x="20.0" y="36" width="720.0" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="380.0" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">EEI</text>
+<text x="380.0" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<text x="20" y="98" font-size="8" fill="#6e7681">Offset: 0x0C  |  Reset: 0x00000000  |  ■ RW (Purple)  ■ RO (Green)  ■ W1C (Amber)  ■ WO (Red)  □ Reserved (Grey)</text>
+</svg></div>
+  <table class="reg-table">
+    <thead><tr><th>Field</th><th>Bits</th><th>Access</th><th>Reset</th><th>Description</th></tr></thead>
+    <tbody><tr><td><strong>EEI</strong></td><td>31:0</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Enable Error Interrupt — Bit N: 1 = generate interrupt on error for channel N</td></tr>
+</tbody>
+  </table>
+</div>
+<h2 class="ip-heading">FlexCAN</h2>
+
+<div class="register-section" id="MCR">
+  <h3>Module Configuration Register <span class="reg-name-badge">MCR</span></h3>
+  <div class="reg-meta">
+    <span>Offset: <code>0x00</code></span>
+    <span>Size: 32 bits</span>
+    <span>Access: RW</span>
+    <span>Reset: <code>0x5000000F</code></span>
+  </div>
+  <p class="reg-desc">Contains global module control and configuration bits for the FlexCAN module, including freeze, halt, and supervisory mode settings.</p>
+  <div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="110" viewBox="0 0 760 110">
+<rect width="760" height="110" fill="#1e1e2e" rx="6"/>
+<text x="10" y="16" font-family="monospace" font-size="11" font-weight="bold" fill="#c9d1d9">MCR — Module Configuration Register</text>
+<text x="31.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">31</text>
+<text x="53.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">30</text>
+<text x="76.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">29</text>
+<text x="98.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">28</text>
+<text x="121.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">27</text>
+<text x="143.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">26</text>
+<text x="166.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">25</text>
+<text x="188.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">24</text>
+<text x="211.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">23</text>
+<text x="233.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">22</text>
+<text x="256.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">21</text>
+<text x="278.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">20</text>
+<text x="301.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">19</text>
+<text x="323.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">18</text>
+<text x="346.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">17</text>
+<text x="368.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">16</text>
+<text x="391.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">15</text>
+<text x="413.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">14</text>
+<text x="436.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">13</text>
+<text x="458.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">12</text>
+<text x="481.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">11</text>
+<text x="503.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">10</text>
+<text x="526.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">9</text>
+<text x="548.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">8</text>
+<text x="571.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">7</text>
+<text x="593.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">6</text>
+<text x="616.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">5</text>
+<text x="638.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">4</text>
+<text x="661.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">3</text>
+<text x="683.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">2</text>
+<text x="706.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">1</text>
+<text x="728.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">0</text>
+<rect x="20" y="36" width="720" height="40" fill="#30363d" rx="2"/>
+<rect x="20.0" y="36" width="22.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="31.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">MDIS</text>
+<text x="31.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="42.5" y="36" width="22.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="53.8" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">FRZ</text>
+<text x="53.8" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="155.0" y="36" width="45.0" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="177.5" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">CLK_SRC</text>
+<text x="177.5" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="335.0" y="36" width="22.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="346.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">SRX_DIS</text>
+<text x="346.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="560.0" y="36" width="180.0" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="650.0" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">MAXMB</text>
+<text x="650.0" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<text x="20" y="98" font-size="8" fill="#6e7681">Offset: 0x00  |  Reset: 0x5000000F  |  ■ RW (Purple)  ■ RO (Green)  ■ W1C (Amber)  ■ WO (Red)  □ Reserved (Grey)</text>
+</svg></div>
+  <table class="reg-table">
+    <thead><tr><th>Field</th><th>Bits</th><th>Access</th><th>Reset</th><th>Description</th></tr></thead>
+    <tbody><tr><td><strong>MDIS</strong></td><td>31:31</td><td><span class="access-rw">RW</span></td><td>0x5000000F</td><td>Module Disable — 0: Module enabled, 1: Module disabled (clock gated)</td></tr>
+<tr><td><strong>FRZ</strong></td><td>30:30</td><td><span class="access-rw">RW</span></td><td>0x5000000F</td><td>Freeze Enable — Enables entry to Freeze mode upon FRZ_ACK</td></tr>
+<tr><td><strong>CLK_SRC</strong></td><td>25:24</td><td><span class="access-rw">RW</span></td><td>0x5000000F</td><td>Clock Source Selection — 00: Oscillator clock, 01: PLL clock, 10: External clock, 11: Reserved</td></tr>
+<tr><td><strong>SRX_DIS</strong></td><td>17:17</td><td><span class="access-rw">RW</span></td><td>0x5000000F</td><td>Self-Reception Disable — When set, frames transmitted are not received internally</td></tr>
+<tr><td><strong>MAXMB</strong></td><td>7:0</td><td><span class="access-rw">RW</span></td><td>0x5000000F</td><td>Maximum Number of Mailboxes — Defines the upper message buffer index (0..127)</td></tr>
+</tbody>
+  </table>
+</div>
+
+<div class="register-section" id="CTRL1">
+  <h3>Control 1 Register <span class="reg-name-badge">CTRL1</span></h3>
+  <div class="reg-meta">
+    <span>Offset: <code>0x04</code></span>
+    <span>Size: 32 bits</span>
+    <span>Access: RW</span>
+    <span>Reset: <code>0x00000000</code></span>
+  </div>
+  <p class="reg-desc">Primary control register for operation mode selection, bit-timing limits, and protocol engine control.</p>
+  <div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="110" viewBox="0 0 760 110">
+<rect width="760" height="110" fill="#1e1e2e" rx="6"/>
+<text x="10" y="16" font-family="monospace" font-size="11" font-weight="bold" fill="#c9d1d9">CTRL1 — Control 1 Register</text>
+<text x="31.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">31</text>
+<text x="53.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">30</text>
+<text x="76.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">29</text>
+<text x="98.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">28</text>
+<text x="121.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">27</text>
+<text x="143.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">26</text>
+<text x="166.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">25</text>
+<text x="188.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">24</text>
+<text x="211.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">23</text>
+<text x="233.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">22</text>
+<text x="256.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">21</text>
+<text x="278.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">20</text>
+<text x="301.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">19</text>
+<text x="323.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">18</text>
+<text x="346.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">17</text>
+<text x="368.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">16</text>
+<text x="391.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">15</text>
+<text x="413.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">14</text>
+<text x="436.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">13</text>
+<text x="458.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">12</text>
+<text x="481.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">11</text>
+<text x="503.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">10</text>
+<text x="526.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">9</text>
+<text x="548.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">8</text>
+<text x="571.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">7</text>
+<text x="593.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">6</text>
+<text x="616.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">5</text>
+<text x="638.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">4</text>
+<text x="661.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">3</text>
+<text x="683.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">2</text>
+<text x="706.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">1</text>
+<text x="728.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">0</text>
+<rect x="20" y="36" width="720" height="40" fill="#30363d" rx="2"/>
+<rect x="20.0" y="36" width="180.0" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="110.0" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">PRESDIV</text>
+<text x="110.0" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="200.0" y="36" width="45.0" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="222.5" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">RJW</text>
+<text x="222.5" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="245.0" y="36" width="67.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="278.8" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">PSEG1</text>
+<text x="278.8" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="312.5" y="36" width="67.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="346.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">PSEG2</text>
+<text x="346.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="380.0" y="36" width="22.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="391.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">BOFF_MSK</text>
+<text x="391.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="402.5" y="36" width="22.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="413.8" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">ERR_MSK</text>
+<text x="413.8" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="425.0" y="36" width="22.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="436.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">TWRN_MSK</text>
+<text x="436.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<text x="20" y="98" font-size="8" fill="#6e7681">Offset: 0x04  |  Reset: 0x00000000  |  ■ RW (Purple)  ■ RO (Green)  ■ W1C (Amber)  ■ WO (Red)  □ Reserved (Grey)</text>
+</svg></div>
+  <table class="reg-table">
+    <thead><tr><th>Field</th><th>Bits</th><th>Access</th><th>Reset</th><th>Description</th></tr></thead>
+    <tbody><tr><td><strong>PRESDIV</strong></td><td>31:24</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Prescaler Division Factor — Divides the CAN clock to generate the Serial Clock (Sclock). Range: 1–256.</td></tr>
+<tr><td><strong>RJW</strong></td><td>23:22</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Resynchronization Jump Width — Maximum number of time quanta a bit period can be adjusted by resynchronization (0–3).</td></tr>
+<tr><td><strong>PSEG1</strong></td><td>21:19</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Phase Segment 1 — Number of time quanta in phase buffer segment 1 (2–8).</td></tr>
+<tr><td><strong>PSEG2</strong></td><td>18:16</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Phase Segment 2 — Number of time quanta in phase buffer segment 2 (2–8).</td></tr>
+<tr><td><strong>BOFF_MSK</strong></td><td>15:15</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Bus-Off Interrupt Mask</td></tr>
+<tr><td><strong>ERR_MSK</strong></td><td>14:14</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Error Interrupt Mask</td></tr>
+<tr><td><strong>TWRN_MSK</strong></td><td>13:13</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Tx Warning Interrupt Mask</td></tr>
+</tbody>
+  </table>
+</div>
+
+<div class="register-section" id="TIMER">
+  <h3>Free-Running Timer Register <span class="reg-name-badge">TIMER</span></h3>
+  <div class="reg-meta">
+    <span>Offset: <code>0x08</code></span>
+    <span>Size: 32 bits</span>
+    <span>Access: RW</span>
+    <span>Reset: <code>0x00000000</code></span>
+  </div>
+  <p class="reg-desc">16-bit free-running timer capturing timestamp on each valid CAN frame. Used for time-stamping received and transmitted messages.</p>
+  <div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="110" viewBox="0 0 760 110">
+<rect width="760" height="110" fill="#1e1e2e" rx="6"/>
+<text x="10" y="16" font-family="monospace" font-size="11" font-weight="bold" fill="#c9d1d9">TIMER — Free-Running Timer Register</text>
+<text x="31.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">31</text>
+<text x="53.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">30</text>
+<text x="76.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">29</text>
+<text x="98.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">28</text>
+<text x="121.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">27</text>
+<text x="143.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">26</text>
+<text x="166.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">25</text>
+<text x="188.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">24</text>
+<text x="211.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">23</text>
+<text x="233.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">22</text>
+<text x="256.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">21</text>
+<text x="278.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">20</text>
+<text x="301.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">19</text>
+<text x="323.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">18</text>
+<text x="346.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">17</text>
+<text x="368.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">16</text>
+<text x="391.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">15</text>
+<text x="413.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">14</text>
+<text x="436.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">13</text>
+<text x="458.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">12</text>
+<text x="481.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">11</text>
+<text x="503.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">10</text>
+<text x="526.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">9</text>
+<text x="548.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">8</text>
+<text x="571.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">7</text>
+<text x="593.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">6</text>
+<text x="616.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">5</text>
+<text x="638.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">4</text>
+<text x="661.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">3</text>
+<text x="683.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">2</text>
+<text x="706.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">1</text>
+<text x="728.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">0</text>
+<rect x="20" y="36" width="720" height="40" fill="#30363d" rx="2"/>
+<rect x="380.0" y="36" width="360.0" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="560.0" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">TIMER</text>
+<text x="560.0" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<text x="20" y="98" font-size="8" fill="#6e7681">Offset: 0x08  |  Reset: 0x00000000  |  ■ RW (Purple)  ■ RO (Green)  ■ W1C (Amber)  ■ WO (Red)  □ Reserved (Grey)</text>
+</svg></div>
+  <table class="reg-table">
+    <thead><tr><th>Field</th><th>Bits</th><th>Access</th><th>Reset</th><th>Description</th></tr></thead>
+    <tbody><tr><td><strong>TIMER</strong></td><td>15:0</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Timer Value — Free-running 16-bit counter clocked by the CAN bit clock</td></tr>
+</tbody>
+  </table>
+</div>
+
+<div class="register-section" id="RXMGMASK">
+  <h3>RX Mailbox Global Mask <span class="reg-name-badge">RXMGMASK</span></h3>
+  <div class="reg-meta">
+    <span>Offset: <code>0x10</code></span>
+    <span>Size: 32 bits</span>
+    <span>Access: RW</span>
+    <span>Reset: <code>0xFFFFFFFF</code></span>
+  </div>
+  <p class="reg-desc">Global acceptance mask register for receive mailboxes (14 & 15). Applies filtering on standard and extended identifiers.</p>
+  <div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="110" viewBox="0 0 760 110">
+<rect width="760" height="110" fill="#1e1e2e" rx="6"/>
+<text x="10" y="16" font-family="monospace" font-size="11" font-weight="bold" fill="#c9d1d9">RXMGMASK — RX Mailbox Global Mask</text>
+<text x="31.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">31</text>
+<text x="53.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">30</text>
+<text x="76.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">29</text>
+<text x="98.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">28</text>
+<text x="121.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">27</text>
+<text x="143.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">26</text>
+<text x="166.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">25</text>
+<text x="188.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">24</text>
+<text x="211.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">23</text>
+<text x="233.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">22</text>
+<text x="256.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">21</text>
+<text x="278.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">20</text>
+<text x="301.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">19</text>
+<text x="323.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">18</text>
+<text x="346.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">17</text>
+<text x="368.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">16</text>
+<text x="391.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">15</text>
+<text x="413.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">14</text>
+<text x="436.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">13</text>
+<text x="458.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">12</text>
+<text x="481.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">11</text>
+<text x="503.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">10</text>
+<text x="526.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">9</text>
+<text x="548.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">8</text>
+<text x="571.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">7</text>
+<text x="593.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">6</text>
+<text x="616.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">5</text>
+<text x="638.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">4</text>
+<text x="661.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">3</text>
+<text x="683.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">2</text>
+<text x="706.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">1</text>
+<text x="728.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">0</text>
+<rect x="20" y="36" width="720" height="40" fill="#30363d" rx="2"/>
+<rect x="20.0" y="36" width="720.0" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="380.0" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">RX_MGMASK_BITS</text>
+<text x="380.0" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<text x="20" y="98" font-size="8" fill="#6e7681">Offset: 0x10  |  Reset: 0xFFFFFFFF  |  ■ RW (Purple)  ■ RO (Green)  ■ W1C (Amber)  ■ WO (Red)  □ Reserved (Grey)</text>
+</svg></div>
+  <table class="reg-table">
+    <thead><tr><th>Field</th><th>Bits</th><th>Access</th><th>Reset</th><th>Description</th></tr></thead>
+    <tbody><tr><td><strong>RX_MGMASK_BITS</strong></td><td>31:0</td><td><span class="access-rw">RW</span></td><td>0xFFFFFFFF</td><td>Mask bits corresponding to each identifier bit. 1 = match checked, 0 = don't care.</td></tr>
+</tbody>
+  </table>
+</div>
+
+<div class="register-section" id="RX14MASK">
+  <h3>RX Mailbox 14 Mask <span class="reg-name-badge">RX14MASK</span></h3>
+  <div class="reg-meta">
+    <span>Offset: <code>0x14</code></span>
+    <span>Size: 32 bits</span>
+    <span>Access: RW</span>
+    <span>Reset: <code>0xFFFFFFFF</code></span>
+  </div>
+  <p class="reg-desc">Individual acceptance mask register for RX mailbox 14.</p>
+  <div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="110" viewBox="0 0 760 110">
+<rect width="760" height="110" fill="#1e1e2e" rx="6"/>
+<text x="10" y="16" font-family="monospace" font-size="11" font-weight="bold" fill="#c9d1d9">RX14MASK — RX Mailbox 14 Mask</text>
+<text x="31.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">31</text>
+<text x="53.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">30</text>
+<text x="76.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">29</text>
+<text x="98.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">28</text>
+<text x="121.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">27</text>
+<text x="143.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">26</text>
+<text x="166.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">25</text>
+<text x="188.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">24</text>
+<text x="211.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">23</text>
+<text x="233.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">22</text>
+<text x="256.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">21</text>
+<text x="278.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">20</text>
+<text x="301.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">19</text>
+<text x="323.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">18</text>
+<text x="346.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">17</text>
+<text x="368.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">16</text>
+<text x="391.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">15</text>
+<text x="413.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">14</text>
+<text x="436.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">13</text>
+<text x="458.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">12</text>
+<text x="481.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">11</text>
+<text x="503.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">10</text>
+<text x="526.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">9</text>
+<text x="548.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">8</text>
+<text x="571.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">7</text>
+<text x="593.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">6</text>
+<text x="616.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">5</text>
+<text x="638.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">4</text>
+<text x="661.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">3</text>
+<text x="683.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">2</text>
+<text x="706.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">1</text>
+<text x="728.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">0</text>
+<rect x="20" y="36" width="720" height="40" fill="#30363d" rx="2"/>
+<text x="20" y="98" font-size="8" fill="#6e7681">Offset: 0x14  |  Reset: 0xFFFFFFFF  |  ■ RW (Purple)  ■ RO (Green)  ■ W1C (Amber)  ■ WO (Red)  □ Reserved (Grey)</text>
+</svg></div>
+  <table class="reg-table">
+    <thead><tr><th>Field</th><th>Bits</th><th>Access</th><th>Reset</th><th>Description</th></tr></thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<div class="register-section" id="RX15MASK">
+  <h3>RX Mailbox 15 Mask <span class="reg-name-badge">RX15MASK</span></h3>
+  <div class="reg-meta">
+    <span>Offset: <code>0x18</code></span>
+    <span>Size: 32 bits</span>
+    <span>Access: RW</span>
+    <span>Reset: <code>0xFFFFFFFF</code></span>
+  </div>
+  <p class="reg-desc">Individual acceptance mask register for RX mailbox 15.</p>
+  <div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="110" viewBox="0 0 760 110">
+<rect width="760" height="110" fill="#1e1e2e" rx="6"/>
+<text x="10" y="16" font-family="monospace" font-size="11" font-weight="bold" fill="#c9d1d9">RX15MASK — RX Mailbox 15 Mask</text>
+<text x="31.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">31</text>
+<text x="53.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">30</text>
+<text x="76.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">29</text>
+<text x="98.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">28</text>
+<text x="121.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">27</text>
+<text x="143.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">26</text>
+<text x="166.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">25</text>
+<text x="188.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">24</text>
+<text x="211.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">23</text>
+<text x="233.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">22</text>
+<text x="256.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">21</text>
+<text x="278.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">20</text>
+<text x="301.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">19</text>
+<text x="323.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">18</text>
+<text x="346.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">17</text>
+<text x="368.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">16</text>
+<text x="391.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">15</text>
+<text x="413.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">14</text>
+<text x="436.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">13</text>
+<text x="458.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">12</text>
+<text x="481.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">11</text>
+<text x="503.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">10</text>
+<text x="526.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">9</text>
+<text x="548.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">8</text>
+<text x="571.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">7</text>
+<text x="593.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">6</text>
+<text x="616.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">5</text>
+<text x="638.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">4</text>
+<text x="661.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">3</text>
+<text x="683.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">2</text>
+<text x="706.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">1</text>
+<text x="728.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">0</text>
+<rect x="20" y="36" width="720" height="40" fill="#30363d" rx="2"/>
+<text x="20" y="98" font-size="8" fill="#6e7681">Offset: 0x18  |  Reset: 0xFFFFFFFF  |  ■ RW (Purple)  ■ RO (Green)  ■ W1C (Amber)  ■ WO (Red)  □ Reserved (Grey)</text>
+</svg></div>
+  <table class="reg-table">
+    <thead><tr><th>Field</th><th>Bits</th><th>Access</th><th>Reset</th><th>Description</th></tr></thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<div class="register-section" id="ECR">
+  <h3>Error Counter Register <span class="reg-name-badge">ECR</span></h3>
+  <div class="reg-meta">
+    <span>Offset: <code>0x1C</code></span>
+    <span>Size: 32 bits</span>
+    <span>Access: RO</span>
+    <span>Reset: <code>0x00000000</code></span>
+  </div>
+  <p class="reg-desc">Contains the transmit and receive error counter values as per CAN protocol specification.</p>
+  <div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="110" viewBox="0 0 760 110">
+<rect width="760" height="110" fill="#1e1e2e" rx="6"/>
+<text x="10" y="16" font-family="monospace" font-size="11" font-weight="bold" fill="#c9d1d9">ECR — Error Counter Register</text>
+<text x="31.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">31</text>
+<text x="53.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">30</text>
+<text x="76.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">29</text>
+<text x="98.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">28</text>
+<text x="121.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">27</text>
+<text x="143.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">26</text>
+<text x="166.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">25</text>
+<text x="188.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">24</text>
+<text x="211.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">23</text>
+<text x="233.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">22</text>
+<text x="256.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">21</text>
+<text x="278.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">20</text>
+<text x="301.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">19</text>
+<text x="323.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">18</text>
+<text x="346.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">17</text>
+<text x="368.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">16</text>
+<text x="391.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">15</text>
+<text x="413.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">14</text>
+<text x="436.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">13</text>
+<text x="458.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">12</text>
+<text x="481.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">11</text>
+<text x="503.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">10</text>
+<text x="526.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">9</text>
+<text x="548.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">8</text>
+<text x="571.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">7</text>
+<text x="593.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">6</text>
+<text x="616.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">5</text>
+<text x="638.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">4</text>
+<text x="661.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">3</text>
+<text x="683.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">2</text>
+<text x="706.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">1</text>
+<text x="728.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">0</text>
+<rect x="20" y="36" width="720" height="40" fill="#30363d" rx="2"/>
+<rect x="380.0" y="36" width="180.0" height="40" fill="#059669" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="470.0" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">TXERRCNT</text>
+<text x="470.0" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RO</text>
+<rect x="560.0" y="36" width="180.0" height="40" fill="#059669" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="650.0" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">RXERRCNT</text>
+<text x="650.0" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RO</text>
+<text x="20" y="98" font-size="8" fill="#6e7681">Offset: 0x1C  |  Reset: 0x00000000  |  ■ RW (Purple)  ■ RO (Green)  ■ W1C (Amber)  ■ WO (Red)  □ Reserved (Grey)</text>
+</svg></div>
+  <table class="reg-table">
+    <thead><tr><th>Field</th><th>Bits</th><th>Access</th><th>Reset</th><th>Description</th></tr></thead>
+    <tbody><tr><td><strong>TXERRCNT</strong></td><td>15:8</td><td><span class="access-ro">RO</span></td><td>0x00000000</td><td>Transmit Error Counter — 9-bit, value 0–255</td></tr>
+<tr><td><strong>RXERRCNT</strong></td><td>7:0</td><td><span class="access-ro">RO</span></td><td>0x00000000</td><td>Receive Error Counter — 9-bit, value 0–255</td></tr>
+</tbody>
+  </table>
+</div>
+
+<div class="register-section" id="ESR1">
+  <h3>Error and Status Register 1 <span class="reg-name-badge">ESR1</span></h3>
+  <div class="reg-meta">
+    <span>Offset: <code>0x20</code></span>
+    <span>Size: 32 bits</span>
+    <span>Access: RO</span>
+    <span>Reset: <code>0x00000000</code></span>
+  </div>
+  <p class="reg-desc">Provides error status and interrupt flag bits including bus-off, error, and warning indicators.</p>
+  <div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="110" viewBox="0 0 760 110">
+<rect width="760" height="110" fill="#1e1e2e" rx="6"/>
+<text x="10" y="16" font-family="monospace" font-size="11" font-weight="bold" fill="#c9d1d9">ESR1 — Error and Status Register 1</text>
+<text x="31.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">31</text>
+<text x="53.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">30</text>
+<text x="76.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">29</text>
+<text x="98.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">28</text>
+<text x="121.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">27</text>
+<text x="143.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">26</text>
+<text x="166.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">25</text>
+<text x="188.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">24</text>
+<text x="211.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">23</text>
+<text x="233.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">22</text>
+<text x="256.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">21</text>
+<text x="278.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">20</text>
+<text x="301.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">19</text>
+<text x="323.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">18</text>
+<text x="346.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">17</text>
+<text x="368.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">16</text>
+<text x="391.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">15</text>
+<text x="413.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">14</text>
+<text x="436.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">13</text>
+<text x="458.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">12</text>
+<text x="481.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">11</text>
+<text x="503.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">10</text>
+<text x="526.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">9</text>
+<text x="548.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">8</text>
+<text x="571.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">7</text>
+<text x="593.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">6</text>
+<text x="616.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">5</text>
+<text x="638.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">4</text>
+<text x="661.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">3</text>
+<text x="683.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">2</text>
+<text x="706.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">1</text>
+<text x="728.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">0</text>
+<rect x="20" y="36" width="720" height="40" fill="#30363d" rx="2"/>
+<rect x="20.0" y="36" width="22.5" height="40" fill="#d97706" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="31.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">TWRN_INT</text>
+<text x="31.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">W1C</text>
+<rect x="42.5" y="36" width="22.5" height="40" fill="#d97706" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="53.8" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">RWRN_INT</text>
+<text x="53.8" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">W1C</text>
+<rect x="222.5" y="36" width="22.5" height="40" fill="#d97706" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="233.8" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">BOFF_INT</text>
+<text x="233.8" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">W1C</text>
+<rect x="245.0" y="36" width="22.5" height="40" fill="#d97706" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="256.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">ERR_INT</text>
+<text x="256.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">W1C</text>
+<rect x="402.5" y="36" width="22.5" height="40" fill="#059669" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="413.8" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">FLT_CONF</text>
+<text x="413.8" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RO</text>
+<rect x="695.0" y="36" width="45.0" height="40" fill="#059669" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="717.5" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">ERR_CODE</text>
+<text x="717.5" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RO</text>
+<text x="20" y="98" font-size="8" fill="#6e7681">Offset: 0x20  |  Reset: 0x00000000  |  ■ RW (Purple)  ■ RO (Green)  ■ W1C (Amber)  ■ WO (Red)  □ Reserved (Grey)</text>
+</svg></div>
+  <table class="reg-table">
+    <thead><tr><th>Field</th><th>Bits</th><th>Access</th><th>Reset</th><th>Description</th></tr></thead>
+    <tbody><tr><td><strong>TWRN_INT</strong></td><td>31:31</td><td><span class="access-w1c">W1C</span></td><td>0x00000000</td><td>Tx Warning Interrupt Flag</td></tr>
+<tr><td><strong>RWRN_INT</strong></td><td>30:30</td><td><span class="access-w1c">W1C</span></td><td>0x00000000</td><td>Rx Warning Interrupt Flag</td></tr>
+<tr><td><strong>BOFF_INT</strong></td><td>22:22</td><td><span class="access-w1c">W1C</span></td><td>0x00000000</td><td>Bus-Off Interrupt Flag</td></tr>
+<tr><td><strong>ERR_INT</strong></td><td>21:21</td><td><span class="access-w1c">W1C</span></td><td>0x00000000</td><td>Error Interrupt Flag</td></tr>
+<tr><td><strong>FLT_CONF</strong></td><td>14:14</td><td><span class="access-ro">RO</span></td><td>0x00000000</td><td>Fault Confinement State — 0: Error Active, 1: Error Passive</td></tr>
+<tr><td><strong>ERR_CODE</strong></td><td>1:0</td><td><span class="access-ro">RO</span></td><td>0x00000000</td><td>Error Code — 00: Bit error, 01: Form error, 10: Stuffing error, 11: CRC error</td></tr>
+</tbody>
+  </table>
+</div>
+
+<div class="register-section" id="MB_CS_0">
+  <h3>Mailbox 0 Control/Status <span class="reg-name-badge">MB_CS_0</span></h3>
+  <div class="reg-meta">
+    <span>Offset: <code>0x100</code></span>
+    <span>Size: 32 bits</span>
+    <span>Access: RW</span>
+    <span>Reset: <code>0x00000000</code></span>
+  </div>
+  <p class="reg-desc">Control and status word for each message buffer. Total 64 mailboxes, each occupying 16 bytes of address space (4 words).</p>
+  <div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="110" viewBox="0 0 760 110">
+<rect width="760" height="110" fill="#1e1e2e" rx="6"/>
+<text x="10" y="16" font-family="monospace" font-size="11" font-weight="bold" fill="#c9d1d9">MB_CS_0 — Mailbox 0 Control/Status</text>
+<text x="31.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">31</text>
+<text x="53.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">30</text>
+<text x="76.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">29</text>
+<text x="98.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">28</text>
+<text x="121.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">27</text>
+<text x="143.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">26</text>
+<text x="166.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">25</text>
+<text x="188.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">24</text>
+<text x="211.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">23</text>
+<text x="233.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">22</text>
+<text x="256.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">21</text>
+<text x="278.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">20</text>
+<text x="301.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">19</text>
+<text x="323.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">18</text>
+<text x="346.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">17</text>
+<text x="368.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">16</text>
+<text x="391.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">15</text>
+<text x="413.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">14</text>
+<text x="436.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">13</text>
+<text x="458.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">12</text>
+<text x="481.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">11</text>
+<text x="503.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">10</text>
+<text x="526.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">9</text>
+<text x="548.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">8</text>
+<text x="571.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">7</text>
+<text x="593.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">6</text>
+<text x="616.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">5</text>
+<text x="638.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">4</text>
+<text x="661.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">3</text>
+<text x="683.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">2</text>
+<text x="706.2" y="32" text-anchor="middle" font-size="7" fill="#6e7681">1</text>
+<text x="728.8" y="32" text-anchor="middle" font-size="7" fill="#6e7681">0</text>
+<rect x="20" y="36" width="720" height="40" fill="#30363d" rx="2"/>
+<rect x="20.0" y="36" width="90.0" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="65.0" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">CODE</text>
+<text x="65.0" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="110.0" y="36" width="22.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="121.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">SRR</text>
+<text x="121.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="132.5" y="36" width="22.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="143.8" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">IDE</text>
+<text x="143.8" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="155.0" y="36" width="22.5" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="166.2" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">RTR</text>
+<text x="166.2" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="200.0" y="36" width="180.0" height="40" fill="#7c3aed" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="290.0" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">DLC</text>
+<text x="290.0" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RW</text>
+<rect x="380.0" y="36" width="360.0" height="40" fill="#059669" rx="2" stroke="#0d1117" stroke-width="1"/>
+<text x="560.0" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">TIME_STAMP</text>
+<text x="560.0" y="68" text-anchor="middle" font-size="6" fill="#e2e8f0">RO</text>
+<text x="20" y="98" font-size="8" fill="#6e7681">Offset: 0x100  |  Reset: 0x00000000  |  ■ RW (Purple)  ■ RO (Green)  ■ W1C (Amber)  ■ WO (Red)  □ Reserved (Grey)</text>
+</svg></div>
+  <table class="reg-table">
+    <thead><tr><th>Field</th><th>Bits</th><th>Access</th><th>Reset</th><th>Description</th></tr></thead>
+    <tbody><tr><td><strong>CODE</strong></td><td>31:28</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Message Buffer Code — 0000: MB inactive (RX), 0100: MB active & empty (RX), 0010: MB full (RX), 0110: MB overrun (RX), 1000: MB ready to transmit (TX), 1100: MB aborted (TX)</td></tr>
+<tr><td><strong>SRR</strong></td><td>27:27</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Substitute Remote Request — Transmit 1 for extended frames</td></tr>
+<tr><td><strong>IDE</strong></td><td>26:26</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Extended Identifier — 0: Standard (11-bit), 1: Extended (29-bit)</td></tr>
+<tr><td><strong>RTR</strong></td><td>25:25</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Remote Transmission Request</td></tr>
+<tr><td><strong>DLC</strong></td><td>23:16</td><td><span class="access-rw">RW</span></td><td>0x00000000</td><td>Data Length Code — Number of data bytes (0–8 for CAN, 0–64 for CAN-FD)</td></tr>
+<tr><td><strong>TIME_STAMP</strong></td><td>15:0</td><td><span class="access-ro">RO</span></td><td>0x00000000</td><td>Free-running timer value captured at frame reception or transmission</td></tr>
+</tbody>
+  </table>
+</div>
+
+</main>
+</body>
+</html>

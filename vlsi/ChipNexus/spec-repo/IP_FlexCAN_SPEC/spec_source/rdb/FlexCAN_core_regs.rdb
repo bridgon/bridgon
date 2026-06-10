@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  FlexCAN_core_regs.regs — Register definition file for FlexCAN Core.
+  Similar to IP-XACT but in a custom format tailored for DITA transformation.
+  Contains register descriptions, bit-field definitions, access types, and reset values.
+-->
+<registers
+    xmlns="http://bridgon.com/schemas/register-db"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://bridgon.com/schemas/register-db http://bridgon.com/schemas/bridgon-rdb.xsd"
+           ip_name="FlexCAN"
+           regs_id="CAN_CORE">
+
+  <register offset="0x00" name="MCR" display_name="Module Configuration Register"
+            size="32" access="RW" reset_value="0x5000000F">
+    <description>Contains global module control and configuration bits for the FlexCAN module, including freeze, halt, and supervisory mode settings.</description>
+    <bitfield msb="31" lsb="31" name="MDIS" access="RW">
+      <description>Module Disable — 0: Module enabled, 1: Module disabled (clock gated)</description>
+    </bitfield>
+    <bitfield msb="30" lsb="30" name="FRZ" access="RW">
+      <description>Freeze Enable — Enables entry to Freeze mode upon FRZ_ACK</description>
+    </bitfield>
+    <bitfield msb="25" lsb="24" name="CLK_SRC" access="RW">
+      <description>Clock Source Selection — 00: Oscillator clock, 01: PLL clock, 10: External clock, 11: Reserved</description>
+    </bitfield>
+    <bitfield msb="17" lsb="17" name="SRX_DIS" access="RW">
+      <description>Self-Reception Disable — When set, frames transmitted are not received internally</description>
+    </bitfield>
+    <bitfield msb="7" lsb="0" name="MAXMB" access="RW">
+      <description>Maximum Number of Mailboxes — Defines the upper message buffer index (0..127)</description>
+    </bitfield>
+  </register>
+
+  <register offset="0x04" name="CTRL1" display_name="Control 1 Register"
+            size="32" access="RW" reset_value="0x00000000">
+    <description>Primary control register for operation mode selection, bit-timing limits, and protocol engine control.</description>
+    <bitfield msb="31" lsb="24" name="PRESDIV" access="RW">
+      <description>Prescaler Division Factor — Divides the CAN clock to generate the Serial Clock (Sclock). Range: 1–256.</description>
+    </bitfield>
+    <bitfield msb="23" lsb="22" name="RJW" access="RW">
+      <description>Resynchronization Jump Width — Maximum number of time quanta a bit period can be adjusted by resynchronization (0–3).</description>
+    </bitfield>
+    <bitfield msb="21" lsb="19" name="PSEG1" access="RW">
+      <description>Phase Segment 1 — Number of time quanta in phase buffer segment 1 (2–8).</description>
+    </bitfield>
+    <bitfield msb="18" lsb="16" name="PSEG2" access="RW">
+      <description>Phase Segment 2 — Number of time quanta in phase buffer segment 2 (2–8).</description>
+    </bitfield>
+    <bitfield msb="15" lsb="15" name="BOFF_MSK" access="RW">
+      <description>Bus-Off Interrupt Mask</description>
+    </bitfield>
+    <bitfield msb="14" lsb="14" name="ERR_MSK" access="RW">
+      <description>Error Interrupt Mask</description>
+    </bitfield>
+    <bitfield msb="13" lsb="13" name="TWRN_MSK" access="RW">
+      <description>Tx Warning Interrupt Mask</description>
+    </bitfield>
+  </register>
+
+  <register offset="0x08" name="TIMER" display_name="Free-Running Timer Register"
+            size="32" access="RW" reset_value="0x00000000">
+    <description>16-bit free-running timer capturing timestamp on each valid CAN frame. Used for time-stamping received and transmitted messages.</description>
+    <bitfield msb="15" lsb="0" name="TIMER" access="RW">
+      <description>Timer Value — Free-running 16-bit counter clocked by the CAN bit clock</description>
+    </bitfield>
+  </register>
+
+  <register offset="0x10" name="RXMGMASK" display_name="RX Mailbox Global Mask"
+            size="32" access="RW" reset_value="0xFFFFFFFF">
+    <description>Global acceptance mask register for receive mailboxes (14 &amp; 15). Applies filtering on standard and extended identifiers.</description>
+    <bitfield msb="31" lsb="0" name="RX_MGMASK_BITS" access="RW">
+      <description>Mask bits corresponding to each identifier bit. 1 = match checked, 0 = don't care.</description>
+    </bitfield>
+  </register>
+
+  <register offset="0x14" name="RX14MASK" display_name="RX Mailbox 14 Mask"
+            size="32" access="RW" reset_value="0xFFFFFFFF">
+    <description>Individual acceptance mask register for RX mailbox 14.</description>
+  </register>
+
+  <register offset="0x18" name="RX15MASK" display_name="RX Mailbox 15 Mask"
+            size="32" access="RW" reset_value="0xFFFFFFFF">
+    <description>Individual acceptance mask register for RX mailbox 15.</description>
+  </register>
+
+  <register offset="0x1C" name="ECR" display_name="Error Counter Register"
+            size="32" access="RO" reset_value="0x00000000">
+    <description>Contains the transmit and receive error counter values as per CAN protocol specification.</description>
+    <bitfield msb="15" lsb="8" name="TXERRCNT" access="RO">
+      <description>Transmit Error Counter — 9-bit, value 0–255</description>
+    </bitfield>
+    <bitfield msb="7" lsb="0" name="RXERRCNT" access="RO">
+      <description>Receive Error Counter — 9-bit, value 0–255</description>
+    </bitfield>
+  </register>
+
+  <register offset="0x20" name="ESR1" display_name="Error and Status Register 1"
+            size="32" access="RO" reset_value="0x00000000">
+    <description>Provides error status and interrupt flag bits including bus-off, error, and warning indicators.</description>
+    <bitfield msb="31" lsb="31" name="TWRN_INT" access="W1C">
+      <description>Tx Warning Interrupt Flag</description>
+    </bitfield>
+    <bitfield msb="30" lsb="30" name="RWRN_INT" access="W1C">
+      <description>Rx Warning Interrupt Flag</description>
+    </bitfield>
+    <bitfield msb="22" lsb="22" name="BOFF_INT" access="W1C">
+      <description>Bus-Off Interrupt Flag</description>
+    </bitfield>
+    <bitfield msb="21" lsb="21" name="ERR_INT" access="W1C">
+      <description>Error Interrupt Flag</description>
+    </bitfield>
+    <bitfield msb="14" lsb="14" name="FLT_CONF" access="RO">
+      <description>Fault Confinement State — 0: Error Active, 1: Error Passive</description>
+    </bitfield>
+    <bitfield msb="1" lsb="0" name="ERR_CODE" access="RO">
+      <description>Error Code — 00: Bit error, 01: Form error, 10: Stuffing error, 11: CRC error</description>
+    </bitfield>
+  </register>
+
+  <register offset="0x100" name="MB_CS_0" display_name="Mailbox 0 Control/Status"
+            size="32" access="RW" reset_value="0x00000000" array_size="64" array_stride="0x10">
+    <description>Control and status word for each message buffer. Total 64 mailboxes, each occupying 16 bytes of address space (4 words).</description>
+    <bitfield msb="31" lsb="28" name="CODE" access="RW">
+      <description>Message Buffer Code — 0000: MB inactive (RX), 0100: MB active &amp; empty (RX), 0010: MB full (RX), 0110: MB overrun (RX), 1000: MB ready to transmit (TX), 1100: MB aborted (TX)</description>
+    </bitfield>
+    <bitfield msb="27" lsb="27" name="SRR" access="RW">
+      <description>Substitute Remote Request — Transmit 1 for extended frames</description>
+    </bitfield>
+    <bitfield msb="26" lsb="26" name="IDE" access="RW">
+      <description>Extended Identifier — 0: Standard (11-bit), 1: Extended (29-bit)</description>
+    </bitfield>
+    <bitfield msb="25" lsb="25" name="RTR" access="RW">
+      <description>Remote Transmission Request</description>
+    </bitfield>
+    <bitfield msb="23" lsb="16" name="DLC" access="RW">
+      <description>Data Length Code — Number of data bytes (0–8 for CAN, 0–64 for CAN-FD)</description>
+    </bitfield>
+    <bitfield msb="15" lsb="0" name="TIME_STAMP" access="RO">
+      <description>Free-running timer value captured at frame reception or transmission</description>
+    </bitfield>
+  </register>
+
+</registers>

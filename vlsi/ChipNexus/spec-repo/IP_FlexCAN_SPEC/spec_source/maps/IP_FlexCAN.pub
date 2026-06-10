@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  IP_FlexCAN.pub — Publishing instructions for FlexCAN IP specification.
+  Defines register resolution groups, instance selectors, merging rules,
+  and output configuration. Referenced by the DITA map during publication.
+-->
+<pub
+    xmlns="http://bridgon.com/schemas/publishing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:pm="http://bridgon.com/schemas/param-mapping"
+    xsi:schemaLocation="http://bridgon.com/schemas/publishing http://bridgon.com/schemas/bridgon-pub.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:pm="http://bridgon.com/schemas/param-mapping"
+     spec_id="IP_FlexCAN">
+
+  <description>
+    Publishing instructions for FlexCAN IP-level specification.
+    Links register instances to their .rdb file, defines merge rules for
+    multi-instance scenarios, and sets up parameter resolution ordering.
+  </description>
+
+  <paramdef_href href="../params/IP_FlexCAN.prm"/>
+
+  <resolve_group id="FLEXCAN_CORE_REGS">
+    <description>Core FlexCAN register file resolution. Single instance at IP level.</description>
+    <instance_selector type="imap_file">
+      <imap_href href="../inst/IP_FlexCAN_top.imap"/>
+      <regs_ref select_instance="FlexCAN_core_0"/>
+    </instance_selector>
+    <merging_rules>
+      <common_region_strategy>keep_first</common_region_strategy>
+      <address_grouping>concatenate</address_grouping>
+      <merge_on_field>register_offset</merge_on_field>
+    </merging_rules>
+    <output_regmap format="dita_table_with_diagram" style="standard_bitfield"/>
+  </resolve_group>
+
+  <parameter_resolution_order>
+    <step priority="1">load_paramdef</step>
+    <step priority="2">load_imap_overrides</step>
+    <step priority="3">apply_global_paramdb_overrides</step>
+    <step priority="4">validate_bounds</step>
+  </parameter_resolution_order>
+
+  <output_config>
+    <target name="dita_resolved" dir="../../output/resolved_dita/"/>
+    <target name="pdf" dir="../../output/pdf/" template="bridgon_rm_template.xsl"/>
+    <target name="webhelp" dir="../../output/webhelp/" skin="bridgon_modern_skin"/>
+    <memory_map include_at_ip_level="true" include_offset_bars="true"/>
+  </output_config>
+
+</pub>

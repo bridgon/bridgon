@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<reference id="reg_MB_CS_0">
+  <title>Mailbox 0 Control/Status (MB_CS_0)</title>
+  <refbody>
+    <section>
+      <title>Register Summary</title>
+      <table>
+        <tgroup cols="2">
+          <colspec colname="c1" colwidth="30*"/>
+          <colspec colname="c2" colwidth="70*"/>
+          <tbody>
+            <row><entry>Offset</entry><entry>0x100</entry></row>
+            <row><entry>Size</entry><entry>32 bits</entry></row>
+            <row><entry>Access</entry><entry>RW</entry></row>
+            <row><entry>Reset Value</entry><entry>0x00000000</entry></row>
+          </tbody>
+        </tgroup>
+      </table>
+    </section>
+    <section>
+      <title>Description</title>
+      <p>Control and status word for each message buffer. Total 64 mailboxes, each occupying 16 bytes of address space (4 words).</p>
+    </section>
+    <section>
+      <title>Bit-Field Descriptions</title>
+      <table>
+        <tgroup cols="5">
+          <thead>
+            <row>
+              <entry>Field</entry><entry>Bits</entry><entry>Access</entry>
+              <entry>Reset</entry><entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><b>CODE</b></entry>
+              <entry>31:28</entry>
+              <entry>RW</entry>
+              <entry>0x00000000</entry>
+              <entry>Message Buffer Code — 0000: MB inactive (RX), 0100: MB active & empty (RX), 0010: MB full (RX), 0110: MB overrun (RX), 1000: MB ready to transmit (TX), 1100: MB aborted (TX)</entry>
+            </row>
+            <row>
+              <entry><b>SRR</b></entry>
+              <entry>27:27</entry>
+              <entry>RW</entry>
+              <entry>0x00000000</entry>
+              <entry>Substitute Remote Request — Transmit 1 for extended frames</entry>
+            </row>
+            <row>
+              <entry><b>IDE</b></entry>
+              <entry>26:26</entry>
+              <entry>RW</entry>
+              <entry>0x00000000</entry>
+              <entry>Extended Identifier — 0: Standard (11-bit), 1: Extended (29-bit)</entry>
+            </row>
+            <row>
+              <entry><b>RTR</b></entry>
+              <entry>25:25</entry>
+              <entry>RW</entry>
+              <entry>0x00000000</entry>
+              <entry>Remote Transmission Request</entry>
+            </row>
+            <row>
+              <entry><b>DLC</b></entry>
+              <entry>23:16</entry>
+              <entry>RW</entry>
+              <entry>0x00000000</entry>
+              <entry>Data Length Code — Number of data bytes (0–8 for CAN, 0–64 for CAN-FD)</entry>
+            </row>
+            <row>
+              <entry><b>TIME_STAMP</b></entry>
+              <entry>15:0</entry>
+              <entry>RO</entry>
+              <entry>0x00000000</entry>
+              <entry>Free-running timer value captured at frame reception or transmission</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+    </section>
+  </refbody>
+</reference>

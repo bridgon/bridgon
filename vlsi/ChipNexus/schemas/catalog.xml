@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  catalog.xml — XML Catalog for Bridgon SoC DocFlow Schemas
+  ===========================================================
+  OASIS XML Catalog that maps namespace URIs to local XSD schema
+  files. Used by XML parsers and the DITA-OT pipeline for offline
+  schema validation (no network access required).
+
+  The Bridgon schemas extend standard DITA-OT processing with
+  semiconductor-specific file formats: .prm, .imap, .rdb, .pub
+
+  To use:
+    Set the XML_CATALOG_FILES environment variable or pass
+    --catalog schemas/catalog.xml to your XML tooling.
+-->
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog"
+         prefer="public">
+
+  <!-- ==================================================================
+       Bridgon Custom Format Schemas
+       ================================================================== -->
+
+  <!-- Parameter Definition (.prm) -->
+  <uri name="http://bridgon.com/schemas/param-mapping"
+       uri="bridgon-prm.xsd"/>
+
+  <!-- Instance Map (.imap) -->
+  <uri name="http://bridgon.com/schemas/instance-map"
+       uri="bridgon-imap.xsd"/>
+
+  <!-- Register Database (.rdb) -->
+  <uri name="http://bridgon.com/schemas/register-db"
+       uri="bridgon-rdb.xsd"/>
+
+  <!-- Publishing Instructions (.pub) -->
+  <uri name="http://bridgon.com/schemas/publishing"
+       uri="bridgon-pub.xsd"/>
+
+  <!-- ==================================================================
+       DITA-OT Standard DTD References (delegated to DITA-OT catalog)
+       ================================================================== -->
+
+  <!-- DITA 2.0 Map DTD -->
+  <public publicId="-//OASIS//DTD DITA 2.0 Map//EN"
+          uri="../dita-ot-4.4/plugins/org.oasis-open.dita.techcomm.v2_0/dtd/technicalContent/map.dtd"/>
+
+  <!-- DITA 2.0 Topic DTD -->
+  <public publicId="-//OASIS//DTD DITA 2.0 Topic//EN"
+          uri="../dita-ot-4.4/plugins/org.oasis-open.dita.techcomm.v2_0/dtd/technicalContent/topic.dtd"/>
+
+  <!-- DITA 2.0 Concept DTD -->
+  <public publicId="-//OASIS//DTD DITA 2.0 Concept//EN"
+          uri="../dita-ot-4.4/plugins/org.oasis-open.dita.techcomm.v2_0/dtd/technicalContent/concept.dtd"/>
+
+  <!-- DITA 2.0 Reference DTD -->
+  <public publicId="-//OASIS//DTD DITA 2.0 Reference//EN"
+          uri="../dita-ot-4.4/plugins/org.oasis-open.dita.techcomm.v2_0/dtd/technicalContent/reference.dtd"/>
+
+  <!-- DITA 2.0 Task DTD -->
+  <public publicId="-//OASIS//DTD DITA 2.0 Task//EN"
+          uri="../dita-ot-4.4/plugins/org.oasis-open.dita.techcomm.v2_0/dtd/technicalContent/task.dtd"/>
+
+  <!-- ==================================================================
+       Delegation to DITA-OT's own catalogs
+       ================================================================== -->
+  <nextCatalog catalog="../dita-ot-4.4/catalog-dita.xml"/>
+
+</catalog>

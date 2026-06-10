@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<reference id="reg_ECR">
+  <title>Error Counter Register (ECR)</title>
+  <refbody>
+    <section>
+      <title>Register Summary</title>
+      <table>
+        <tgroup cols="2">
+          <colspec colname="c1" colwidth="30*"/>
+          <colspec colname="c2" colwidth="70*"/>
+          <tbody>
+            <row><entry>Offset</entry><entry>0x1C</entry></row>
+            <row><entry>Size</entry><entry>32 bits</entry></row>
+            <row><entry>Access</entry><entry>RO</entry></row>
+            <row><entry>Reset Value</entry><entry>0x00000000</entry></row>
+          </tbody>
+        </tgroup>
+      </table>
+    </section>
+    <section>
+      <title>Description</title>
+      <p>Contains the transmit and receive error counter values as per CAN protocol specification.</p>
+    </section>
+    <section>
+      <title>Bit-Field Descriptions</title>
+      <table>
+        <tgroup cols="5">
+          <thead>
+            <row>
+              <entry>Field</entry><entry>Bits</entry><entry>Access</entry>
+              <entry>Reset</entry><entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><b>TXERRCNT</b></entry>
+              <entry>15:8</entry>
+              <entry>RO</entry>
+              <entry>0x00000000</entry>
+              <entry>Transmit Error Counter — 9-bit, value 0–255</entry>
+            </row>
+            <row>
+              <entry><b>RXERRCNT</b></entry>
+              <entry>7:0</entry>
+              <entry>RO</entry>
+              <entry>0x00000000</entry>
+              <entry>Receive Error Counter — 9-bit, value 0–255</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+    </section>
+  </refbody>
+</reference>

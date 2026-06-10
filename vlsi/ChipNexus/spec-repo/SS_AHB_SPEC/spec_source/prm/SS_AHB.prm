@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<paramdef
+    xmlns="http://bridgon.com/schemas/param-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://bridgon.com/schemas/param-mapping http://bridgon.com/schemas/bridgon-prm.xsd" spec_id="SS_AHB">
+  <parameter id="SS_AHB_DATA_WIDTH" class="integer" source="RTL">
+    <name>AHB Data Bus Width</name>
+    <default>64</default>
+    <low_limit>32</low_limit>
+    <high_limit>256</high_limit>
+    <description>Width of the AHB bus data lines in bits.</description>
+  </parameter>
+  <parameter id="SS_AHB_NUM_MASTERS" class="integer" source="RTL">
+    <name>Number of AHB Masters</name>
+    <default>8</default>
+    <low_limit>2</low_limit>
+    <high_limit>16</high_limit>
+    <description>Number of master interfaces on the AHB bus matrix.</description>
+  </parameter>
+  <parameter id="SS_AHB_NUM_SLAVES" class="integer" source="RTL">
+    <name>Number of AHB Slaves</name>
+    <default>32</default>
+    <low_limit>4</low_limit>
+    <high_limit>64</high_limit>
+    <description>Number of slave ports on the AHB bus matrix.</description>
+  </parameter>
+  <parameter id="SS_PUBLISH_MODE" class="enumerated" source="nonrtl">
+    <name>Publishing Mode</name>
+    <default>FULL</default>
+    <accepted_values>FULL,PREVIEW,INTERNAL</accepted_values>
+    <description>Controls output generation mode for this SubSystem specification.</description>
+  </parameter>
+  <parameter id="SS_SECURITY_CLASS" class="enumerated" source="nonrtl">
+    <name>Security Classification</name>
+    <default>CONFIDENTIAL</default>
+    <accepted_values>PUBLIC,INTERNAL,CONFIDENTIAL,RESTRICTED</accepted_values>
+  </parameter>
+</paramdef>

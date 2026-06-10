@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  bridgon-rdb.xsd — Register Database (.rdb) Schema
+  ===================================================
+  Custom extension to DITA OT for semiconductor documentation.
+  Defines the structure for Register Database files used in the
+  Bridgon SoC DocFlow pipeline.
+
+  Root element: <registers>
+  Namespace:    http://bridgon.com/schemas/register-db
+
+  An .rdb file defines hardware registers with their bitfield
+  descriptions, access types, offsets, and reset values in an
+  IP-XACT-compatible XML format. The DITA resolver transforms
+  these into DITA reference topics with SVG diagrams.
+
+  Schema version: 2.0
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://bridgon.com/schemas/register-db"
+           xmlns="http://bridgon.com/schemas/register-db"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="2.0">
+
+  <xs:annotation>
+    <xs:documentation>
+      Bridgon Register Database (.rdb) Schema.
+
+      Defines hardware registers, bitfields, access types, offsets,
+      reset values, and descriptions. RDB files are the primary
+      source-of-truth for register-level documentation.
+    </xs:documentation>
+  </xs:annotation>
+
+  <!-- ==================================================================
+       Root Element: registers
+       ================================================================== -->
+  <xs:element name="registers">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="register" type="registerType" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute name="ip_name" type="xs:string" use="required">
+        <xs:annotation>
+          <xs:documentation>Name of the IP block (e.g., "FlexCAN", "DMA").</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="regs_id" type="xs:string" use="required">
+        <xs:annotation>
+          <xs:documentation>Unique identifier for this register set (e.g., "CAN_CORE", "DMA_ENGINE").</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- ==================================================================
+       Register Type
+       ================================================================== -->
+  <xs:complexType name="registerType">
+    <xs:sequence>
+      <xs:element name="description" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Human-readable description of the register's function.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="bitfield" type="bitfieldType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Individual bitfield within this register.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="offset" type="xs:string" use="required">
+      <xs:annotation>
+        <xs:documentation>Byte offset of the register from the IP base address (hex, e.g., "0x00", "0x04").</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="name" type="xs:string" use="required">
+      <xs:annotation>
+        <xs:documentation>Short register mnemonic (e.g., "MCR", "CTRL1", "STATUS").</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="display_name" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>Human-readable register name (e.g., "Module Configuration Register").</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="size" type="xs:positiveInteger" default="32">
+      <xs:annotation>
+        <xs:documentation>Register width in bits (typically 8, 16, 32, or 64).</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="access" type="accessType" default="RW">
+      <xs:annotation>
+        <xs:documentation>Register-level access type.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="reset_value" type="xs:string" default="0x0">
+      <xs:annotation>
+        <xs:documentation>Reset value of the register (hex, e.g., "0x5000000F").</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <!-- ==================================================================
+       Bitfield Type
+       ================================================================== -->
+  <xs:complexType name="bitfieldType">
+    <xs:sequence>
+      <xs:element name="description" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Description of the bitfield's function, including encoding details.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="encoding" type="encodingType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Encoding value for enumerated bitfields.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="msb" type="xs:nonNegativeInteger" use="required">
+      <xs:annotation>
+        <xs:documentation>Most significant bit position (0-based).</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="lsb" type="xs:nonNegativeInteger" use="required">
+      <xs:annotation>
+        <xs:documentation>Least significant bit position (0-based).</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="name" type="xs:string" use="required">
+      <xs:annotation>
+        <xs:documentation>Bitfield name/mnemonic (e.g., "MDIS", "FRZ", "MAXMB").</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="access" type="accessType" default="RW">
+      <xs:annotation>
+        <xs:documentation>Access type for this bitfield.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <!-- ==================================================================
+       Encoding Type
+       ================================================================== -->
+  <xs:complexType name="encodingType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="value" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Bitfield value for this encoding entry (hex or binary).</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="meaning" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Human-readable meaning of this encoding value.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <!-- ==================================================================
+       Access Type Enumeration
+       ================================================================== -->
+  <xs:simpleType name="accessType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="RW">
+        <xs:annotation><xs:documentation>Read/Write — fully accessible</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="RO">
+        <xs:annotation><xs:documentation>Read Only — write has no effect</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="WO">
+        <xs:annotation><xs:documentation>Write Only — read returns undefined</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="W1C">
+        <xs:annotation><xs:documentation>Write 1 to Clear — write 1 clears the bit</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="W0C">
+        <xs:annotation><xs:documentation>Write 0 to Clear — write 0 clears the bit</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="RZ">
+        <xs:annotation><xs:documentation>Read returns Zero</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="RSVD">
+        <xs:annotation><xs:documentation>Reserved — must not be modified</xs:documentation></xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>

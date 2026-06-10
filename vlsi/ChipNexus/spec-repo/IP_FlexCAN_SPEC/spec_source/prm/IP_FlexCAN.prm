@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  IP_FlexCAN_paramdef.xml
+  Parameter definitions for the FlexCAN IP block.
+  This file defines all configurable parameters—both RTL and non-RTL—
+  describing their default values, limits, descriptions, and types.
+-->
+<paramdef
+    xmlns="http://bridgon.com/schemas/param-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://bridgon.com/schemas/param-mapping http://bridgon.com/schemas/bridgon-prm.xsd" spec_id="IP_FlexCAN">
+  
+  <parameter id="CAN_NUM_MB" class="integer" source="RTL">
+    <name>Number of Mailboxes</name>
+    <default>64</default>
+    <low_limit>16</low_limit>
+    <high_limit>128</high_limit>
+    <description>Number of message buffers (mailboxes) implemented in the FlexCAN controller. This parameter determines the total storage capacity for incoming and outgoing CAN frames.</description>
+  </parameter>
+
+  <parameter id="CAN_CLK_FREQ" class="integer" source="RTL">
+    <name>CAN Clock Frequency (Hz)</name>
+    <default>80000000</default>
+    <low_limit>10000000</low_limit>
+    <high_limit>200000000</high_limit>
+    <description>The peripheral clock frequency driving the FlexCAN module, in Hz. This value is used to calculate bit-timing prescalers.</description>
+  </parameter>
+
+  <parameter id="CAN_FD_ENABLE" class="boolean" source="RTL">
+    <name>CAN-FD Support</name>
+    <default>true</default>
+    <accepted_values>true,false</accepted_values>
+    <description>When true, the module supports CAN Flexible Data-rate (CAN-FD) frames with payloads up to 64 bytes and higher bit rates during the data phase.</description>
+  </parameter>
+
+  <parameter id="CAN_RXFIFO_DEPTH" class="integer" source="RTL">
+    <name>RX FIFO Depth</name>
+    <default>32</default>
+    <low_limit>1</low_limit>
+    <high_limit>128</high_limit>
+    <description>Depth of the hardware receive FIFO. Larger values provide more buffering against interrupt latency at the cost of gate count.</description>
+  </parameter>
+
+  <parameter id="CAN_TXMB_COUNT" class="integer" source="RTL">
+    <name>Transmit Mailbox Count</name>
+    <default>8</default>
+    <low_limit>1</low_limit>
+    <high_limit>32</high_limit>
+    <description>Number of dedicated transmit mailboxes. These are separate from configurable mailboxes and are used for prioritized transmission scheduling.</description>
+  </parameter>
+
+  <parameter id="CAN_STD_FILTER_MASK" class="integer" source="RTL">
+    <name>Standard ID Filter Mask</name>
+    <default>0x7FF</default>
+    <low_limit>0x000</low_limit>
+    <high_limit>0x7FF</high_limit>
+    <description>Default acceptance mask for standard (11-bit) CAN identifiers on all mailboxes.</description>
+  </parameter>
+
+  <parameter id="CAN_EXT_FILTER_MASK" class="integer" source="RTL">
+    <name>Extended ID Filter Mask</name>
+    <default>0x1FFFFFFF</default>
+    <low_limit>0x00000000</low_limit>
+    <high_limit>0x1FFFFFFF</high_limit>
+    <description>Default acceptance mask for extended (29-bit) CAN identifiers on all mailboxes.</description>
+  </parameter>
+
+  <parameter id="CAN_MEM_MAP_OFFSET" class="integer" source="RTL">
+    <name>Module Base Address Offset</name>
+    <default>0x0000</default>
+    <low_limit>0x0000</low_limit>
+    <high_limit>0xFFFFF000</high_limit>
+    <description>Base address offset of the FlexCAN module within the peripheral address space. Must be aligned to a 4KB boundary.</description>
+  </parameter>
+
+  <!-- ==================== Non-RTL Parameters ==================== -->
+  
+  <parameter id="CAN_DOC_REVISION" class="string" source="nonrtl">
+    <name>Documentation Revision</name>
+    <default>Rev. 2.1</default>
+    <description>Document revision string that appears in the footer and revision history table of the published reference manual.</description>
+  </parameter>
+
+  <parameter id="CAN_SECURITY_CLASS" class="enumerated" source="nonrtl">
+    <name>Security Classification</name>
+    <default>CONFIDENTIAL</default>
+    <accepted_values>PUBLIC,INTERNAL,CONFIDENTIAL,RESTRICTED</accepted_values>
+    <description>Security classification label applied to the published document. Determines watermarks, distribution lists, and export control handling.</description>
+  </parameter>
+
+  <parameter id="CAN_PUBLISH_MODE" class="enumerated" source="nonrtl">
+    <name>Publishing Mode</name>
+    <default>FULL</default>
+    <accepted_values>FULL,PREVIEW,INTERNAL,DRAFT</accepted_values>
+    <description>Controls the publishing pipeline behaviour. FULL produces a complete reference manual; PREVIEW excludes sensitive register details; INTERNAL includes reviewer annotations; DRAFT includes watermark and change-track indicators.</description>
+  </parameter>
+
+  <parameter id="CAN_CHIP_PREFIX" class="string" source="nonrtl">
+    <name>Chip Prefix</name>
+    <default>MCU_X</default>
+    <description>The chip family prefix used to namespace the instance files and to select chip-specific parameter overrides from the Non-RTL Parameter Database.</description>
+  </parameter>
+
+</paramdef>

@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Powered SoC RM Generation Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #0c0e14;
+  --bg2:      #13151e;
+  --bg3:      #1a1d28;
+  --border:   #252836;
+  --border2:  #2f3347;
+  --text:     #e2e4ed;
+  --text2:    #8b8fa8;
+  --text3:    #555970;
+  --blue:     #4a9eff;
+  --blue-dim: #1a3a5c;
+  --teal:     #2dd4a0;
+  --teal-dim: #0d3326;
+  --amber:    #f5a623;
+  --amber-dim:#3d2800;
+  --purple:   #a78bfa;
+  --purple-dim:#2a1f4a;
+  --coral:    #ff6b6b;
+  --coral-dim:#3d1515;
+  --green:    #4ade80;
+  --mono:     'IBM Plex Mono', monospace;
+  --sans:     'IBM Plex Sans', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* grid background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container { max-width: 1100px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
+
+/* HEADER */
+header {
+  padding: 64px 0 48px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 56px;
+}
+.header-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--teal);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+h1 {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 300;
+  line-height: 1.15;
+  color: var(--text);
+  letter-spacing: -.02em;
+  margin-bottom: 16px;
+}
+h1 em { color: var(--blue); font-style: normal; font-weight: 500; }
+.subtitle {
+  color: var(--text2);
+  font-weight: 300;
+  font-size: 15px;
+  max-width: 600px;
+  line-height: 1.7;
+}
+.meta-row {
+  display: flex;
+  gap: 24px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+.meta-item {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.meta-item span { color: var(--text2); }
+
+/* SECTION TITLES */
+.section-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+section { margin-bottom: 72px; }
+
+h2 {
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text);
+  letter-spacing: -.01em;
+  margin-bottom: 8px;
+}
+.section-desc {
+  color: var(--text2);
+  font-size: 13px;
+  margin-bottom: 32px;
+  max-width: 640px;
+  line-height: 1.7;
+}
+
+/* ═══════════════════════════════════════
+   PIPELINE FLOW
+═══════════════════════════════════════ */
+.pipeline { display: flex; flex-direction: column; gap: 0; }
+
+.stage-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.stage-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0 10px;
+}
+.stage-num {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  width: 24px;
+  text-align: right;
+  flex-shrink: 0;
+}
+.stage-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text3);
+}
+
+.stage-cards {
+  display: grid;
+  gap: 8px;
+  margin-left: 34px;
+  margin-bottom: 4px;
+}
+.stage-cards.cols-1 { grid-template-columns: 1fr; }
+.stage-cards.cols-2 { grid-template-columns: repeat(2, 1fr); }
+.stage-cards.cols-3 { grid-template-columns: repeat(3, 1fr); }
+
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: border-color .2s, background .2s, transform .15s;
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: var(--card-accent, var(--border2));
+  transition: background .2s;
+}
+.card:hover { border-color: var(--card-accent, var(--border2)); background: var(--bg3); transform: translateY(-1px); }
+.card:hover::before { background: var(--card-accent, var(--border2)); }
+.card.active { border-color: var(--card-accent, var(--border2)); background: var(--bg3); }
+
+.card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
+.card-name { font-size: 13px; font-weight: 500; color: var(--text); }
+.card-ext { font-family: var(--mono); font-size: 10px; padding: 2px 6px; border-radius: 3px; border: 1px solid; flex-shrink: 0; }
+.card-sub { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+/* accent colors */
+.c-blue   { --card-accent: var(--blue);   }
+.c-teal   { --card-accent: var(--teal);   }
+.c-amber  { --card-accent: var(--amber);  }
+.c-purple { --card-accent: var(--purple); }
+.c-coral  { --card-accent: var(--coral);  }
+.c-green  { --card-accent: var(--green);  }
+
+.c-blue   .card-ext { color: var(--blue);   border-color: var(--blue-dim);   background: var(--blue-dim);   }
+.c-teal   .card-ext { color: var(--teal);   border-color: var(--teal-dim);   background: var(--teal-dim);   }
+.c-amber  .card-ext { color: var(--amber);  border-color: var(--amber-dim);  background: var(--amber-dim);  }
+.c-purple .card-ext { color: var(--purple); border-color: var(--purple-dim); background: var(--purple-dim); }
+.c-coral  .card-ext { color: var(--coral);  border-color: var(--coral-dim);  background: var(--coral-dim);  }
+.c-green  .card-ext { color: var(--green);  border-color: #0d3320; background: #0d3320; }
+
+/* connector arrow between stages */
+.connector {
+  display: flex;
+  align-items: center;
+  margin-left: 34px;
+  padding: 6px 0;
+}
+.connector-line {
+  width: 1px;
+  height: 24px;
+  background: var(--border2);
+  margin-left: 16px;
+}
+.connector-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--border2);
+  margin-left: 13px;
+  margin-top: 2px;
+}
+
+/* DETAIL PANEL */
+.detail-panel {
+  margin-left: 34px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 20px 22px;
+  display: none;
+  animation: fadeIn .15s ease;
+}
+.detail-panel.open { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
+.dp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+.dp-title { font-size: 14px; font-weight: 500; color: var(--text); }
+.dp-close {
+  background: none; border: none; color: var(--text3); cursor: pointer;
+  font-size: 18px; line-height: 1; padding: 0; transition: color .15s;
+}
+.dp-close:hover { color: var(--text); }
+.dp-body { font-size: 13px; color: var(--text2); line-height: 1.75; }
+.dp-body p { margin-bottom: 10px; }
+.dp-body p:last-child { margin-bottom: 0; }
+.dp-body code {
+  font-family: var(--mono);
+  font-size: 11px;
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: 3px;
+  padding: 1px 5px;
+  color: var(--teal);
+}
+.dp-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+.dp-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 3px;
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  color: var(--text3);
+}
+
+/* ═══════════════════════════════════════
+   SPEC HIERARCHY DIAGRAM
+═══════════════════════════════════════ */
+.hierarchy {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 28px;
+  font-family: var(--mono);
+  font-size: 12px;
+  overflow-x: auto;
+}
+.tier {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin-bottom: 0;
+}
+.tier-label {
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text3);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  padding: 8px 0;
+  margin-right: 16px;
+  flex-shrink: 0;
+  min-width: 20px;
+  text-align: center;
+}
+.tier-box {
+  flex: 1;
+  border: 1px solid;
+  border-radius: 6px;
+  padding: 16px 18px;
+  position: relative;
+}
+.tier-box.t3 { border-color: var(--blue-dim); background: rgba(74,158,255,.04); }
+.tier-box.t2 { border-color: #1a3326; background: rgba(45,212,160,.04); }
+.tier-box.t1 { border-color: #2a2000; background: rgba(245,166,35,.04); }
+
+.tier-name {
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tier-name.blue { color: var(--blue); }
+.tier-name.teal { color: var(--teal); }
+.tier-name.amber { color: var(--amber); }
+
+.dir-tree {
+  color: var(--text3);
+  font-size: 11px;
+  line-height: 1.9;
+}
+.dir-tree .dir-name { color: var(--text2); }
+.dir-tree .file-name { color: var(--text3); }
+.dir-tree .file-name.highlight { color: var(--amber); }
+.dir-tree .comment { color: var(--text3); font-size: 10px; }
+
+.tier-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 0;
+}
+.tc-line { width: 1px; flex: 1; background: var(--border2); }
+.tc-arrow { color: var(--text3); font-size: 14px; line-height: 1; margin: 2px 0; }
+
+.tier-row { display: flex; flex-direction: column; gap: 0; }
+.tier-row-inner { display: flex; gap: 12px; }
+
+/* ═══════════════════════════════════════
+   FILE TYPE CARDS
+═══════════════════════════════════════ */
+.filetype-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+.ft-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+}
+.ft-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+.ft-card.prm::before  { background: var(--amber); }
+.ft-card.vmap::before { background: var(--teal); }
+.ft-card.pub::before  { background: var(--blue); }
+.ft-card.rdb::before  { background: var(--coral); }
+
+.ft-ext {
+  font-family: var(--mono);
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.ft-card.prm  .ft-ext { color: var(--amber); }
+.ft-card.vmap .ft-ext { color: var(--teal); }
+.ft-card.pub  .ft-ext { color: var(--blue); }
+.ft-card.rdb  .ft-ext { color: var(--coral); }
+
+.ft-name { font-size: 13px; color: var(--text2); margin-bottom: 12px; }
+.ft-desc { font-size: 12px; color: var(--text2); line-height: 1.65; margin-bottom: 12px; }
+.ft-types { display: flex; flex-wrap: wrap; gap: 5px; }
+.ft-type {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  color: var(--text3);
+}
+
+/* ═══════════════════════════════════════
+   VERIFIC SECTION
+═══════════════════════════════════════ */
+.verific-flow {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  gap: 0;
+  align-items: center;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px;
+}
+.vf-box {
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 14px 16px;
+  text-align: center;
+}
+.vf-box .vf-title { font-size: 12px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+.vf-box .vf-sub   { font-size: 11px; color: var(--text3); line-height: 1.5; }
+.vf-arrow { text-align: center; color: var(--text3); font-size: 20px; padding: 0 12px; }
+.vf-box.hi { border-color: var(--purple-dim); }
+.vf-box.hi .vf-title { color: var(--purple); }
+
+/* ═══════════════════════════════════════
+   CODE SNIPPET
+═══════════════════════════════════════ */
+.code-block {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.code-header {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.code-lang {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.code-fname { font-family: var(--mono); font-size: 11px; color: var(--teal); }
+pre {
+  padding: 16px 18px;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.7;
+  color: #cdd6f4;
+  overflow-x: auto;
+}
+pre .kw  { color: #cba6f7; }
+pre .fn  { color: #89b4fa; }
+pre .str { color: #a6e3a1; }
+pre .cmt { color: #6c7086; }
+pre .num { color: #fab387; }
+pre .attr{ color: #89dceb; }
+
+/* ═══════════════════════════════════════
+   OUTPUTS SECTION
+═══════════════════════════════════════ */
+.outputs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+}
+.out-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 20px 22px;
+}
+.out-icon { font-size: 22px; margin-bottom: 12px; }
+.out-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
+.out-desc  { font-size: 12px; color: var(--text2); line-height: 1.65; }
+.out-stack { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 12px; }
+.out-tag   {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  color: var(--text3);
+}
+
+/* NAV */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(12,14,20,.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0;
+}
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  height: 44px;
+  overflow-x: auto;
+}
+.nav-link {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+  text-decoration: none;
+  padding: 0 16px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  transition: color .15s;
+  border-bottom: 2px solid transparent;
+  letter-spacing: .04em;
+}
+.nav-link:hover { color: var(--text); }
+.nav-link.active { color: var(--teal); border-bottom-color: var(--teal); }
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 0;
+  margin-top: 40px;
+}
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.footer-name { font-size: 13px; color: var(--text2); }
+.footer-meta { font-family: var(--mono); font-size: 11px; color: var(--text3); }
+
+@media (max-width: 640px) {
+  .stage-cards.cols-3 { grid-template-columns: 1fr; }
+  .stage-cards.cols-2 { grid-template-columns: 1fr; }
+  .verific-flow { grid-template-columns: 1fr; gap: 8px; }
+  .vf-arrow { transform: rotate(90deg); }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-link active" href="#pipeline">Pipeline</a>
+    <a class="nav-link" href="#hierarchy">Spec Hierarchy</a>
+    <a class="nav-link" href="#filetypes">File Types</a>
+    <a class="nav-link" href="#verific">RTL Analysis</a>
+    <a class="nav-link" href="#paramdb">Param DB</a>
+    <a class="nav-link" href="#ai">AI Authoring</a>
+    <a class="nav-link" href="#outputs">Outputs</a>
+  </div>
+</nav>
+
+<div class="container">
+
+<header>
+  <div class="header-tag">// Bridgon · Documentation Engineering</div>
+  <h1>AI-Powered <em>SoC Reference Manual</em><br>Generation Platform</h1>
+  <p class="subtitle">An end-to-end toolchain integrating Verific RTL elaboration, automated DITA spec assembly, Claude-powered chapter authoring, and a RAG-based natural language RM Explorer.</p>
+  <div class="meta-row">
+    <div class="meta-item">Author <span>Jayant Kaushik</span></div>
+    <div class="meta-item">Role <span>Principal Technical Writer</span></div>
+    <div class="meta-item">Stack <span>Python · TypeScript · DITA-OT · Claude API · FAISS</span></div>
+    <div class="meta-item">Date <span>June 2025</span></div>
+  </div>
+</header>
+
+<!-- ═══════════════════════ PIPELINE ═══════════════════════ -->
+<section id="pipeline">
+  <div class="section-label">01 &nbsp; End-to-end pipeline</div>
+  <h2>Generation Pipeline</h2>
+  <p class="section-desc">Eight stages from raw RTL inputs to published PDF, WebHelp, and a RAG-powered natural language RM Explorer. Click any card for details.</p>
+
+  <div class="pipeline">
+
+    <!-- INPUTS -->
+    <div class="stage-group">
+      <div class="stage-header">
+        <span class="stage-num">—</span>
+        <span class="stage-title">Inputs</span>
+      </div>
+      <div class="stage-cards cols-3">
+        <div class="card c-purple" onclick="toggleDetail('d-rtl', this)">
+          <div class="card-top"><span class="card-name">RTL file list</span><span class="card-ext">.f / .sv / .vhd</span></div>
+          <div class="card-sub">SystemVerilog / VHDL source files for the target SoC or subsystem</div>
+        </div>
+        <div class="card c-blue" onclick="toggleDetail('d-mm', this)">
+          <div class="card-top"><span class="card-name">Top spec memory map</span><span class="card-ext">.xlsx</span></div>
+          <div class="card-sub">IP instances, spec repo paths, .rdb links, start/end addresses, slot sizes</div>
+        </div>
+        <div class="card c-blue" onclick="toggleDetail('d-db', this)">
+          <div class="card-top"><span class="card-name">Non-RTL param DB</span><span class="card-ext">.json</span></div>
+          <div class="card-sub">Hierarchical JSON — doc-specific parameter associations keyed by chip prefix</div>
+        </div>
+      </div>
+
+      <div id="d-rtl" class="detail-panel">
+        <div class="dp-header"><span class="dp-title">RTL file list</span><button class="dp-close" onclick="closeDetail('d-rtl')">×</button></div>
+        <div class="dp-body">
+          <p>The RTL file list (<code>.f</code>) references all SystemVerilog (IEEE 1800) and VHDL (IEEE 1076) source files that comprise the SoC or subsystem design. This is the primary input to the Verific parser and elaborator.</p>
+          <p>The file list must include the complete design hierarchy — from the chip top-level module down through all subsystems and IP instances — so that Verific can perform full static elaboration and resolve all parameter overrides at every level.</p>
+        </div>
+        <div class="dp-tags"><span class="dp-tag">SystemVerilog</span><span class="dp-tag">VHDL</span><span class="dp-tag">IEEE 1800</span><span class="dp-tag">IEEE 1076</span></div>
+      </div>
+      <div id="d-mm" class="detail-panel">
+        <div class="dp-header"><span class="dp-title">Top spec memory map (XLSX)</span><button class="dp-close" onclick="closeDetail('d-mm')">×</button></div>
+        <div class="dp-body">
+          <p>The memory map XLSX is the single authoritative source for what is in scope for the current SoC or subsystem spec. Each row describes one IP instance with: IP name, spec repository path (git URL), <code>.rdb</code> register file link, start address, end address, slot size, and address space identifier.</p>
+          <p>The pipeline reads this file to populate spec directories from repository paths and to establish the address layout for memory map generation and <code>.vmap</code> register instance construction.</p>
+        </div>
+        <div class="dp-tags"><span class="dp-tag">openpyxl</span><span class="dp-tag">address layout</span><span class="dp-tag">spec repo paths</span></div>
+      </div>
+      <div id="d-db" class="detail-panel">
+        <div class="dp-header"><span class="dp-title">Non-RTL parameter database</span><button class="dp-close" onclick="closeDetail('d-db')">×</button></div>
+        <div class="dp-body">
+          <p>A hierarchical JSON file (version-controlled alongside documentation source) recording associations between documentation-specific parameters — IP revision identifiers, feature flags, chip-tier labels, protocol variant names — and specific IP, subsystem, and SoC instances.</p>
+          <p>Values are keyed by chip prefix (e.g. <code>IMX95</code>) and instance name, enabling the merge step to extract the correct non-RTL value for each instance in the target spec. This replaces the prior unstructured spreadsheet approach with a schema-governed, diffable data source.</p>
+        </div>
+        <div class="dp-tags"><span class="dp-tag">JSON</span><span class="dp-tag">chip prefix keying</span><span class="dp-tag">version-controlled</span><span class="dp-tag">non-RTL params</span></div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+
+    <!-- STAGE 1 -->
+    <div class="stage-group">
+      <div class="stage-header"><span class="stage-num">01</span><span class="stage-title">RTL analysis &amp; spec population</span></div>
+      <div class="stage-cards cols-2">
+        <div class="card c-purple" onclick="toggleDetail('d-verific', this)">
+          <div class="card-top"><span class="card-name">Verific RTL analysis</span><span class="card-ext">elaboration</span></div>
+          <div class="card-sub">SV/VHDL parse → static elaboration → module_parameters.json</div>
+        </div>
+        <div class="card c-blue" onclick="toggleDetail('d-repo', this)">
+          <div class="card-top"><span class="card-name">Spec repo population</span><span class="card-ext">git</span></div>
+          <div class="card-sub">Clone/update each IP spec from XLSX repository paths</div>
+        </div>
+      </div>
+      <div id="d-verific" class="detail-panel">
+        <div class="dp-header"><span class="dp-title">Verific RTL analysis &amp; elaboration</span><button class="dp-close" onclick="closeDetail('d-verific')">×</button></div>
+        <div class="dp-body">
+          <p>Uses <strong>Verific Design Automation's</strong> SystemVerilog/VHDL parser and RTL elaborator — an industry-grade tool supporting the complete IEEE 1800 and IEEE 1076 standards. Analysis creates parse trees and performs type inferencing; RTL elaboration then binds instances to modules, resolves library references, propagates <code>defparam</code> assignments, unrolls <code>generate</code> statements, and resolves all hierarchical names.</p>
+          <p>After elaboration, every parameter override at every level of the design hierarchy is fully resolved. A Python script using Verific's API walks the elaborated hierarchy and dumps <code>module_parameters.json</code> — capturing resolved parameter values, instance paths, module names, and register definitions for every IP instance in the design. Replaces the previous inaccurate LEC-based extraction approach.</p>
+        </div>
+        <div class="dp-tags"><span class="dp-tag">Verific</span><span class="dp-tag">RTL elaboration</span><span class="dp-tag">defparam resolution</span><span class="dp-tag">module_parameters.json</span><span class="dp-tag">Python API</span></div>
+      </div>
+      <div id="d-repo" class="detail-panel">
+        <div class="dp-header"><span class="dp-title">Spec repo population</span><button class="dp-close" onclick="closeDetail('d-repo')">×</button></div>
+        <div class="dp-body">
+          <p>In parallel with Verific analysis, the pipeline reads the memory map XLSX and uses <code>git clone</code> / <code>git pull</code> to populate each IP spec directory from its repository path. This ensures the complete <code>spec_source</code> tree — <code>maps/</code>, <code>topics/</code>, <code>inst/</code>, <code>params/</code>, <code>regs/</code>, <code>images/</code> — is present locally before assembly begins.</p>
+        </div>
+        <div class="dp-tags"><span class="dp-tag">git</span><span class="dp-tag">spec_source tree</span><span class="dp-tag">IP spec directories</span></div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+
+    <!-- STAGE 2 -->
+    <div class="stage-group">
+      <div class="stage-header"><span class="stage-num">02</span><span class="stage-title">Parameter merge</span></div>
+      <div class="stage-cards cols-1">
+        <div class="card c-teal" onclick="toggleDetail('d-merge', this)">
+          <div class="card-top"><span class="card-name">RTL + non-RTL parameter merge → <strong style="color:var(--teal)">.vmap</strong></span></div>
+          <div class="card-sub">Combines Verific RTL params + non-RTL DB (chip-prefix keyed) into a unified value map with register instance elements per IP</div>
+        </div>
+      </div>
+      <div id="d-merge" class="detail-panel">
+        <div class="dp-header"><span class="dp-title">RTL + non-RTL merge → .vmap</span><button class="dp-close" onclick="closeDetail('d-merge')">×</button></div>
+        <div class="dp-body">
+          <p>The merge step combines <code>module_parameters.json</code> (RTL-sourced, from Verific elaboration) with the non-RTL parameter DB (doc-specific params, keyed by chip prefix) to produce a unified <code>.vmap</code> (value map) file — the central artifact of the pipeline.</p>
+          <p>For each IP instance in the memory map, the pipeline creates a <strong>register instance element</strong> in the <code>.vmap</code>. Each register instance links its <code>.rdb</code> register database file and carries both RTL and non-RTL parameter bindings as <code>&lt;param-binding&gt;</code> elements. Multiple register instances can reference the same <code>.rdb</code> with different bindings — enabling per-instance parameter variation of shared register sets.</p>
+        </div>
+        <div class="dp-tags"><span class="dp-tag">.vmap</span><span class="dp-tag">register instances</span><span class="dp-tag">RTL params</span><span class="dp-tag">non-RTL params</span><span class="dp-tag">chip prefix</span></div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+
+    <!-- STAGE 3 -->
+    <div class="stage-group">
+      <div class="stage-header"><span class="stage-num">03</span><span class="stage-title">Automated spec source generation</span></div>
+      <div class="stage-cards cols-3">
+        <div class="card c-amber" onclick="toggleDetail('d-ditamap', this)">
+          <div class="card-top"><span class="card-name">Top DITA map</span><span class="card-ext">.ditamap</span></div>
+          <div class="card-sub">Auto-generated from .vmap — IP spec references in correct hierarchical order</div>
+        </div>
+        <div class="card c-amber" onclick="toggleDetail('d-pub', this)">
+          <div class="card-top"><span class="card-name">Top publishing manifest</span><span class="card-ext">.pub</span></div>
+          <div class="card-sub">Hierarchical resolve groups and instance selectors for register deduplication</div>
+        </div>
+        <div class="card c-amber" onclick="toggleDetail('d-prm', this)">
+          <div class="card-top"><span class="card-name">Top param definitions</span><span class="card-ext">.prm</span></div>
+          <div class="card-sub">SoC-level parameter definitions — IP .prm files stay in their spec dirs</div>
+        </div>
+      </div>
+      <div class="stage-cards cols-2" style="margin-top:8px">
+        <div class="card c-amber" onclick="toggleDetail('d-chipsc', this)">
+          <div class="card-top"><span class="card-name">Chip-specific DITA sections</span><span class="card-ext">.dita</span></div>
+          <div class="card-sub">Per-IP intro + config topics auto-generated and inserted into the top DITA map and .vmap</div>
+        </div>
+        <div class="card c-purple" onclick="toggleDetail('d-regval', this)">
+          <div class="card-top"><span class="card-name">Register spec validation</span><span class="card-ext">report</span></div>
+          <div class="card-sub">Verific register data cross-validated against .rdb — flags reset value / bit-range mismatches</div>
+        </div>
+      </div>
+      <div id="d-ditamap" class="detail-panel">
+        <div class="dp-header"><span class="dp-title">Top DITA map generation</span><button class="dp-close" onclick="closeDetail('d-ditamap')">×</button></div>
+        <div class="dp-body"><p>Auto-generated from the <code>.vmap</code> and memory map XLSX. Iterates over register instances to insert <code>&lt;topicref format="ditamap"&gt;</code> elements referencing each IP spec's <code>ip.ditamap</code> in the correct hierarchical order. AI-authored SoC chapter topics are inserted at the front of the map.</p></div>
+        <div class="dp-tags"><span class="dp-tag">.ditamap</span><span class="dp-tag">topicref</span><span class="dp-tag">hierarchical assembly</span></div>
+      </div>
+      <div id="d-pub" class="detail-panel">
+        <div class="dp-header"><span class="dp-title">Top publishing manifest (.pub)</span><button class="dp-close" onclick="closeDetail('d-pub')">×</button></div>
+        <div class="dp-body">
+          <p>The <code>.pub</code> publishing manifest defines <strong>instance selectors</strong> (referencing a <code>.vmap</code> file or a named instance) and <strong>hierarchical resolve groups</strong> that govern how register information is merged and deduplicated during PDF and WebHelp publishing.</p>
+          <p>When the same IP appears at multiple base addresses, the resolve group ensures common register content appears only once, with per-instance address information consolidated in a generated memory map table. The top-level <code>.pub</code> references IP-level <code>.pub</code> files via <code>&lt;include-proc&gt;</code>, building a complete hierarchical publication tree.</p>
+        </div>
+        <div class="dp-tags"><span class="dp-tag">.pub</span><span class="dp-tag">resolve groups</span><span class="dp-tag">instance selectors</span><span class="dp-tag">register deduplication</span></div>
+      </div>
+      <div id="d-prm" class="detail-panel">
+        <div class="dp-header"><span class="dp-title">Top parameter definitions (.prm)</span><button class="dp-close" onclick="closeDetail('d-prm')">×</button></div>
+        <div class="dp-body"><p>Consolidated SoC-level <code>.prm</code> declaring all SoC-specific parameters — type (boolean / integer / float / string / enumerated), default value, allowed range, and RTL vs non-RTL source. IP-level <code>.prm</code> files remain in their spec directories and are not duplicated at the SoC level, maintaining a clean single-source inheritance model.</p></div>
+        <div class="dp-tags"><span class="dp-tag">.prm</span><span class="dp-tag">boolean/integer/float/string/enum</span><span class="dp-tag">RTL vs non-RTL</span></div>
+      </div>
+      <div id="d-chipsc" class="detail-panel">
+        <div class="dp-header"><span class="dp-title">Chip-specific DITA sections</span><button class="dp-close" onclick="closeDetail('d-chipsc')">×</button></div>
+        <div class="dp-body"><p>For each IP instance in the SoC, the pipeline auto-generates chip-specific DITA topic files — a chip intro topic and a chip configuration topic — and inserts references to these into the top-level DITA map and the <code>.vmap</code>. Enables SoC-specific narrative and configuration content without modifying the reusable IP spec source.</p></div>
+        <div class="dp-tags"><span class="dp-tag">chip intro</span><span class="dp-tag">chip config</span><span class="dp-tag">DITA topics</span><span class="dp-tag">single-source preservation</span></div>
+      </div>
+      <div id="d-regval" class="detail-panel">
+        <div class="dp-header"><span class="dp-title">Register spec validation</span><button class="dp-close" onclick="closeDetail('d-regval')">×</button></div>
+        <div class="dp-body"><p>Verific elaboration extracts complete register definitions alongside parameter values — register names, bit-field names, bit positions, reset values, access types. These are cross-validated against the corresponding <code>.rdb</code> files in each IP spec. Discrepancies (missing registers, reset value mismatches, bit-range errors, access type differences) are surfaced as structured reports in the VSCode plugin, catching a class of errata before tape-out.</p></div>
+        <div class="dp-tags"><span class="dp-tag">reset value check</span><span class="dp-tag">bit-range check</span><span class="dp-tag">access type check</span><span class="dp-tag">pre-tape-out errata</span></div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+
+    <!-- STAGE 4 -->
+    <div class="stage-group">
+      <div class="stage-header"><span class="stage-num">04</span><span class="stage-title">AI chapter authoring</span></div>
+      <div class="stage-cards cols-1">
+        <div class="card c-coral" onclick="toggleDetail('d-ai', this)">
+          <div class="card-top"><span class="card-name">Claude API agent — SoC chapter authoring</span><span class="card-ext">claude-sonnet</span></div>
+          <div class="card-sub">Reads SoC architecture spec + .vmap context → outputs DITA-conformant concept and reference topics</div>
+        </div>
+      </div>
+      <div id="d-ai" class="detail-panel">
+        <div class="dp-header"><span class="dp-title">AI SoC chapter authoring</span><button class="dp-close" onclick="closeDetail('d-ai')">×</button></div>
+        <div class="dp-body">
+          <p>A Claude API agent (claude-sonnet) receives: (1) the relevant section of the SoC architecture specification document, (2) a DITA structural template defining required topic type and section hierarchy, and (3) the merged <code>.vmap</code> parameter context providing accurate instance names, base addresses, and feature flags.</p>
+          <p>The agent outputs DITA-conformant XML: <code>&lt;concept&gt;</code> topics for architectural narratives (clocking overview, power domains, boot sequence) and <code>&lt;reference&gt;</code> topics for tabular data (interrupt matrix, memory map summary). Parameter context ensures cross-references to instance names and addresses are accurate.</p>
+        </div>
+        <div class="dp-tags"><span class="dp-tag">Claude API</span><span class="dp-tag">claude-sonnet</span><span class="dp-tag">DITA concept/reference</span><span class="dp-tag">.vmap context</span><span class="dp-tag">prompt engineering</span></div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+
+    <!-- STAGE 5 -->
+    <div class="stage-group">
+      <div class="stage-header"><span class="stage-num">05</span><span class="stage-title">DITA-OT resolution &amp; publishing</span></div>
+      <div class="stage-cards cols-2">
+        <div class="card c-blue" onclick="toggleDetail('d-ot', this)">
+          <div class="card-top"><span class="card-name">DITA-OT + param resolver</span><span class="card-ext">Python wrapper</span></div>
+          <div class="card-sub">Evaluates applies-when conditions, resolves all params → fully resolved parameter-free DITA</div>
+        </div>
+        <div class="card c-blue" onclick="toggleDetail('d-rdb', this)">
+          <div class="card-top"><span class="card-name">.rdb → DITA transform</span><span class="card-ext">XSLT / Python</span></div>
+          <div class="card-sub">Register database files converted to DITA reference topics with bit-field diagrams + tables</div>
+        </div>
+      </div>
+      <div id="d-ot" class="detail-panel">
+        <div class="dp-header"><span class="dp-title">DITA-OT wrapper + param resolver</span><button class="dp-close" onclick="closeDetail('d-ot')">×</button></div>
+        <div class="dp-body">
+          <p>A Python wrapper around DITA-OT 3.x runs a resolution preprocessing pass before standard transformation. All DITA topics, maps, and register files support a custom <code>applies-when</code> attribute that can conditionalize any element on any instantiated parameter value (RTL or non-RTL).</p>
+          <p>The resolver evaluates these conditions against the active <code>.vmap</code> and produces fully resolved, parameter-free DITA output — filtering inapplicable content and substituting parameter values inline. The resolved DITA is then passed to standard DITA-OT for PDF2 or WebHelp-Responsive transformation.</p>
+        </div>
+        <div class="dp-tags"><span class="dp-tag">DITA-OT 3.x</span><span class="dp-tag">applies-when</span><span class="dp-tag">param resolution</span><span class="dp-tag">PDF2</span><span class="dp-tag">WebHelp-Responsive</span></div>
+      </div>
+      <div id="d-rdb" class="detail-panel">
+        <div class="dp-header"><span class="dp-title">.rdb → DITA transform</span><button class="dp-close" onclick="closeDetail('d-rdb')">×</button></div>
+        <div class="dp-body">
+          <p>Each <code>.rdb</code> register database file is transformed into a DITA <code>&lt;reference&gt;</code> topic. The transform auto-generates: (1) an SVG bit-field diagram showing register layout with field names and bit positions, and (2) a structured table with field name, offset, reset value, access type, and description columns. Output is embedded directly in the resolved DITA.</p>
+          <p>Parameterized fields and conditional register blocks in the <code>.rdb</code> (gated by <code>applies-when</code> attributes) are resolved against the instance's <code>.vmap</code> bindings before transformation.</p>
+        </div>
+        <div class="dp-tags"><span class="dp-tag">.rdb</span><span class="dp-tag">SVG bit-field diagrams</span><span class="dp-tag">register tables</span><span class="dp-tag">XSLT</span></div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+
+    <!-- OUTPUTS -->
+    <div class="stage-group">
+      <div class="stage-header"><span class="stage-num">—</span><span class="stage-title">Outputs</span></div>
+      <div class="stage-cards cols-2">
+        <div class="card c-green" onclick="toggleDetail('d-pdf', this)">
+          <div class="card-top"><span class="card-name">PDF</span><span class="card-ext">DITA-OT PDF2</span></div>
+          <div class="card-sub">Fully resolved, parameter-free DITA → paginated PDF with register diagrams and tables inline</div>
+        </div>
+        <div class="card c-green" onclick="toggleDetail('d-rm', this)">
+          <div class="card-top"><span class="card-name">RM Explorer</span><span class="card-ext">Flask / WebHelp / RAG</span></div>
+          <div class="card-sub">Browser app: navigable WebHelp + register diagrams + memory maps + Claude RAG chatbot</div>
+        </div>
+      </div>
+      <div id="d-pdf" class="detail-panel">
+        <div class="dp-header"><span class="dp-title">PDF output</span><button class="dp-close" onclick="closeDetail('d-pdf')">×</button></div>
+        <div class="dp-body"><p>Fully resolved DITA published to PDF via DITA-OT PDF2 transform with a custom Apache FOP configuration (<code>custom_fo_config.xml</code>). Register tables and bit-field diagrams are rendered inline at the relevant chapter positions. The PDF is the deliverable for hardware engineers, system architects, and external customers.</p></div>
+        <div class="dp-tags"><span class="dp-tag">DITA-OT PDF2</span><span class="dp-tag">Apache FOP</span><span class="dp-tag">custom FO config</span></div>
+      </div>
+      <div id="d-rm" class="detail-panel">
+        <div class="dp-header"><span class="dp-title">RM Explorer — WebHelp + RAG + Claude chatbot</span><button class="dp-close" onclick="closeDetail('d-rm')">×</button></div>
+        <div class="dp-body">
+          <p>A Flask-served browser application rendering resolved DITA as navigable, bookmark-rich WebHelp with a modern UI. Register bit-field diagrams and memory map tables are available inline. Built on top of the resolved DITA — not the PDF — so content is structured and searchable.</p>
+          <p>Users can trigger a <strong>RAG knowledge base build</strong> from the resolved DITA directory. Text is chunked by DITA section, embedded with <code>sentence-transformers</code> (all-MiniLM-L6-v2), and indexed in FAISS for fast semantic retrieval. A Claude-powered chatbot uses top-k retrieved context chunks to answer natural language queries — register definitions, parameter values, memory addresses, architectural relationships — in the browser, replacing 15–30 minute PDF navigation with sub-3-second responses.</p>
+        </div>
+        <div class="dp-tags"><span class="dp-tag">Flask</span><span class="dp-tag">WebHelp</span><span class="dp-tag">FAISS</span><span class="dp-tag">sentence-transformers</span><span class="dp-tag">Claude API</span><span class="dp-tag">RAG</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════ HIERARCHY ═══════════════════════ -->
+<section id="hierarchy">
+  <div class="section-label">02 &nbsp; Content architecture</div>
+  <h2>Three-Tier Spec Hierarchy</h2>
+  <p class="section-desc">IP specs compose into subsystem specs, which compose into SoC specs. Each tier shares the same directory structure; higher tiers reference lower tiers through their DITA maps and .pub manifests.</p>
+
+  <div class="hierarchy">
+    <div class="tier-row">
+      <div style="display:flex;gap:12px;align-items:stretch">
+        <div class="tier-label" style="color:#4a9eff">Tier 3</div>
+        <div class="tier-box t3" style="flex:1">
+          <div class="tier-name blue">SoC_IMX95_SPEC / spec_source /</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px">
+            <div class="dir-tree">
+              <div>📁 <span class="dir-name">maps/</span></div>
+              <div style="padding-left:18px">📄 <span class="file-name highlight">top.ditamap</span> <span class="comment">← auto-gen</span></div>
+              <div style="padding-left:18px">📄 <span class="file-name highlight">top.pub</span> <span class="comment">← auto-gen</span></div>
+              <div>📁 <span class="dir-name">topics/</span></div>
+              <div style="padding-left:18px">📄 <span class="file-name">introduction.dita</span> <span class="comment">← AI-gen</span></div>
+              <div style="padding-left:18px">📄 <span class="file-name">clocking.dita</span> <span class="comment">← AI-gen</span></div>
+            </div>
+            <div class="dir-tree">
+              <div>📁 <span class="dir-name">inst/</span></div>
+              <div style="padding-left:18px">📄 <span class="file-name highlight">ip_params_top.vmap</span> <span class="comment">← auto-gen</span></div>
+              <div>📁 <span class="dir-name">params/</span></div>
+              <div style="padding-left:18px">📄 <span class="file-name highlight">soc.prm</span> <span class="comment">← auto-gen</span></div>
+              <div>📁 <span class="dir-name">images/</span></div>
+              <div>📁 <span class="dir-name">chip/</span></div>
+              <div style="padding-left:18px">📄 <span class="file-name">flexcan_0_intro.dita</span> <span class="comment">← auto-gen</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tier-connector"><div class="tc-line"></div><div class="tc-arrow">↓</div><div class="tc-line"></div></div>
+
+      <div style="display:flex;gap:12px;align-items:stretch">
+        <div class="tier-label" style="color:#2dd4a0">Tier 2</div>
+        <div class="tier-box t2" style="flex:1">
+          <div class="tier-name teal">SS_AUDIO_SPEC / spec_source /</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px">
+            <div class="dir-tree">
+              <div>📁 <span class="dir-name">maps/</span></div>
+              <div style="padding-left:18px">📄 <span class="file-name">ss.ditamap</span></div>
+              <div style="padding-left:18px">📄 <span class="file-name">ss.pub</span></div>
+              <div>📁 <span class="dir-name">inst/</span></div>
+              <div style="padding-left:18px">📄 <span class="file-name">ss.vmap</span></div>
+            </div>
+            <div class="dir-tree">
+              <div>📁 <span class="dir-name">params/</span></div>
+              <div style="padding-left:18px">📄 <span class="file-name">ss.prm</span></div>
+              <div>📁 <span class="dir-name">topics/</span></div>
+              <div>📁 <span class="dir-name">images/</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tier-connector"><div class="tc-line"></div><div class="tc-arrow">↓</div><div class="tc-line"></div></div>
+
+      <div style="display:flex;gap:12px;align-items:stretch">
+        <div class="tier-label" style="color:#f5a623">Tier 1</div>
+        <div class="tier-box t1" style="flex:1">
+          <div class="tier-name amber">IP_FlexCAN_SPEC / spec_source /</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px">
+            <div class="dir-tree">
+              <div>📁 <span class="dir-name">maps/</span></div>
+              <div style="padding-left:18px">📄 <span class="file-name">ip.ditamap</span></div>
+              <div style="padding-left:18px">📄 <span class="file-name">ip.pub</span></div>
+              <div>📁 <span class="dir-name">topics/</span></div>
+              <div style="padding-left:18px">📄 <span class="file-name">overview.dita</span></div>
+              <div style="padding-left:18px">📄 <span class="file-name">registers.dita</span></div>
+            </div>
+            <div class="dir-tree">
+              <div>📁 <span class="dir-name">inst/</span></div>
+              <div style="padding-left:18px">📄 <span class="file-name">ip.vmap</span></div>
+              <div>📁 <span class="dir-name">params/</span></div>
+              <div style="padding-left:18px">📄 <span class="file-name">ip.prm</span></div>
+              <div>📁 <span class="dir-name">regs/</span></div>
+              <div style="padding-left:18px">📄 <span class="file-name">flexcan.rdb</span></div>
+              <div>📁 <span class="dir-name">images/</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ FILE TYPES ═══════════════════════ -->
+<section id="filetypes">
+  <div class="section-label">03 &nbsp; Custom file types</div>
+  <h2>Proprietary File Type System</h2>
+  <p class="section-desc">Four file types extend the standard DITA authoring model to support parameter-driven publishing across the three-tier spec hierarchy.</p>
+
+  <div class="filetype-grid">
+    <div class="ft-card prm">
+      <div class="ft-ext">.prm</div>
+      <div class="ft-name">Parameter definition file</div>
+      <div class="ft-desc">Declares all parameters used in a spec tier — data type, default value, allowed range or accepted value set, and RTL vs non-RTL source. A global .prm covers shared publishing parameters that need not be redeclared per spec. IP .prm files are not duplicated at subsystem or SoC level.</div>
+      <div class="ft-types">
+        <span class="ft-type">boolean</span>
+        <span class="ft-type">integer</span>
+        <span class="ft-type">float</span>
+        <span class="ft-type">string</span>
+        <span class="ft-type">enumerated</span>
+        <span class="ft-type">RTL / non-RTL</span>
+      </div>
+    </div>
+    <div class="ft-card vmap">
+      <div class="ft-ext">.vmap</div>
+      <div class="ft-name">Value map — instance bindings</div>
+      <div class="ft-desc">Binds resolved parameter values to the parameters declared in the .prm. Contains register instance elements, each linking a .rdb file and carrying per-instance parameter bindings. Multiple register instances can reference the same .rdb with different bindings — enabling per-instance variation of shared register sets.</div>
+      <div class="ft-types">
+        <span class="ft-type">param-override</span>
+        <span class="ft-type">reg-instance</span>
+        <span class="ft-type">param-binding</span>
+        <span class="ft-type">base-address</span>
+      </div>
+    </div>
+    <div class="ft-card pub">
+      <div class="ft-ext">.pub</div>
+      <div class="ft-name">Publishing manifest</div>
+      <div class="ft-desc">Defines instance selectors and hierarchical resolve groups governing how register information is merged and deduplicated across IP instances during publishing. Subsystem and SoC .pub files reference IP .pub files via include-proc elements, building the full publication tree.</div>
+      <div class="ft-types">
+        <span class="ft-type">resolve-group</span>
+        <span class="ft-type">instance-selector</span>
+        <span class="ft-type">include-proc</span>
+        <span class="ft-type">address-instance</span>
+      </div>
+    </div>
+    <div class="ft-card rdb">
+      <div class="ft-ext">.rdb</div>
+      <div class="ft-name">Register database</div>
+      <div class="ft-desc">Proprietary XML analogous to IPXACT. Stores complete register definitions: name, offset, reset value, access type, and full bit-field specs. Supports parameterized fields and conditional register blocks via applies-when attributes. Transformed to DITA reference topics with SVG bit-field diagrams during publishing.</div>
+      <div class="ft-types">
+        <span class="ft-type">register</span>
+        <span class="ft-type">field</span>
+        <span class="ft-type">applies-when</span>
+        <span class="ft-type">param-condition</span>
+        <span class="ft-type">IPXACT-like</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ VERIFIC ═══════════════════════ -->
+<section id="verific">
+  <div class="section-label">04 &nbsp; RTL design analysis</div>
+  <h2>Verific RTL Analysis Flow</h2>
+  <p class="section-desc">Verific Design Automation's SystemVerilog/VHDL parser and RTL elaborator — replacing the previous LEC-based approach — provides fully resolved parameter values at every hierarchy level.</p>
+
+  <div class="verific-flow" style="margin-bottom:24px">
+    <div class="vf-box">
+      <div class="vf-title">RTL sources</div>
+      <div class="vf-sub">.sv / .vhd file list<br>top-level module</div>
+    </div>
+    <div class="vf-arrow">→</div>
+    <div class="vf-box hi">
+      <div class="vf-title" style="color:var(--purple)">Verific analysis</div>
+      <div class="vf-sub">Parse trees<br>type inferencing<br>identifier resolution</div>
+    </div>
+    <div class="vf-arrow">→</div>
+    <div class="vf-box hi">
+      <div class="vf-title" style="color:var(--purple)">RTL elaboration</div>
+      <div class="vf-sub">Instance binding<br>defparam propagation<br>generate unrolling<br>hierarchy resolution</div>
+    </div>
+    <div class="vf-arrow">→</div>
+    <div class="vf-box">
+      <div class="vf-title">module_parameters.json</div>
+      <div class="vf-sub">Resolved params per instance<br>register definitions<br>hierarchy paths</div>
+    </div>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="code-lang">Python</span>
+      <span class="code-fname">verific_extractor.py</span>
+    </div>
+    <pre><span class="kw">import</span> verific_db <span class="kw">as</span> vdb
+<span class="kw">import</span> json
+
+<span class="kw">def</span> <span class="fn">extract_module_parameters</span>(top_module: str, filelist: str, work_dir: str) -> dict:
+    <span class="cmt"># Compile and elaborate the RTL hierarchy</span>
+    vdb.<span class="fn">analyze_files</span>(filelist=filelist, work_dir=work_dir)
+    vdb.<span class="fn">elaborate</span>(top=top_module)
+
+    result = {}
+    design = vdb.<span class="fn">get_design</span>(top_module)
+
+    <span class="kw">for</span> inst <span class="kw">in</span> design.<span class="fn">iter_instances</span>(recursive=<span class="num">True</span>):
+        module = inst.<span class="fn">get_module</span>()
+        params = {}
+        <span class="kw">for</span> param <span class="kw">in</span> module.<span class="fn">get_parameters</span>():
+            <span class="cmt"># Post-elaboration: fully resolved override value</span>
+            params[param.name] = {
+                <span class="str">'value'</span>:       inst.<span class="fn">get_param_value</span>(param.name),
+                <span class="str">'type'</span>:        param.data_type,
+                <span class="str">'default'</span>:     param.default_value,
+            }
+        result[inst.full_path] = {
+            <span class="str">'module_name'</span>:  module.name,
+            <span class="str">'parameters'</span>:   params,
+            <span class="str">'registers'</span>:    <span class="fn">extract_register_defs</span>(inst),
+        }
+    <span class="kw">return</span> result</pre>
+  </div>
+</section>
+
+<!-- ═══════════════════════ PARAM DB ═══════════════════════ -->
+<section id="paramdb">
+  <div class="section-label">05 &nbsp; Non-RTL parameter database</div>
+  <h2>JSON Parameter Database</h2>
+  <p class="section-desc">Documentation-specific parameters not present in RTL are managed in a hierarchical JSON database — version-controlled, schema-governed, chip-prefix keyed.</p>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="code-lang">JSON</span>
+      <span class="code-fname">non_rtl_params_db.json (excerpt)</span>
+    </div>
+    <pre>{
+  <span class="attr">"schema_version"</span>: <span class="str">"2.1"</span>,
+  <span class="attr">"parameters"</span>: {
+    <span class="attr">"FEATURE_FDCAN"</span>: {
+      <span class="attr">"type"</span>: <span class="str">"boolean"</span>,
+      <span class="attr">"description"</span>: <span class="str">"FD-CAN capability enabled for this chip configuration"</span>,
+      <span class="attr">"ip"</span>: <span class="str">"FlexCAN"</span>,
+      <span class="attr">"instances"</span>: {
+        <span class="attr">"IMX95"</span>: { <span class="attr">"FLEXCAN_0"</span>: <span class="num">true</span>, <span class="attr">"FLEXCAN_1"</span>: <span class="num">false</span> },
+        <span class="attr">"IMX93"</span>: { <span class="attr">"FLEXCAN_0"</span>: <span class="num">false</span>, <span class="attr">"FLEXCAN_1"</span>: <span class="num">false</span> }
+      }
+    },
+    <span class="attr">"IP_REVISION"</span>: {
+      <span class="attr">"type"</span>: <span class="str">"string"</span>,
+      <span class="attr">"ip"</span>: <span class="str">"FlexCAN"</span>,
+      <span class="attr">"instances"</span>: {
+        <span class="attr">"IMX95"</span>: { <span class="attr">"_all"</span>: <span class="str">"3.2"</span> },
+        <span class="attr">"IMX93"</span>: { <span class="attr">"_all"</span>: <span class="str">"3.0"</span> }
+      }
+    }
+  }
+}</pre>
+  </div>
+</section>
+
+<!-- ═══════════════════════ AI AUTHORING ═══════════════════════ -->
+<section id="ai">
+  <div class="section-label">06 &nbsp; Generative AI</div>
+  <h2>AI-Powered Chapter Authoring</h2>
+  <p class="section-desc">Claude API agent extracts architecture content from SoC specs and produces DITA-conformant chapter topics, parameterised with accurate instance data from the .vmap.</p>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="code-lang">Python</span>
+      <span class="code-fname">soc_chapter_agent.py</span>
+    </div>
+    <pre><span class="kw">import</span> anthropic, json
+
+client = anthropic.<span class="fn">Anthropic</span>()
+
+SYSTEM = <span class="str">"""You are a semiconductor documentation engineer at Bridgon.
+Generate DITA 1.3 conformant XML chapter topics for SoC Reference Manuals.
+- Use &lt;concept&gt; for architectural overviews and narratives
+- Use &lt;reference&gt; for tabular data (registers, addresses, interrupts)
+- Use only values present in the architecture spec and .vmap context
+- Never invent register values, addresses, or instance counts
+- Output only valid DITA XML — no prose wrapper, no markdown"""</span>
+
+<span class="kw">def</span> <span class="fn">generate_chapter</span>(arch_spec_section: str, chapter_type: str,
+                      vmap_context: dict, template: str) -> str:
+    response = client.messages.<span class="fn">create</span>(
+        model=<span class="str">"claude-sonnet-4-20250514"</span>,
+        max_tokens=<span class="num">4096</span>,
+        system=SYSTEM,
+        messages=[{<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: <span class="fn">f</span><span class="str">"""
+Chapter type: {chapter_type}
+Template: {template}
+Parameter context: {json.dumps(vmap_context)[:3000]}
+Architecture spec: {arch_spec_section[:6000]}
+Generate the complete DITA topic."""</span>}]
+    )
+    <span class="kw">return</span> response.content[<span class="num">0</span>].text</pre>
+  </div>
+</section>
+
+<!-- ═══════════════════════ OUTPUTS ═══════════════════════ -->
+<section id="outputs">
+  <div class="section-label">07 &nbsp; Platform outputs</div>
+  <h2>Generated Outputs</h2>
+  <p class="section-desc">Three output types from a single resolved DITA source — PDF for distribution, WebHelp for online browsing, and a RAG-powered chatbot for natural language access.</p>
+
+  <div class="outputs-grid">
+    <div class="out-card">
+      <div class="out-icon">📄</div>
+      <div class="out-title">Reference Manual PDF</div>
+      <div class="out-desc">Fully resolved, parameter-free DITA published to paginated PDF via DITA-OT PDF2 with custom Apache FOP configuration. Register bit-field diagrams and structured tables rendered inline at correct chapter positions.</div>
+      <div class="out-stack"><span class="out-tag">DITA-OT PDF2</span><span class="out-tag">Apache FOP</span><span class="out-tag">register diagrams</span></div>
+    </div>
+    <div class="out-card">
+      <div class="out-icon">🌐</div>
+      <div class="out-title">RM Explorer WebHelp</div>
+      <div class="out-desc">Flask-served browser application rendering resolved DITA as navigable, bookmark-rich WebHelp. Register diagrams and memory map tables available inline. Modern responsive UI with structured table-of-contents navigation.</div>
+      <div class="out-stack"><span class="out-tag">Flask</span><span class="out-tag">WebHelp-Responsive</span><span class="out-tag">DITA-OT</span></div>
+    </div>
+    <div class="out-card">
+      <div class="out-icon">💬</div>
+      <div class="out-title">RAG Chatbot</div>
+      <div class="out-desc">Semantic knowledge base built from resolved DITA content using sentence-transformers and FAISS indexing. Claude API chatbot answers natural language queries with top-k retrieved context — replacing 15–30 minute PDF navigation with sub-3-second responses.</div>
+      <div class="out-stack"><span class="out-tag">FAISS</span><span class="out-tag">sentence-transformers</span><span class="out-tag">Claude API</span><span class="out-tag">RAG</span></div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /container -->
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <span class="footer-name">Jayant Kaushik · Principal Technical Writer · Bridgon</span>
+      <span class="footer-meta">jayant.kaush@gmail.com · github.com/kaushikjayant/techdocs</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleDetail(id, card) {
+  const panel = document.getElementById(id);
+  const isOpen = panel.classList.contains('open');
+  // close all panels
+  document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('open'));
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+  if (!isOpen) {
+    panel.classList.add('open');
+    card.classList.add('active');
+    setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+  }
+}
+function closeDetail(id) {
+  document.getElementById(id).classList.remove('open');
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+}
+
+// Nav active link on scroll
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const link = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { threshold: 0.3 });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

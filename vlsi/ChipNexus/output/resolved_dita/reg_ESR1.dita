@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<reference id="reg_ESR1">
+  <title>Error and Status Register 1 (ESR1)</title>
+  <refbody>
+    <section>
+      <title>Register Summary</title>
+      <table>
+        <tgroup cols="2">
+          <colspec colname="c1" colwidth="30*"/>
+          <colspec colname="c2" colwidth="70*"/>
+          <tbody>
+            <row><entry>Offset</entry><entry>0x20</entry></row>
+            <row><entry>Size</entry><entry>32 bits</entry></row>
+            <row><entry>Access</entry><entry>RO</entry></row>
+            <row><entry>Reset Value</entry><entry>0x00000000</entry></row>
+          </tbody>
+        </tgroup>
+      </table>
+    </section>
+    <section>
+      <title>Description</title>
+      <p>Provides error status and interrupt flag bits including bus-off, error, and warning indicators.</p>
+    </section>
+    <section>
+      <title>Bit-Field Descriptions</title>
+      <table>
+        <tgroup cols="5">
+          <thead>
+            <row>
+              <entry>Field</entry><entry>Bits</entry><entry>Access</entry>
+              <entry>Reset</entry><entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><b>TWRN_INT</b></entry>
+              <entry>31:31</entry>
+              <entry>W1C</entry>
+              <entry>0x00000000</entry>
+              <entry>Tx Warning Interrupt Flag</entry>
+            </row>
+            <row>
+              <entry><b>RWRN_INT</b></entry>
+              <entry>30:30</entry>
+              <entry>W1C</entry>
+              <entry>0x00000000</entry>
+              <entry>Rx Warning Interrupt Flag</entry>
+            </row>
+            <row>
+              <entry><b>BOFF_INT</b></entry>
+              <entry>22:22</entry>
+              <entry>W1C</entry>
+              <entry>0x00000000</entry>
+              <entry>Bus-Off Interrupt Flag</entry>
+            </row>
+            <row>
+              <entry><b>ERR_INT</b></entry>
+              <entry>21:21</entry>
+              <entry>W1C</entry>
+              <entry>0x00000000</entry>
+              <entry>Error Interrupt Flag</entry>
+            </row>
+            <row>
+              <entry><b>FLT_CONF</b></entry>
+              <entry>14:14</entry>
+              <entry>RO</entry>
+              <entry>0x00000000</entry>
+              <entry>Fault Confinement State — 0: Error Active, 1: Error Passive</entry>
+            </row>
+            <row>
+              <entry><b>ERR_CODE</b></entry>
+              <entry>1:0</entry>
+              <entry>RO</entry>
+              <entry>0x00000000</entry>
+              <entry>Error Code — 00: Bit error, 01: Form error, 10: Stuffing error, 11: CRC error</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+    </section>
+  </refbody>
+</reference>

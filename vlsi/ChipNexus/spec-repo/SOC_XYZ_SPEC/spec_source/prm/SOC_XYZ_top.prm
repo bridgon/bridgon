@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<paramdef
+    xmlns="http://bridgon.com/schemas/param-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://bridgon.com/schemas/param-mapping http://bridgon.com/schemas/bridgon-prm.xsd" spec_id="SOC_XYZ">
+  <parameter id="SOC_CHIP_NAME" class="string" source="nonrtl">
+    <name>Chip Name</name>
+    <default>SoC_Demo</default>
+    <description>Chip name string used in document titles and headers.</description>
+  </parameter>
+  <parameter id="SOC_DOC_REVISION" class="string" source="nonrtl">
+    <name>Document Revision</name>
+    <default>Rev. 0.9 Preliminary</default>
+    <description>Document revision string for the published SoC reference manual.</description>
+  </parameter>
+  <parameter id="SOC_SECURITY_CLASS" class="enumerated" source="nonrtl">
+    <name>Security Classification</name>
+    <default>CONFIDENTIAL</default>
+    <accepted_values>PUBLIC,INTERNAL,CONFIDENTIAL,RESTRICTED</accepted_values>
+  </parameter>
+  <parameter id="SOC_PUBLISH_MODE" class="enumerated" source="nonrtl">
+    <name>Publishing Mode</name>
+    <default>FULL</default>
+    <accepted_values>FULL,PREVIEW,INTERNAL</accepted_values>
+  </parameter>
+</paramdef>

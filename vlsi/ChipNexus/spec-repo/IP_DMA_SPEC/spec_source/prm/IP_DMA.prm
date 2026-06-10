@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<paramdef
+    xmlns="http://bridgon.com/schemas/param-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://bridgon.com/schemas/param-mapping http://bridgon.com/schemas/bridgon-prm.xsd" spec_id="IP_DMA">
+  <parameter id="DMA_NUM_CHANNELS" class="integer" source="RTL">
+    <name>Number of DMA Channels</name>
+    <default>32</default>
+    <low_limit>4</low_limit>
+    <high_limit>128</high_limit>
+    <description>Total number of independent DMA transfer channels. Each channel has its own source/destination address registers, transfer count, and control logic.</description>
+  </parameter>
+  <parameter id="DMA_DATA_WIDTH" class="integer" source="RTL">
+    <name>Data Bus Width (bits)</name>
+    <default>64</default>
+    <low_limit>32</low_limit>
+    <high_limit>512</high_limit>
+    <description>Width of the DMA data transfer bus in bits. Wider buses enable higher throughput at the cost of routing complexity.</description>
+  </parameter>
+  <parameter id="DMA_ADDR_WIDTH" class="integer" source="RTL">
+    <name>Address Bus Width (bits)</name>
+    <default>32</default>
+    <low_limit>32</low_limit>
+    <high_limit>64</high_limit>
+    <description>Width of the DMA address bus. Determines the maximum addressable memory range for DMA transfers.</description>
+  </parameter>
+  <parameter id="DMA_SCATTER_GATHER" class="boolean" source="RTL">
+    <name>Scatter-Gather Support</name>
+    <default>true</default>
+    <accepted_values>true,false</accepted_values>
+    <description>Enables scatter-gather descriptor-based DMA operations, allowing non-contiguous memory transfers in a single DMA transaction.</description>
+  </parameter>
+  <parameter id="DMA_FIFO_DEPTH" class="integer" source="RTL">
+    <name>Internal FIFO Depth</name>
+    <default>16</default>
+    <low_limit>4</low_limit>
+    <high_limit>256</high_limit>
+    <description>Depth of the per-channel internal FIFO buffer. Deeper FIFOs improve tolerance to bus contention at the cost of area.</description>
+  </parameter>
+  <parameter id="DMA_PUBLISH_MODE" class="enumerated" source="nonrtl">
+    <name>Publishing Mode</name>
+    <default>FULL</default>
+    <accepted_values>FULL,PREVIEW,INTERNAL</accepted_values>
+    <description>Controls publishing pipeline: FULL includes all register diagrams; PREVIEW shows summary only.</description>
+  </parameter>
+  <parameter id="DMA_CHIP_PREFIX" class="string" source="nonrtl">
+    <name>Chip Prefix</name>
+    <default>MCU_X</default>
+    <description>Chip family prefix used to namespace instance files and select chip-specific parameter overrides from the Non-RTL Parameter Database.</description>
+  </parameter>
+  <parameter id="DMA_DOC_REVISION" class="string" source="nonrtl">
+    <name>Document Revision</name>
+    <default>Rev. 1.7</default>
+    <description>Document revision string for the published reference manual.</description>
+  </parameter>
+</paramdef>

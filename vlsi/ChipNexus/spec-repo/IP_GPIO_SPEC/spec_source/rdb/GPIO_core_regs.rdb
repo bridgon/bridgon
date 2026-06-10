@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<registers ip_name="GPIO" regs_id="GPIO_CORE">
+  <register offset="0x00" name="PDOR" display_name="Port Data Output Register"
+            size="32" access="RW" reset_value="0x00000000">
+    <description>Stores the logic levels driven on each GPIO output pin. Writing 1 drives the pin high; writing 0 drives it low.</description>
+    <bitfield msb="31" lsb="0" name="PDO" access="RW">
+      <description>Port Data Output — Bit N controls pin N output level</description>
+    </bitfield>
+  </register>
+  <register offset="0x04" name="PSOR" display_name="Port Set Output Register"
+            size="32" access="WO" reset_value="0x00000000">
+    <description>Writing 1 to a bit sets the corresponding output pin high. Writing 0 has no effect.</description>
+    <bitfield msb="31" lsb="0" name="PTSO" access="WO">
+      <description>Port Set Output — Write 1 to set pin N high</description>
+    </bitfield>
+  </register>
+  <register offset="0x08" name="PCOR" display_name="Port Clear Output Register"
+            size="32" access="WO" reset_value="0x00000000">
+    <description>Writing 1 to a bit clears the corresponding output pin to low. Writing 0 has no effect.</description>
+    <bitfield msb="31" lsb="0" name="PTCO" access="WO">
+      <description>Port Clear Output — Write 1 to clear pin N to low</description>
+    </bitfield>
+  </register>
+  <register offset="0x0C" name="PTOR" display_name="Port Toggle Output Register"
+            size="32" access="WO" reset_value="0x00000000">
+    <description>Writing 1 to a bit toggles the corresponding output pin. Writing 0 has no effect.</description>
+    <bitfield msb="31" lsb="0" name="PTTO" access="WO">
+      <description>Port Toggle Output — Write 1 to toggle pin N</description>
+    </bitfield>
+  </register>
+  <register offset="0x10" name="PDIR" display_name="Port Data Input Register"
+            size="32" access="RO" reset_value="0x00000000">
+    <description>Reflects the current logic level on each GPIO pin regardless of direction setting.</description>
+    <bitfield msb="31" lsb="0" name="PDI" access="RO">
+      <description>Port Data Input — Bit N reflects current level on pin N</description>
+    </bitfield>
+  </register>
+  <register offset="0x14" name="PDDR" display_name="Port Data Direction Register"
+            size="32" access="RW" reset_value="0x00000000">
+    <description>Controls the direction of each GPIO pin. 0 = input, 1 = output.</description>
+    <bitfield msb="31" lsb="0" name="PDD" access="RW">
+      <description>Port Data Direction — Bit N: 0 = input, 1 = output for pin N</description>
+    </bitfield>
+  </register>
+  <register offset="0x18" name="PIDR" display_name="Port Input Disable Register"
+            size="32" access="RW" reset_value="0x00000000">
+    <description>Disables the digital input path for each pin to reduce power consumption when used as analog input.</description>
+    <bitfield msb="31" lsb="0" name="PID" access="RW">
+      <description>Port Input Disable — Bit N: 1 = disable digital input buffer for pin N</description>
+    </bitfield>
+  </register>
+</registers>

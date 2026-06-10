@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schema Repository — Bridgon</title>
+<style>:root{--bg:#080c14;--bg2:#0f1626;--bg3:#182032;--border:#1e2d4d;--text:#e2e8f0;--muted:#8899b4;--blue:#38bdf8;--purple:#a78bfa;--emerald:#34d399;--grad:linear-gradient(135deg,#38bdf8 0%,#a78bfa 50%,#34d399 100%)}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);display:flex;justify-content:center;align-items:center;min-height:100vh}h1{font-size:28px;font-weight:800;margin-bottom:24px;text-align:center}h1 span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.container{max-width:720px;width:100%}.url-bar{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px 20px;font-family:monospace;font-size:14px;color:var(--muted);margin-bottom:32px;text-align:center}.file-list{list-style:none;display:flex;flex-direction:column;gap:12px}.file-item a{display:flex;align-items:center;gap:16px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px 20px;text-decoration:none;color:var(--text);transition:all .2s}.file-item a:hover{border-color:var(--blue);background:var(--bg3);transform:translateX(4px)}.file-icon{font-size:22px;min-width:30px;text-align:center}.file-name{font-size:15px;font-weight:600}.file-type{font-size:11px;color:var(--muted);margin-left:auto;background:var(--bg3);padding:3px 10px;border-radius:4px}.file-desc{font-size:12px;color:var(--muted);margin-top:2px}.back-link{display:block;text-align:center;margin-top:40px;color:var(--muted);font-size:13px;text-decoration:none}.back-link:hover{color:var(--blue)}</style>
+</head>
+<body>
+<div class="container">
+  <h1><span>Bridgon</span> Schema Repository</h1>
+  <div class="url-bar">bridgon.com/schemas/</div>
+  <ul class="file-list">
+    <li class="file-item">
+      <a href="bridgon-prm.xsd">
+        <span class="file-icon">📐</span>
+        <span>
+          <div class="file-name">bridgon-prm.xsd</div>
+          <div class="file-desc">Parameter Definition — configurable parameters with defaults, constraints, types</div>
+        </span>
+        <span class="file-type">XSD 2.0</span>
+      </a>
+    </li>
+    <li class="file-item">
+      <a href="bridgon-imap.xsd">
+        <span class="file-icon">🗺️</span>
+        <span>
+          <div class="file-name">bridgon-imap.xsd</div>
+          <div class="file-desc">Instance Map — per-instance parameter overrides with base addresses</div>
+        </span>
+        <span class="file-type">XSD 2.0</span>
+      </a>
+    </li>
+    <li class="file-item">
+      <a href="bridgon-rdb.xsd">
+        <span class="file-icon">🗄️</span>
+        <span>
+          <div class="file-name">bridgon-rdb.xsd</div>
+          <div class="file-desc">Register Database — registers, bitfields, access types, encodings</div>
+        </span>
+        <span class="file-type">XSD 2.0</span>
+      </a>
+    </li>
+    <li class="file-item">
+      <a href="bridgon-pub.xsd">
+        <span class="file-icon">📋</span>
+        <span>
+          <div class="file-name">bridgon-pub.xsd</div>
+          <div class="file-desc">Publishing Instructions — resolution groups, merging rules, output targets</div>
+        </span>
+        <span class="file-type">XSD 2.0</span>
+      </a>
+    </li>
+    <li class="file-item">
+      <a href="catalog.xml">
+        <span class="file-icon">📚</span>
+        <span>
+          <div class="file-name">catalog.xml</div>
+          <div class="file-desc">OASIS XML Catalog — namespace URI to XSD file mappings</div>
+        </span>
+        <span class="file-type">XML</span>
+      </a>
+    </li>
+  </ul>
+  <a href="/" class="back-link">← Back to bridgon.com</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map PUBLIC "-//OASIS//DTD DITA 2.0 Map//EN" "../../../dita-ot-4.4/plugins/org.oasis-open.dita.techcomm.v2_0/dtd/technicalContent/map.dtd">
+<!--
+  IP_FlexCAN.ditamap — Top-level DITA map for FlexCAN IP specification.
+  Organizes the logical structure: overview → functional description → 
+  programming model → register descriptions.
+  Uses custom RTL/non-RTL parameter conditional attributes (pm:cond_*) for
+  conditional inclusion based on instance parameter values.
+-->
+<map xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+     ditaarch:DITAArchVersion="2.0"
+     xml:lang="en"
+     xmlns:pm="http://bridgon.com/schemas/param-mapping">
+
+  <title>FlexCAN Module Reference Manual</title>
+
+  <!-- ========== Introduction / Overview ========== -->
+  <topicref href="../topics/FlexCAN_Overview.dita" navtitle="Overview" type="concept"
+            pm:cond_CAN_FD_ENABLE="true">
+    <topicref href="../topics/FlexCAN_Features.dita" navtitle="Features" type="reference"/>
+    <topicref href="../topics/FlexCAN_Block_Diagram.dita" navtitle="Block Diagram" type="concept"/>
+  </topicref>
+
+  <!-- ========== Functional Description ========== -->
+  <topicref href="../topics/FlexCAN_Functional_Description.dita" navtitle="Functional Description" type="concept">
+    <topicref href="../topics/FlexCAN_Protocol_Engine.dita" navtitle="Protocol Engine" type="concept"/>
+    <topicref href="../topics/FlexCAN_Mailbox_Management.dita" navtitle="Mailbox Management"
+              pm:cond_CAN_NUM_MB="64">
+      <topicref href="../topics/FlexCAN_RX_FIFO.dita" navtitle="RX FIFO" type="concept"
+                pm:cond_CAN_RXFIFO_DEPTH="32"/>
+      <topicref href="../topics/FlexCAN_TX_Scheduling.dita" navtitle="Transmit Scheduling" type="concept"
+                pm:cond_CAN_TXMB_COUNT="8"/>
+    </topicref>
+    <topicref href="../topics/FlexCAN_CANFD_Support.dita" navtitle="CAN-FD Operation" type="concept"
+              pm:cond_CAN_FD_ENABLE="true"/>
+    <topicref href="../topics/FlexCAN_Error_Handling.dita" navtitle="Error Handling and Fault Confinement" type="concept"/>
+  </topicref>
+
+  <!-- ========== Programming Model / Registers ========== -->
+  <topicref href="../topics/FlexCAN_Programming_Model.dita" navtitle="Programming Model" type="concept">
+    <topicref href="../topics/FlexCAN_Register_Summary.dita" navtitle="Register Summary" type="reference"/>
+    <!-- Register detail is injected by ditaproc resolution via the regs_link -->
+    <topicref href="regref:FLEXCAN_CORE_REGS" navtitle="Register Descriptions" type="reference"/>
+  </topicref>
+
+  <!-- ========== Application Notes ========== -->
+  <topicref href="../topics/FlexCAN_Application_Notes.dita" navtitle="Application Information" type="concept"
+            pm:cond_PUBLISH_MODE="FULL">
+    <topicref href="../topics/FlexCAN_Bit_Timing_Calc.dita" navtitle="Bit-Timing Calculation" type="reference"/>
+    <topicref href="../topics/FlexCAN_Initialization_Sequence.dita" navtitle="Initialization Sequence" type="task"/>
+  </topicref>
+
+  <!-- ====== Revision History ====== -->
+  <topicref href="../topics/FlexCAN_Revision_History.dita" navtitle="Document Revision History" type="reference"
+            pm:cond_DOC_REVISION="Rev. 2.1"/>
+
+</map>

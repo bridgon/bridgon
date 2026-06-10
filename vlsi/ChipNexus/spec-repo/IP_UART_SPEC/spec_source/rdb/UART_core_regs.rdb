@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<registers ip_name="UART" regs_id="UART_CORE">
+  <register offset="0x00" name="UART_BAUD1" display_name="Baud Rate Register High"
+            size="32" access="RW" reset_value="0x00000004">
+    <description>Upper byte of the baud rate modulo divisor. Together with BAUD2 determines the baud rate.</description>
+    <bitfield msb="12" lsb="11" name="BOTHEDGE" access="RW">
+      <description>Both Edge Sampling — 1: Sample on both rising and falling edges</description>
+    </bitfield>
+    <bitfield msb="10" lsb="8" name="SBNS" access="RW">
+      <description>Stop Bit Number Select — 0: One stop bit, 1: Two stop bits</description>
+    </bitfield>
+    <bitfield msb="7" lsb="0" name="SBR" access="RW">
+      <description>Baud Rate Modulo Divisor — High 8 bits of 13-bit divisor</description>
+    </bitfield>
+  </register>
+  <register offset="0x04" name="UART_BAUD2" display_name="Baud Rate Register Low"
+            size="32" access="RW" reset_value="0x00000000">
+    <description>Lower 5 bits of the baud rate modulo divisor.</description>
+    <bitfield msb="4" lsb="0" name="SBR" access="RW">
+      <description>Baud Rate Modulo Divisor — Low 5 bits of 13-bit divisor</description>
+    </bitfield>
+  </register>
+  <register offset="0x08" name="UART_CTRL" display_name="UART Control Register"
+            size="32" access="RW" reset_value="0x00000000">
+    <description>Controls UART transmitter and receiver enable, parity, and interrupt enables.</description>
+    <bitfield msb="31" lsb="31" name="R8T9" access="RW">
+      <description>Receive Bit 8 / Transmit Bit 9 — 9-bit mode data bit</description>
+    </bitfield>
+    <bitfield msb="23" lsb="23" name="TIE" access="RW">
+      <description>Transmit Interrupt Enable</description>
+    </bitfield>
+    <bitfield msb="22" lsb="22" name="TCIE" access="RW">
+      <description>Transmission Complete Interrupt Enable</description>
+    </bitfield>
+    <bitfield msb="21" lsb="21" name="RIE" access="RW">
+      <description>Receiver Interrupt Enable</description>
+    </bitfield>
+    <bitfield msb="19" lsb="19" name="TE" access="RW">
+      <description>Transmitter Enable</description>
+    </bitfield>
+    <bitfield msb="18" lsb="18" name="RE" access="RW">
+      <description>Receiver Enable</description>
+    </bitfield>
+    <bitfield msb="10" lsb="10" name="PE" access="RW">
+      <description>Parity Enable</description>
+    </bitfield>
+    <bitfield msb="9" lsb="9" name="PT" access="RW">
+      <description>Parity Type — 0: Even, 1: Odd</description>
+    </bitfield>
+  </register>
+  <register offset="0x0C" name="UART_STAT" display_name="UART Status Register"
+            size="32" access="RO" reset_value="0x00C00000">
+    <description>Reflects the current status of the UART transmitter and receiver.</description>
+    <bitfield msb="31" lsb="31" name="TDRE" access="RO">
+      <description>Transmit Data Register Empty — 1: Transmit buffer ready for new data</description>
+    </bitfield>
+    <bitfield msb="30" lsb="30" name="TC" access="RO">
+      <description>Transmission Complete — 1: No transmission in progress</description>
+    </bitfield>
+    <bitfield msb="29" lsb="29" name="RDRF" access="RO">
+      <description>Receive Data Register Full — 1: Received data available</description>
+    </bitfield>
+    <bitfield msb="28" lsb="28" name="IDLE" access="W1C">
+      <description>Idle Line Flag — 1: Idle line detected</description>
+    </bitfield>
+    <bitfield msb="27" lsb="27" name="OR" access="W1C">
+      <description>Receiver Overrun Flag</description>
+    </bitfield>
+    <bitfield msb="26" lsb="26" name="NF" access="W1C">
+      <description>Noise Flag</description>
+    </bitfield>
+    <bitfield msb="25" lsb="25" name="FE" access="W1C">
+      <description>Framing Error Flag</description>
+    </bitfield>
+    <bitfield msb="24" lsb="24" name="PF" access="W1C">
+      <description>Parity Error Flag</description>
+    </bitfield>
+  </register>
+</registers>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map PUBLIC "-//OASIS//DTD DITA 2.0 Map//EN" "../../../dita-ot-4.4/plugins/org.oasis-open.dita.techcomm.v2_0/dtd/technicalContent/map.dtd">
+<map xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+     ditaarch:DITAArchVersion="2.0" xml:lang="en"
+     xmlns:pm="http://ditaspec.org/param-mapping">
+  <title>AHB Bus SubSystem Reference</title>
+  <topicref href="../topics/SS_AHB_Overview.dita" navtitle="AHB SubSystem Overview" type="concept"/>
+  <topicref href="ipref:IP_DMA_SPEC" navtitle="DMA Controller" type="concept"/>
+  <topicref href="ipref:IP_GPIO_SPEC" navtitle="GPIO Controller" type="concept"/>
+  <topicref href="regref:AHB_FABRIC_REGS" navtitle="AHB Fabric Register Descriptions" type="reference"/>
+</map>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<registers ip_name="DMA" regs_id="DMA_CORE">
+
+  <register offset="0x00" name="DMA_CR" display_name="DMA Control Register"
+            size="32" access="RW" reset_value="0x00000000">
+    <description>Global DMA engine control register. Controls enable, halt, debug, and arbitration mode.</description>
+    <bitfield msb="31" lsb="31" name="ACTIVE" access="RO">
+      <description>DMA Active — 1: DMA is executing a transfer</description>
+    </bitfield>
+    <bitfield msb="30" lsb="30" name="HALT" access="RW">
+      <description>Halt DMA Operations — 1: Stall new channel activations</description>
+    </bitfield>
+    <bitfield msb="7" lsb="7" name="EMLM" access="RW">
+      <description>Enable Minor Loop Mapping — 1: Enable minor loop offset feature</description>
+    </bitfield>
+    <bitfield msb="6" lsb="6" name="CLM" access="RW">
+      <description>Continuous Link Mode — 1: Automatically activate next channel after minor loop</description>
+    </bitfield>
+    <bitfield msb="5" lsb="5" name="HALT_ERR" access="RW">
+      <description>Halt on Error — 1: Halt DMA operations when an error is detected</description>
+    </bitfield>
+    <bitfield msb="4" lsb="4" name="HOE" access="RW">
+      <description>Halt on Error — 1: Halt DMA operations when an error is detected</description>
+    </bitfield>
+    <bitfield msb="2" lsb="2" name="ERCA" access="RW">
+      <description>Enable Round Robin Channel Arbitration</description>
+    </bitfield>
+    <bitfield msb="1" lsb="1" name="EDBG" access="RW">
+      <description>Enable Debug — 1: Stall DMA when in debug mode</description>
+    </bitfield>
+  </register>
+
+  <register offset="0x04" name="DMA_ES" display_name="DMA Error Status Register"
+            size="32" access="RO" reset_value="0x00000000">
+    <description>Reports the source and type of the most recent DMA error.</description>
+    <bitfield msb="31" lsb="31" name="VLD" access="RO">
+      <description>Logical OR of all ERR status bits — 1: Error has occurred</description>
+    </bitfield>
+    <bitfield msb="16" lsb="16" name="ECX" access="RO">
+      <description>Transfer Cancelled — 1: Last transfer was cancelled</description>
+    </bitfield>
+    <bitfield msb="14" lsb="14" name="CPE" access="RO">
+      <description>Channel Priority Error</description>
+    </bitfield>
+    <bitfield msb="13" lsb="13" name="SAE" access="RO">
+      <description>Source Address Error</description>
+    </bitfield>
+    <bitfield msb="12" lsb="12" name="SOE" access="RO">
+      <description>Source Offset Error</description>
+    </bitfield>
+    <bitfield msb="11" lsb="11" name="DAE" access="RO">
+      <description>Destination Address Error</description>
+    </bitfield>
+    <bitfield msb="10" lsb="10" name="DOE" access="RO">
+      <description>Destination Offset Error</description>
+    </bitfield>
+    <bitfield msb="9" lsb="9" name="NCE" access="RO">
+      <description>NBYTES/CITER Configuration Error</description>
+    </bitfield>
+    <bitfield msb="8" lsb="8" name="SGE" access="RO">
+      <description>Scatter/Gather Configuration Error</description>
+    </bitfield>
+    <bitfield msb="7" lsb="7" name="SBE" access="RO">
+      <description>Source Bus Error</description>
+    </bitfield>
+    <bitfield msb="6" lsb="6" name="DBE" access="RO">
+      <description>Destination Bus Error</description>
+    </bitfield>
+    <bitfield msb="4" lsb="0" name="ERRCHN" access="RO">
+      <description>Error Channel Number — Channel that generated the error</description>
+    </bitfield>
+  </register>
+
+  <register offset="0x08" name="DMA_ERQ" display_name="DMA Enable Request Register"
+            size="32" access="RW" reset_value="0x00000000">
+    <description>Enables hardware service requests for each DMA channel. Bit N enables channel N.</description>
+    <bitfield msb="31" lsb="0" name="ERQ" access="RW">
+      <description>Enable DMA Request — Bit N: 1 = enable hardware service request for channel N</description>
+    </bitfield>
+  </register>
+
+  <register offset="0x0C" name="DMA_EEI" display_name="DMA Enable Error Interrupt Register"
+            size="32" access="RW" reset_value="0x00000000">
+    <description>Enables error interrupt generation for each DMA channel.</description>
+    <bitfield msb="31" lsb="0" name="EEI" access="RW">
+      <description>Enable Error Interrupt — Bit N: 1 = generate interrupt on error for channel N</description>
+    </bitfield>
+  </register>
+
+</registers>

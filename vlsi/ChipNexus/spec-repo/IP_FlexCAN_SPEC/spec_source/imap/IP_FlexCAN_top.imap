@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  IP_FlexCAN_top.imap — Instance Map file for FlexCAN at IP level.
+  This file defines instantiated parameter values for publishing an IP-level
+  specification. It references the corresponding paramdef file.
+-->
+<instance
+    xmlns="http://bridgon.com/schemas/instance-map"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://bridgon.com/schemas/instance-map http://bridgon.com/schemas/bridgon-imap.xsd"
+          spec_id="IP_FlexCAN"
+          paramdef_ref="../params/IP_FlexCAN.prm">
+
+  <!-- ==================== Register Instance: FlexCAN Core ==================== -->
+  <reg instance_name="FlexCAN_core_0">
+    <regs_link href="../regs/FlexCAN_core_regs.rdb"/>
+    
+    <!-- RTL Parameter Overrides -->
+    <param_override param_id="CAN_NUM_MB">64</param_override>
+    <param_override param_id="CAN_CLK_FREQ">80000000</param_override>
+    <param_override param_id="CAN_FD_ENABLE">true</param_override>
+    <param_override param_id="CAN_RXFIFO_DEPTH">32</param_override>
+    <param_override param_id="CAN_TXMB_COUNT">8</param_override>
+    <param_override param_id="CAN_STD_FILTER_MASK">0x7FF</param_override>
+    <param_override param_id="CAN_EXT_FILTER_MASK">0x1FFFFFFF</param_override>
+    <param_override param_id="CAN_MEM_MAP_OFFSET">0x4000</param_override>
+
+    <!-- Non-RTL Parameter Overrides -->
+    <param_override param_id="CAN_DOC_REVISION">Rev. 2.1</param_override>
+    <param_override param_id="CAN_SECURITY_CLASS">CONFIDENTIAL</param_override>
+    <param_override param_id="CAN_PUBLISH_MODE">FULL</param_override>
+    <param_override param_id="CAN_CHIP_PREFIX">MCU_X</param_override>
+
+    <base_address>0x40024000</base_address>
+  </reg>
+
+</instance>

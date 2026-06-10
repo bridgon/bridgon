@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solutions — AI Automation for Enterprises | Bridgon</title>
+<style>:root{--bg:#080c14;--bg2:#0f1626;--bg3:#182032;--border:#1e2d4d;--text:#e2e8f0;--muted:#8899b4;--blue:#38bdf8;--purple:#a78bfa;--emerald:#34d399;--amber:#fbbf24;--rose:#fb7185;--grad:linear-gradient(135deg,#38bdf8 0%,#a78bfa 50%,#34d399 100%)}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+nav{position:sticky;top:0;z-index:100;background:rgba(8,12,20,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 40px;display:flex;align-items:center;height:64px;gap:40px}.nav-logo{font-size:20px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.nav-links{display:flex;gap:28px;margin-left:auto}.nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s}.nav-links a:hover,.nav-links a.active{color:var(--text)}.nav-cta{background:var(--grad);color:#080c14;padding:10px 24px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none}
+section{padding:80px 40px;max-width:1280px;margin:0 auto}.page-hero{padding:80px 40px 60px;text-align:center}.page-hero h1{font-size:clamp(32px,5vw,52px);font-weight:900;margin-bottom:18px}.page-hero h1 span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.page-hero p{font-size:17px;color:var(--muted);max-width:640px;margin:0 auto}.section-tag{font-size:12px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:2.5px;margin-bottom:14px}.section-title{font-size:clamp(28px,4vw,42px);font-weight:800;margin-bottom:18px;line-height:1.2}.section-desc{font-size:16px;color:var(--muted);max-width:640px;margin-bottom:48px}
+.sol-section{padding:80px 40px;max-width:1280px;margin:0 auto;border-bottom:1px solid var(--border)}.sol-section:last-child{border-bottom:none}.sol-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}.sol-content h2{font-size:32px;font-weight:800;margin-bottom:16px}.sol-content p{font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:20px}.sol-tags{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}.sol-tag{background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.2);color:var(--blue);padding:4px 14px;border-radius:20px;font-size:12px;font-weight:600}.sol-visual{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:40px;display:flex;align-items:center;justify-content:center;min-height:280px}.sol-visual .big-icon{font-size:80px}.flow-box{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin:8px 0;text-align:center;font-size:13px;font-weight:600}.flow-arrow{text-align:center;color:var(--purple);font-size:20px;margin:4px 0}
+.benefits-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:40px}.benefit-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px;text-align:center}.benefit-icon{font-size:36px;margin-bottom:12px}.benefit-title{font-size:16px;font-weight:700;margin-bottom:8px}.benefit-desc{font-size:13px;color:var(--muted)}
+.process-steps{display:flex;gap:0;justify-content:center;flex-wrap:wrap;margin-top:32px}.proc-step{text-align:center;min-width:120px;padding:16px;position:relative}.proc-step:not(:last-child)::after{content:'→';position:absolute;right:-12px;top:50%;transform:translateY(-50%);color:var(--border);font-size:18px}.proc-num{width:32px;height:32px;border-radius:50%;background:var(--purple);color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}.proc-title{font-size:12px;font-weight:600}.proc-desc{font-size:11px;color:var(--muted);margin-top:4px}
+.btn-primary{background:var(--grad);color:#080c14;padding:15px 36px;border-radius:10px;font-weight:700;font-size:16px;text-decoration:none;display:inline-block;transition:all .2s}.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(56,189,248,.25)}
+.cta-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}.cta-section>div{max-width:1280px;margin:0 auto;padding:80px 40px;text-align:center}
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:64px 40px}.footer-grid{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}.footer-brand{font-size:22px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:12px}.footer-desc{font-size:13px;color:var(--muted)}.footer-col h4{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}.footer-col a{display:block;color:var(--muted);font-size:13px;text-decoration:none;margin-bottom:10px}.footer-col a:hover{color:var(--blue)}.footer-bottom{max-width:1280px;margin:48px auto 0;padding-top:28px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+@media(max-width:768px){nav{padding:0 20px;gap:16px}.nav-links{display:none}.sol-grid{grid-template-columns:1fr}section,.sol-section{padding:60px 20px}.footer-grid{grid-template-columns:1fr 1fr}}</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Bridgon</div>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="solutions.html" class="active">Solutions</a>
+    <a href="chipnexus.html">ChipNexus</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <a href="contact.html" class="nav-cta">Get Started</a>
+</nav>
+
+<section class="page-hero">
+  <div class="section-tag">Solutions</div>
+  <h1>Automation Platforms for<br/><span>Every Documentation Challenge</span></h1>
+  <p>From semiconductor reference manuals to enterprise knowledge bases — we build AI-powered pipelines that eliminate manual bottlenecks and guarantee accuracy.</p>
+</section>
+
+<div id="documentation" class="sol-section">
+  <div class="sol-grid">
+    <div class="sol-content">
+      <div class="section-tag">Solution 01</div>
+      <h2>AI Document Generation</h2>
+      <p>Automatically generate complete documentation chapters from architecture specifications, PDFs, and design databases. Our LLM-powered extraction pipeline structures raw technical information into publication-ready content — with human-in-the-loop review for guaranteed accuracy.</p>
+      <div class="sol-tags"><span class="sol-tag">Claude API</span><span class="sol-tag">GPT-4</span><span class="sol-tag">DITA XML</span><span class="sol-tag">RAG</span></div>
+      <a href="contact.html" class="btn-primary">Learn More →</a>
+    </div>
+    <div class="sol-visual">
+      <div>
+        <div class="flow-box">📄 Architecture Spec PDF</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-box">🤖 Claude API Extraction</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-box">📝 Structured DITA Chapters</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-box">👤 Human Review & Approve</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-box" style="border-color:var(--emerald);color:var(--emerald)">✅ Published Documentation</div>
+      </div>
+    </div>
+  </div>
+  <div class="benefits-grid" style="margin-top:48px">
+    <div class="benefit-card"><div class="benefit-icon">⚡</div><div class="benefit-title">95% Automation</div><div class="benefit-desc">AI handles extraction and structuring. Humans review only the output.</div></div>
+    <div class="benefit-card"><div class="benefit-icon">🎯</div><div class="benefit-title">100% Source Accuracy</div><div class="benefit-desc">All register names and addresses extracted directly from design databases.</div></div>
+    <div class="benefit-card"><div class="benefit-icon">🌍</div><div class="benefit-title">Multi-Language Ready</div><div class="benefit-desc">Same pipeline generates Chinese, Japanese, and English documentation.</div></div>
+  </div>
+</div>
+
+<div id="pipeline" class="sol-section">
+  <div class="sol-grid">
+    <div class="sol-visual">
+      <div>
+        <div class="flow-box">🔬 RTL Elaboration (RTL Design Elaboration)</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-box">📊 Parameter Extraction JSON</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-box">🗺️ Memory Map → IMAP Generator</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-box">📐 DITA-OT + SVG Rendering</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-box" style="border-color:var(--emerald);color:var(--emerald)">✅ PDF + WebHelp Output</div>
+      </div>
+    </div>
+    <div class="sol-content">
+      <div class="section-tag">Solution 02</div>
+      <h2>Design-to-Document Pipeline</h2>
+      <p>Connect RTL design directly to documentation output. Our pipeline elaborates SystemVerilog/VHDL designs using RTL Design Elaboration or open-source Open-Source Elaboration, extracts every parameter with full type and hierarchy resolution, and flows them automatically into your documentation — zero manual transcription, zero errors.</p>
+      <div class="sol-tags"><span class="sol-tag">RTL Design Elaboration</span><span class="sol-tag">Open-Source Elaboration</span><span class="sol-tag">SystemVerilog</span><span class="sol-tag">VHDL</span><span class="sol-tag">DITA-OT</span></div>
+      <a href="contact.html" class="btn-primary">Learn More →</a>
+    </div>
+  </div>
+  <div class="benefits-grid" style="margin-top:48px">
+    <div class="benefit-card"><div class="benefit-icon">🛡️</div><div class="benefit-title">Zero Transcription</div><div class="benefit-desc">Parameters flow directly from RTL to documentation without human typing.</div></div>
+    <div class="benefit-card"><div class="benefit-icon">🔍</div><div class="benefit-title">Full Hierarchy</div><div class="benefit-desc">Resolves defparam, generate blocks, and module instantiation overrides.</div></div>
+    <div class="benefit-card"><div class="benefit-icon">✅</div><div class="benefit-title">RTL-to-Doc Validation</div><div class="benefit-desc">Cross-reference check catches mismatches before publication.</div></div>
+  </div>
+</div>
+
+<div id="rag" class="sol-section">
+  <div class="sol-grid">
+    <div class="sol-content">
+      <div class="section-tag">Solution 03</div>
+      <h2>RAG Knowledge Bases & AI Chatbots</h2>
+      <p>Turn your documentation into an interactive AI assistant. Our RAG pipeline chunks resolved documentation, embeds it into a vector knowledge base, and provides a natural-language chatbot that answers technical questions with precise source citations — reducing internal support queries by 40%.</p>
+      <div class="sol-tags"><span class="sol-tag">RAG</span><span class="sol-tag">Vector Embeddings</span><span class="sol-tag">Flask</span><span class="sol-tag">Claude</span><span class="sol-tag">Semantic Search</span></div>
+      <a href="contact.html" class="btn-primary">Learn More →</a>
+    </div>
+    <div class="sol-visual">
+      <div>
+        <div class="flow-box">💬 User: "What's the reset value of MCR?"</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-box">🔢 Embed Query → Vector Search</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-box">📚 Top-5 Relevant Chunks Retrieved</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-box">🤖 Claude Generates Grounded Answer</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-box" style="border-color:var(--emerald);color:var(--emerald)">✅ Answer with Source Citations</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="params" class="sol-section">
+  <div class="sol-grid">
+    <div class="sol-visual">
+      <div style="text-align:center">
+        <div class="big-icon">📊</div>
+        <div class="process-steps">
+          <div class="proc-step"><div class="proc-num">1</div><div class="proc-title">Detect Changes</div><div class="proc-desc">parameter definitions diff on commit</div></div>
+          <div class="proc-step"><div class="proc-num">2</div><div class="proc-title">Gap Analysis</div><div class="proc-desc">diff parameter definitions vs DB</div></div>
+          <div class="proc-step"><div class="proc-num">3</div><div class="proc-title">Contribution YAML</div><div class="proc-desc">auto-assigned slots</div></div>
+          <div class="proc-step"><div class="proc-num">4</div><div class="proc-title">Schema Validate</div><div class="proc-desc">type·range·enum</div></div>
+          <div class="proc-step"><div class="proc-num">5</div><div class="proc-title">PR + Merge</div><div class="proc-desc">reviewed & merged</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="sol-content">
+      <div class="section-tag">Solution 04</div>
+      <h2>Parameter Management Platform</h2>
+      <p>Centralize all documentation-specific configuration in a Git-versioned JSON database with CI-integrated gap analysis. When parameters change in your design, the platform automatically detects gaps, generates contribution YAML assignments, validates against the schema, and guides the change through review and merge.</p>
+      <div class="sol-tags"><span class="sol-tag">JSON DB</span><span class="sol-tag">Git Versioned</span><span class="sol-tag">CI/CD</span><span class="sol-tag">YAML</span><span class="sol-tag">Schema Validation</span></div>
+      <a href="contact.html" class="btn-primary">Learn More →</a>
+    </div>
+  </div>
+</div>
+
+<section class="cta-section"><div>
+  <div class="section-tag">Custom Solutions</div>
+  <div class="section-title">Need Something Different?</div>
+  <div class="section-desc" style="margin:20px auto 32px">Every layer is modular and swappable. Register format, elaboration engine, AI model, publishing engine, UI — customize any component to fit your existing toolchain.</div>
+  <a href="contact.html" class="btn-primary">Talk to Our Team →</a>
+</div></section>
+
+<footer>
+  <div class="footer-grid">
+    <div><div class="footer-brand">Bridgon</div><div class="footer-desc">AI-powered automation for semiconductor documentation and enterprise content pipelines.</div></div>
+    <div class="footer-col"><h4>Solutions</h4><a href="solutions.html#documentation">Doc Automation</a><a href="solutions.html#pipeline">Design Pipeline</a><a href="solutions.html#rag">RAG Knowledge Bases</a><a href="chipnexus.html">ChipNexus</a></div>
+    <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="about.html#team">Team</a><a href="about.html#careers">Careers</a></div>
+    <div class="footer-col"><h4>Connect</h4><a href="contact.html">Contact</a><a href="https://bridgon.com">Website</a><a href="#">Resources</a></div>
+  </div>
+  <div class="footer-bottom"><span>&copy; 2026 Bridgon. All rights reserved.</span><span>Built with ❤️ for automation teams everywhere.</span></div>
+</footer>
+</body>
+</html>

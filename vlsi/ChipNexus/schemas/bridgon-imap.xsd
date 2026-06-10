@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  bridgon-imap.xsd — Instance Map (.imap) Schema
+  ================================================
+  Custom extension to DITA OT for semiconductor documentation.
+  Defines the structure for Instance Map files used in the
+  Bridgon SoC DocFlow pipeline.
+
+  Root element: <instance>
+  Namespace:    http://bridgon.com/schemas/instance-map
+
+  An .imap file instantiates parameter values for a specific
+  documentation scope (IP-level, SubSystem-level, or SoC-level).
+  It references .rdb register files and provides per-instance
+  RTL + non-RTL parameter overrides.
+
+  Schema version: 2.0
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:pm="http://bridgon.com/schemas/param-mapping"
+           targetNamespace="http://bridgon.com/schemas/instance-map"
+           xmlns="http://bridgon.com/schemas/instance-map"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="2.0">
+
+  <xs:annotation>
+    <xs:documentation>
+      Bridgon Instance Map (.imap) Schema.
+
+      Maps IP instances to register databases and provides
+      parameter override values for each instance in a given
+      scope (IP-level, SubSystem-level, or SoC-level).
+    </xs:documentation>
+  </xs:annotation>
+
+  <!-- ==================================================================
+       Root Element: instance
+       ================================================================== -->
+  <xs:element name="instance">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="reg" type="regInstanceType" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute name="spec_id" type="xs:string" use="required">
+        <xs:annotation>
+          <xs:documentation>Identifier for the specification scope (e.g., "IP_FlexCAN", "SOC_XYZ").</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="chip_prefix" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Chip family prefix used as lookup key in the Non-RTL Parameter DB.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="paramdef_ref" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Relative path to the parameter definition (.prm) file for this scope.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="global_paramdef_ref" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Relative path to the global parameter definition file.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- ==================================================================
+       Register Instance Type
+       ================================================================== -->
+  <xs:complexType name="regInstanceType">
+    <xs:sequence>
+      <xs:element name="regs_link" type="regsLinkType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Link to the register database (.rdb) file for this instance.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="base_address" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Base address of this register instance in the memory map (hex).</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="end_address" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>End address of this register instance (hex).</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="slot_size" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Address space slot size allocated to this instance (e.g., "0x4000", "16KB").</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="address_space" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Bus/address space type (e.g., "PERIPHERAL", "AHB0", "SYSTEM").</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="param_override" type="paramOverrideType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>A parameter override for this specific instance.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="instance_name" type="xs:string" use="required">
+      <xs:annotation>
+        <xs:documentation>Unique name for this register instance (e.g., "FlexCAN_core_0").</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="ip_spec" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>Reference to the IP specification identifier (e.g., "IP_FlexCAN_SPEC").</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <!-- ==================================================================
+       Register Link Type
+       ================================================================== -->
+  <xs:complexType name="regsLinkType">
+    <xs:attribute name="href" type="xs:string" use="required">
+      <xs:annotation>
+        <xs:documentation>Relative or absolute path to the .rdb register database file.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <!-- ==================================================================
+       Parameter Override Type
+       ================================================================== -->
+  <xs:complexType name="paramOverrideType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="param_id" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Identifier of the parameter being overridden (must match a param id in a .prm file).</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+</xs:schema>

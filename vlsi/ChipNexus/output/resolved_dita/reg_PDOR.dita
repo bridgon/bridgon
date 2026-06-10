@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<reference id="reg_PDOR">
+  <title>Port Data Output Register (PDOR)</title>
+  <refbody>
+    <section>
+      <title>Register Summary</title>
+      <table>
+        <tgroup cols="2">
+          <colspec colname="c1" colwidth="30*"/>
+          <colspec colname="c2" colwidth="70*"/>
+          <tbody>
+            <row><entry>Offset</entry><entry>0x00</entry></row>
+            <row><entry>Size</entry><entry>32 bits</entry></row>
+            <row><entry>Access</entry><entry>RW</entry></row>
+            <row><entry>Reset Value</entry><entry>0x00000000</entry></row>
+          </tbody>
+        </tgroup>
+      </table>
+    </section>
+    <section>
+      <title>Description</title>
+      <p>Stores the logic levels driven on each GPIO output pin. Writing 1 drives the pin high; writing 0 drives it low.</p>
+    </section>
+    <section>
+      <title>Bit-Field Descriptions</title>
+      <table>
+        <tgroup cols="5">
+          <thead>
+            <row>
+              <entry>Field</entry><entry>Bits</entry><entry>Access</entry>
+              <entry>Reset</entry><entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><b>PDO</b></entry>
+              <entry>31:0</entry>
+              <entry>RW</entry>
+              <entry>0x00000000</entry>
+              <entry>Port Data Output — Bit N controls pin N output level</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+    </section>
+  </refbody>
+</reference>

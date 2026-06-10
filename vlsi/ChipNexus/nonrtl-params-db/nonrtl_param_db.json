@@ -1,0 +1,161 @@
+{
+  "_description": "Non-RTL Parameter Database — JSON-based ditabase recording hierarchies and associations of each non-RTL parameter with IP instances, SubSystems, and SoC configurations. Not a SQL DB; structured as nested JSON with chip_prefix-based lookups.",
+  "_schema_version": "3.0",
+  "_default_author": "doc-team",
+  "_author_assignments": {
+    "IP_FlexCAN_SPEC": "can-team",
+    "IP_DMA_SPEC": "dma-team",
+    "IP_UART_SPEC": "serial-team",
+    "IP_GPIO_SPEC": "gpio-team",
+    "SOC_XYZ_SPEC": "soc-team",
+    "SS_AHB_SPEC": "bus-team"
+  },
+  "_contributions_dir": "db-contributions",
+  "_workflow": {
+    "description": "Non-RTL Parameter DB update workflow (see docs/nonrtl_db_update_workflow.html)",
+    "triggers": [
+      "New non-RTL param in .prm (source=nonrtl)",
+      "New SoC/SubSystem added to memory map XLSX",
+      "Param removed from .prm",
+      "IP removed from SoC/SubSystem"
+    ],
+    "pipeline": [
+      "CI hook detects .prm or .xlsx diff on commit",
+      "Gap analyzer diffs .prm vs DB entries per SoC/instance",
+      "If gaps/orphans detected → Contribution YAML generated with empty slots",
+      "Contribution YAML auto-assigned to authors based on spec ownership",
+      "PR created from db-contributions/ branch",
+      "Schema validation checks type, range, enum, required fields",
+      "On pass + review → DB merge"
+    ]
+  },
+  "_copy_from_directives": {
+    "description": "Chip variant inheritance — new chip prefixes can inherit parent values",
+    "example": {
+      "chip_prefix": "MCU_X9Z_LITE",
+      "copy_from": "MCU_X9Z",
+      "overrides": {
+        "SOC_PUBLISH_MODE": "PREVIEW"
+      }
+    }
+  },
+  
+  "chip_prefixes": {
+    "MCU_X": {
+      "description": "MCU X-series automotive SoC family",
+      "instances": {
+        "FlexCAN_core_0": {
+          "spec_ref": "IP_FlexCAN_SPEC",
+          "nonrtl_params": {
+            "CAN_DOC_REVISION": "Rev. 2.1",
+            "CAN_SECURITY_CLASS": "CONFIDENTIAL",
+            "CAN_PUBLISH_MODE": "FULL",
+            "CAN_CHIP_PREFIX": "MCU_X"
+          }
+        },
+        "FlexCAN_core_1": {
+          "spec_ref": "IP_FlexCAN_SPEC",
+          "nonrtl_params": {
+            "CAN_DOC_REVISION": "Rev. 2.1",
+            "CAN_SECURITY_CLASS": "CONFIDENTIAL",
+            "CAN_PUBLISH_MODE": "FULL",
+            "CAN_CHIP_PREFIX": "MCU_X"
+          }
+        },
+        "DMA_engine_0": {
+          "spec_ref": "IP_DMA_SPEC",
+          "nonrtl_params": {
+            "DMA_PUBLISH_MODE": "FULL",
+            "DMA_CHIP_PREFIX": "MCU_X",
+            "DMA_DOC_REVISION": "Rev. 1.7"
+          }
+        },
+        "UART_inst_0": {
+          "spec_ref": "IP_UART_SPEC",
+          "nonrtl_params": {
+            "UART_PUBLISH_MODE": "FULL",
+            "UART_CHIP_PREFIX": "MCU_X",
+            "UART_DOC_REVISION": "Rev. 3.0"
+          }
+        },
+        "GPIO_block_0": {
+          "spec_ref": "IP_GPIO_SPEC",
+          "nonrtl_params": {
+            "GPIO_PUBLISH_MODE": "FULL",
+            "GPIO_CHIP_PREFIX": "MCU_X",
+            "GPIO_DOC_REVISION": "Rev. 2.4"
+          }
+        }
+      },
+      "subsystems": {
+        "SS_AHB_BUS": {
+          "description": "AHB Bus SubSystem grouping DMA and memory controllers",
+          "nonrtl_params": {
+            "SS_PUBLISH_MODE": "FULL",
+            "SS_SECURITY_CLASS": "CONFIDENTIAL"
+          }
+        }
+      },
+      "soc_level_params": {
+        "SOC_CHIP_NAME": "MCU_X9Z",
+        "SOC_DOC_REVISION": "Rev. 0.9 Preliminary",
+        "SOC_SECURITY_CLASS": "RESTRICTED",
+        "SOC_PUBLISH_MODE": "FULL"
+      }
+    },
+    "MCU_Y": {
+      "description": "MCU Y-series industrial SoC family",
+      "instances": {
+        "FlexCAN_core_0": {
+          "spec_ref": "IP_FlexCAN_SPEC",
+          "nonrtl_params": {
+            "CAN_DOC_REVISION": "Rev. 2.0",
+            "CAN_SECURITY_CLASS": "INTERNAL",
+            "CAN_PUBLISH_MODE": "PREVIEW",
+            "CAN_CHIP_PREFIX": "MCU_Y"
+          }
+        }
+      }
+    }
+  },
+
+  "parameter_associations": {
+    "CAN_DOC_REVISION": {
+      "description": "Document revision for FlexCAN spec",
+      "applies_to": ["IP_FlexCAN_SPEC"],
+      "type": "per_instance",
+      "chip_specific": true
+    },
+    "CAN_SECURITY_CLASS": {
+      "description": "Security classification for FlexCAN documentation",
+      "applies_to": ["IP_FlexCAN_SPEC"],
+      "type": "per_instance",
+      "chip_specific": true
+    },
+    "CAN_PUBLISH_MODE": {
+      "description": "Publishing mode override for FlexCAN",
+      "applies_to": ["IP_FlexCAN_SPEC"],
+      "type": "per_instance",
+      "chip_specific": true
+    }
+  },
+
+  "soc_sub_system_mapping": {
+    "MCU_X9Z": {
+      "subsystems": ["SS_AHB_BUS"],
+      "direct_ip_instances": [
+        "FlexCAN_core_0",
+        "FlexCAN_core_1",
+        "UART_inst_0",
+        "GPIO_block_0"
+      ],
+      "memory_map": {
+        "FlexCAN_core_0": {"start_addr": "0x40024000", "end_addr": "0x40027FFF", "slot_size": "16KB"},
+        "FlexCAN_core_1": {"start_addr": "0x40028000", "end_addr": "0x4002BFFF", "slot_size": "16KB"},
+        "DMA_engine_0": {"start_addr": "0x40010000", "end_addr": "0x40010FFF", "slot_size": "4KB"},
+        "UART_inst_0": {"start_addr": "0x40030000", "end_addr": "0x40030FFF", "slot_size": "4KB"},
+        "GPIO_block_0": {"start_addr": "0x40040000", "end_addr": "0x40040FFF", "slot_size": "4KB"}
+      }
+    }
+  }
+}

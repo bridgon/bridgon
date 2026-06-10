@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<paramdef
+    xmlns="http://bridgon.com/schemas/param-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://bridgon.com/schemas/param-mapping http://bridgon.com/schemas/bridgon-prm.xsd" spec_id="IP_GPIO">
+  <parameter id="GPIO_NUM_PINS" class="integer" source="RTL">
+    <name>Number of GPIO Pins</name>
+    <default>32</default>
+    <low_limit>8</low_limit>
+    <high_limit>64</high_limit>
+    <description>Total number of general-purpose I/O pins in this GPIO block.</description>
+  </parameter>
+  <parameter id="GPIO_INTERRUPT_EN" class="boolean" source="RTL">
+    <name>Interrupt Support</name>
+    <default>true</default>
+    <accepted_values>true,false</accepted_values>
+    <description>When true, each GPIO pin supports configurable interrupt generation (rising, falling, both edges, level).</description>
+  </parameter>
+  <parameter id="GPIO_PULL_EN" class="boolean" source="RTL">
+    <name>Pull Resistor Enable</name>
+    <default>true</default>
+    <accepted_values>true,false</accepted_values>
+    <description>When true, configurable pull-up/pull-down resistors are available on each pin.</description>
+  </parameter>
+  <parameter id="GPIO_DRIVE_STRENGTH" class="enumerated" source="RTL">
+    <name>Drive Strength</name>
+    <default>HIGH</default>
+    <accepted_values>LOW,HIGH</accepted_values>
+    <description>Output drive strength selection for all GPIO pins.</description>
+  </parameter>
+  <parameter id="GPIO_PUBLISH_MODE" class="enumerated" source="nonrtl">
+    <name>Publishing Mode</name>
+    <default>FULL</default>
+    <accepted_values>FULL,PREVIEW,INTERNAL</accepted_values>
+  </parameter>
+  <parameter id="GPIO_CHIP_PREFIX" class="string" source="nonrtl">
+    <name>Chip Prefix</name>
+    <default>DEMO</default>
+  </parameter>
+  <parameter id="GPIO_DOC_REVISION" class="string" source="nonrtl">
+    <name>Document Revision</name>
+    <default>Rev. 2.4</default>
+  </parameter>
+</paramdef>

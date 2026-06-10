@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<paramdef
+    xmlns="http://bridgon.com/schemas/param-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://bridgon.com/schemas/param-mapping http://bridgon.com/schemas/bridgon-prm.xsd" spec_id="IP_UART">
+  <parameter id="UART_BAUD_RATE" class="integer" source="RTL">
+    <name>Default Baud Rate</name>
+    <default>115200</default>
+    <low_limit>1200</low_limit>
+    <high_limit>4000000</high_limit>
+    <description>Default UART baud rate in bits per second. Actual rate depends on clock frequency and prescaler settings.</description>
+  </parameter>
+  <parameter id="UART_DATA_BITS" class="integer" source="RTL">
+    <name>Data Bits</name>
+    <default>8</default>
+    <low_limit>5</low_limit>
+    <high_limit>9</high_limit>
+    <description>Number of data bits per UART frame (5, 6, 7, 8, or 9).</description>
+  </parameter>
+  <parameter id="UART_FIFO_DEPTH" class="integer" source="RTL">
+    <name>FIFO Depth</name>
+    <default>64</default>
+    <low_limit>4</low_limit>
+    <high_limit>256</high_limit>
+    <description>Depth of the transmit and receive FIFOs in bytes.</description>
+  </parameter>
+  <parameter id="UART_PARITY_EN" class="boolean" source="RTL">
+    <name>Parity Enable</name>
+    <default>false</default>
+    <accepted_values>true,false</accepted_values>
+    <description>When true, parity generation and checking is enabled.</description>
+  </parameter>
+  <parameter id="UART_FLOW_CTRL" class="boolean" source="RTL">
+    <name>Hardware Flow Control</name>
+    <default>true</default>
+    <accepted_values>true,false</accepted_values>
+    <description>When true, RTS/CTS hardware flow control is supported.</description>
+  </parameter>
+  <parameter id="UART_PUBLISH_MODE" class="enumerated" source="nonrtl">
+    <name>Publishing Mode</name>
+    <default>FULL</default>
+    <accepted_values>FULL,PREVIEW,INTERNAL</accepted_values>
+    <description>Controls publishing pipeline output mode.</description>
+  </parameter>
+  <parameter id="UART_CHIP_PREFIX" class="string" source="nonrtl">
+    <name>Chip Prefix</name>
+    <default>DEMO</default>
+    <description>Chip family prefix for instance namespacing.</description>
+  </parameter>
+  <parameter id="UART_DOC_REVISION" class="string" source="nonrtl">
+    <name>Document Revision</name>
+    <default>Rev. 3.0</default>
+    <description>Document revision string for the published reference manual.</description>
+  </parameter>
+</paramdef>

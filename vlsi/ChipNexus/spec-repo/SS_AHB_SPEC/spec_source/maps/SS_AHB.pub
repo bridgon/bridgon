@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pub
+    xmlns="http://bridgon.com/schemas/publishing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:pm="http://bridgon.com/schemas/param-mapping"
+    xsi:schemaLocation="http://bridgon.com/schemas/publishing http://bridgon.com/schemas/bridgon-pub.xsd" spec_id="SS_AHB">
+  <paramdef_href href="../prm/SS_AHB.prm"/>
+
+  <resolve_group id="DMA_ENGINE_0">
+    <instance_selector type="imap_file">
+      <imap_href href="../imap/SS_AHB_top.imap"/>
+      <regs_ref select_instance="DMA_engine_0"/>
+    </instance_selector>
+    <output_regmap format="dita_table_with_diagram"/>
+  </resolve_group>
+
+  <resolve_group id="GPIO_BLOCK_0">
+    <instance_selector type="imap_file">
+      <imap_href href="../imap/SS_AHB_top.imap"/>
+      <regs_ref select_instance="GPIO_block_0"/>
+    </instance_selector>
+    <output_regmap format="dita_table_with_diagram"/>
+  </resolve_group>
+
+  <output_config>
+    <target name="dita_resolved" dir="../../output/resolved_dita/"/>
+    <target name="pdf" dir="../../output/pdf/"/>
+    <target name="webhelp" dir="../../output/webhelp/"/>
+  </output_config>
+</pub>

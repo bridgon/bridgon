@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pub
+    xmlns="http://bridgon.com/schemas/publishing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:pm="http://bridgon.com/schemas/param-mapping"
+    xsi:schemaLocation="http://bridgon.com/schemas/publishing http://bridgon.com/schemas/bridgon-pub.xsd" spec_id="SOC_XYZ">
+  <paramdef_href href="../prm/SOC_XYZ_top.prm"/>
+
+  <resolve_group id="FLEXCAN_CORE_0">
+    <description>FlexCAN instance 0 register resolution</description>
+    <instance_selector type="imap_file">
+      <imap_href href="../imap/SOC_XYZ_top.imap"/>
+      <regs_ref select_instance="FlexCAN_core_0"/>
+    </instance_selector>
+    <merging_rules>
+      <common_region_strategy>keep_first</common_region_strategy>
+      <address_grouping>concatenate</address_grouping>
+    </merging_rules>
+    <output_regmap format="dita_table_with_diagram"/>
+  </resolve_group>
+
+  <resolve_group id="FLEXCAN_CORE_1">
+    <description>FlexCAN instance 1 register resolution</description>
+    <instance_selector type="imap_file">
+      <imap_href href="../imap/SOC_XYZ_top.imap"/>
+      <regs_ref select_instance="FlexCAN_core_1"/>
+    </instance_selector>
+    <merging_rules>
+      <common_region_strategy>merge_with_first</common_region_strategy>
+      <address_grouping>concatenate</address_grouping>
+    </merging_rules>
+    <output_regmap format="dita_table_with_diagram"/>
+  </resolve_group>
+
+  <resolve_group id="DMA_ENGINE_0">
+    <instance_selector type="imap_file">
+      <imap_href href="../imap/SOC_XYZ_top.imap"/>
+      <regs_ref select_instance="DMA_engine_0"/>
+    </instance_selector>
+    <output_regmap format="dita_table_with_diagram"/>
+  </resolve_group>
+
+  <resolve_group id="UART_INST_0">
+    <instance_selector type="imap_file">
+      <imap_href href="../imap/SOC_XYZ_top.imap"/>
+      <regs_ref select_instance="UART_inst_0"/>
+    </instance_selector>
+    <output_regmap format="dita_table_with_diagram"/>
+  </resolve_group>
+
+  <resolve_group id="GPIO_BLOCK_0">
+    <instance_selector type="imap_file">
+      <imap_href href="../imap/SOC_XYZ_top.imap"/>
+      <regs_ref select_instance="GPIO_block_0"/>
+    </instance_selector>
+    <output_regmap format="dita_table_with_diagram"/>
+  </resolve_group>
+
+  <parameter_resolution_order>
+    <step priority="1">load_paramdef</step>
+    <step priority="2">load_imap_overrides</step>
+    <step priority="3">apply_global_paramdb_overrides</step>
+    <step priority="4">validate_bounds</step>
+  </parameter_resolution_order>
+
+  <output_config>
+    <target name="dita_resolved" dir="../../output/resolved_dita/"/>
+    <target name="pdf" dir="../../output/pdf/" template="rm_template.xsl"/>
+    <target name="webhelp" dir="../../output/webhelp/" skin="modern_skin"/>
+    <memory_map include_at_soc_level="true" include_offset_bars="true"/>
+  </output_config>
+</pub>

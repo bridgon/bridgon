@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  global_params.prm — Global publishing parameters applicable across all specs.
+  These parameters do not need to be redefined in every IP-level .prm file.
+  They are automatically merged into the parameter resolution context.
+-->
+<paramdef
+    xmlns="http://bridgon.com/schemas/param-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://bridgon.com/schemas/param-mapping http://bridgon.com/schemas/bridgon-prm.xsd"
+    spec_id="GLOBAL">
+  
+  <parameter id="GLB_PUBLISH_DATE" class="string" source="nonrtl">
+    <name>Publication Date</name>
+    <default>2026-06-01</default>
+    <description>Date string that appears on the cover page and in document metadata.</description>
+  </parameter>
+
+  <parameter id="GLB_CORP_LEGAL_TEXT" class="string" source="nonrtl">
+    <name>Corporate Legal Notice</name>
+    <default>CONFIDENTIAL PROPRIETARY — Bridgon. All rights reserved. This document and the information contained herein is confidential and proprietary to Bridgon.</default>
+    <description>Standard legal disclaimer text included in all published documents.</description>
+  </parameter>
+
+  <parameter id="GLB_WATERMARK_TEXT" class="string" source="nonrtl">
+    <name>Watermark Text</name>
+    <default>Bridgon Confidential</default>
+    <description>Diagonal watermark text applied to all pages depending on security classification.</description>
+  </parameter>
+
+  <parameter id="GLB_OUTPUT_DIR" class="string" source="nonrtl">
+    <name>Default Output Directory</name>
+    <default>/proj/pubs/output</default>
+    <description>Base output directory for all generated documentation artifacts.</description>
+  </parameter>
+
+  <parameter id="GLB_PDF_ENGINE" class="enumerated" source="nonrtl">
+    <name>PDF Generation Engine</name>
+    <default>DITA_OT</default>
+    <accepted_values>DITA_OT,XEP,ANTENNA_HOUSE,FOP</accepted_values>
+    <description>Backend engine used for PDF generation. DITA_OT uses the built-in FOP; XEP and Antenna House offer commercial-quality typography.</description>
+  </parameter>
+
+  <parameter id="GLB_ENABLE_RAG" class="boolean" source="nonrtl">
+    <name>Enable RAG Knowledge Base Creation</name>
+    <default>true</default>
+    <accepted_values>true,false</accepted_values>
+    <description>When true, the resolved DITA output is automatically ingested into the RAG knowledge base for use by the RM Explorer chatbot.</description>
+  </parameter>
+
+</paramdef>

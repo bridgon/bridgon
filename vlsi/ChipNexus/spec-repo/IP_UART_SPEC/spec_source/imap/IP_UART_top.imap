@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<instance
+    xmlns="http://bridgon.com/schemas/instance-map"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://bridgon.com/schemas/instance-map http://bridgon.com/schemas/bridgon-imap.xsd"
+    spec_id="IP_UART" paramdef_ref="../prm/IP_UART.prm">
+  <reg instance_name="UART_inst_0">
+    <regs_link href="../rdb/UART_core_regs.rdb"/>
+    <base_address>0x40030000</base_address>
+    <slot_size>0x1000</slot_size>
+    <address_space>PERIPHERAL</address_space>
+    <param_override param_id="UART_BAUD_RATE">115200</param_override>
+    <param_override param_id="UART_DATA_BITS">8</param_override>
+    <param_override param_id="UART_FIFO_DEPTH">64</param_override>
+    <param_override param_id="UART_PARITY_EN">false</param_override>
+    <param_override param_id="UART_FLOW_CTRL">true</param_override>
+    <param_override param_id="UART_PUBLISH_MODE">FULL</param_override>
+    <param_override param_id="UART_CHIP_PREFIX">DEMO</param_override>
+    <param_override param_id="UART_DOC_REVISION">Rev. 3.0</param_override>
+  </reg>
+</instance>

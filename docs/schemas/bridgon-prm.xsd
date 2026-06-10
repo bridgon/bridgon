@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  bridgon-prm.xsd — Parameter Definition (.prm) Schema
+  ======================================================
+  Custom extension to DITA OT for semiconductor documentation.
+  Defines the structure for parameter definition files used in
+  the Bridgon SoC DocFlow pipeline.
+
+  Root element: <paramdef>
+  Namespace:    http://bridgon.com/schemas/param-mapping
+  Prefix:       pm
+
+  Schema version: 2.0
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:pm="http://bridgon.com/schemas/param-mapping"
+           targetNamespace="http://bridgon.com/schemas/param-mapping"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="2.0">
+
+  <!-- ==================================================================
+       Documentation
+       ================================================================== -->
+  <xs:annotation>
+    <xs:documentation>
+      Bridgon Parameter Definition Schema (.prm).
+      
+      A .prm file defines all configurable parameters—both RTL-extracted
+      and non-RTL (documentation-specific)—for a given specification scope
+      (IP-level, SubSystem-level, or SoC-level).
+
+      Parameter classes: integer, boolean, float, string, enumerated
+      Parameter sources: RTL (extracted automatically), nonrtl (manual)
+    </xs:documentation>
+  </xs:annotation>
+
+  <!-- ==================================================================
+       Root Element: paramdef
+       ================================================================== -->
+  <xs:element name="paramdef">
+    <xs:annotation>
+      <xs:documentation>Root element for a parameter definition file.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="parameter" type="pm:parameterType" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute name="spec_id" type="xs:string" use="required">
+        <xs:annotation>
+          <xs:documentation>Unique identifier for the specification scope (e.g., "IP_FlexCAN", "SOC_XYZ", "GLOBAL").</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- ==================================================================
+       Parameter Type
+       ================================================================== -->
+  <xs:complexType name="parameterType">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Human-readable display name for the parameter.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice minOccurs="0">
+        <xs:element name="default" type="xs:string"/>
+        <xs:element name="default_value" type="xs:string"/>
+      </xs:choice>
+      <xs:element name="low_limit" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Minimum allowed value (for integer/float classes).</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="high_limit" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Maximum allowed value (for integer/float classes).</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="accepted_values" type="pm:acceptedValuesType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Set of accepted values (for enumerated class). Can be expressed as comma-separated text or as child value elements.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="description" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Human-readable description of the parameter's purpose and usage.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:ID" use="required">
+      <xs:annotation>
+        <xs:documentation>Unique parameter identifier (e.g., "CAN_NUM_MB", "CHIP_PREFIX").</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="class" type="pm:parameterClassType" use="required">
+      <xs:annotation>
+        <xs:documentation>Parameter data type class.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="source" type="pm:parameterSourceType" use="required">
+      <xs:annotation>
+        <xs:documentation>Source of the parameter value: RTL (extracted from design) or nonrtl (documentation-managed).</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <!-- ==================================================================
+       Accepted Values Type (mixed content: text or child elements)
+       ================================================================== -->
+  <xs:complexType name="acceptedValuesType" mixed="true">
+    <xs:sequence>
+      <xs:element name="value" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>A single accepted value.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ==================================================================
+       Parameter Class Enumeration
+       ================================================================== -->
+  <xs:simpleType name="parameterClassType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="string">
+        <xs:annotation><xs:documentation>Free-form text value.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="integer">
+        <xs:annotation><xs:documentation>Integer value, bounded by low_limit and high_limit.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="boolean">
+        <xs:annotation><xs:documentation>Boolean value ("true" or "false").</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="float">
+        <xs:annotation><xs:documentation>Decimal/floating-point value.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="enumerated">
+        <xs:annotation><xs:documentation>One of a defined set of accepted values.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- ==================================================================
+       Parameter Source Enumeration
+       ================================================================== -->
+  <xs:simpleType name="parameterSourceType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="RTL">
+        <xs:annotation><xs:documentation>Parameter value extracted from RTL design elaboration (Verific/Yosys).</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="nonrtl">
+        <xs:annotation><xs:documentation>Parameter value managed through the Non-RTL Parameter Database.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>

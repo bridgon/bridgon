@@ -1,0 +1,82 @@
+{
+  "name": "soc-docflow",
+  "displayName": "SoC DocFlow — Reference Manual Automation",
+  "description": "AI-powered automated SoC Reference Manual generation. Integrates RTL design analysis, parameter extraction, Non-RTL database enrichment, DITA source auto-generation, register diagram rendering, and RAG-based documentation explorer — all from within VS Code.",
+  "version": "2.4.0",
+  "publisher": "soc-docflow",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "icon": "media/icon.png",
+  "activationEvents": [
+    "onCommand:docflow.openPanel"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "docflow.openPanel",
+        "title": "SoC DocFlow: Open Pipeline Panel",
+        "icon": "$(book)"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "docflow.openPanel",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "SoC DocFlow",
+      "properties": {
+        "docflow.specRepoPath": {
+          "type": "string",
+          "default": "",
+          "description": "Root path of the specification repository"
+        },
+        "docflow.verificHome": {
+          "type": "string",
+          "default": "/opt/verific",
+          "description": "Path to Verific installation directory"
+        },
+        "docflow.nonRtlDbPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to nonrtl_param_db.json"
+        },
+        "docflow.claudeApiKey": {
+          "type": "string",
+          "default": "",
+          "description": "Claude API key for AI-assisted chapter generation and chatbot"
+        },
+        "docflow.ditaOtHome": {
+          "type": "string",
+          "default": "/opt/dita-ot",
+          "description": "Path to DITA Open Toolkit installation"
+        },
+        "docflow.pythonPath": {
+          "type": "string",
+          "default": "python3",
+          "description": "Path to Python 3 interpreter"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package --no-dependencies"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.42",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^2.32.0",
+    "typescript": "^5.9.3"
+  }
+}
